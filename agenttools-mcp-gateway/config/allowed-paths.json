@@ -1,0 +1,13 @@
+{
+  "allowedRoots": [
+    "${AGENTTOOLS_ROOT}",
+    "${USERPROFILE}/.devspace/worktrees"
+  ],
+  "deniedPathFragments": [
+    "/.git/objects/",
+    "/node_modules/",
+    "/.env",
+    "/secrets/",
+    "/Secrets/"
+  ]
+}

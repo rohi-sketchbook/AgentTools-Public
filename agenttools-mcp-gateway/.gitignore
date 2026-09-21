@@ -1,0 +1,9 @@
+node_modules/
+logs/*.log
+logs/*.jsonl
+state/*.json
+state/devspace/
+.DS_Store
+.env
+.env.*
+!.env.example

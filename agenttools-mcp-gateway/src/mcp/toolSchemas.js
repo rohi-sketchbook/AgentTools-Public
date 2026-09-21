@@ -1,0 +1,154 @@
+function schema(properties = {}, required = []) {
+  return {
+    type: 'object',
+    additionalProperties: false,
+    properties,
+    required,
+  };
+}
+
+const string = (description) => ({ type: 'string', description });
+const bool = (description) => ({ type: 'boolean', description });
+const integer = (description, minimum = 0) => ({ type: 'integer', minimum, description });
+const stringArray = (description) => ({ type: 'array', items: { type: 'string' }, description });
+
+const schemas = {
+  'status.summary': schema(),
+  'status.paths': schema(),
+  'gateway.health': schema(),
+  'gateway.info': schema(),
+  'workflow.review': schema({ mode: { type: 'string', enum: ['codex', 'chatgpt'], description: 'Review mode. codex uses a separate Codex reviewer when practical; chatgpt keeps review with the host.' } }),
+  'workflow.continuation': schema({ mode: { type: 'string', enum: ['codex', 'chatgpt', 'off'], description: 'Automatic continuation mode after a resumable ChatGPT execution ends. codex delegates safe local work to Codex, chatgpt waits for the next host execution, off disables automatic continuation.' } }),
+
+  'skill.list': schema({ mode: { type: 'string', enum: ['active', 'all', 'recent', 'pending', 'approved', 'rejected', 'applied', 'stale'], description: 'Skill improvement proposal view.' }, limit: integer('Maximum proposals to return.', 1) }),
+  'skill.get': schema({ id: string('Skill improvement proposal ID.'), proposalId: string('Proposal ID alias.'), includeContent: bool('Include stored proposed Skill content. Defaults to false to keep responses compact.') }),
+  'skill.usage': schema({ limit: integer('Maximum Skill usage telemetry records.', 1) }),
+  'skill.curate': schema({ staleDays: integer('Days without recorded use before a Skill becomes a review candidate.', 1), days: integer('Alias for staleDays.', 1) }),
+  'skill.propose': schema({ skillPath: string('Target SKILL.md path under an allowed root.'), skillName: string('Skill display name.'), reason: string('Why this reusable Skill improvement is warranted.'), summary: string('Short proposal summary.'), source: string('Proposal source such as task_completion, manual, or audit.'), sourceTaskId: string('Related Work Task ID when applicable.'), proposedBy: string('Agent or user proposing the change.'), proposedContent: string('Complete proposed SKILL.md content.'), proposedContentFile: string('Alternative path to a file containing the complete proposed content.') }, ['skillPath', 'reason']),
+  'skill.approve': schema({ id: string('Skill improvement proposal ID.'), proposalId: string('Proposal ID alias.'), approvedBy: string('Reviewer identity.'), note: string('Optional approval note.') }),
+  'skill.reject': schema({ id: string('Skill improvement proposal ID.'), proposalId: string('Proposal ID alias.'), rejectedBy: string('Reviewer identity.'), note: string('Optional rejection note.') }),
+  'skill.apply': schema({ id: string('Approved Skill improvement proposal ID.'), proposalId: string('Proposal ID alias.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this Skill write in the current action.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+
+  'history.search': schema({ query: string('Task/Subagent history search query.'), q: string('Query alias.'), kind: string('Optional kind: work_task/task/work or subagent/agent.'), kinds: stringArray('Optional kinds.'), workspaceRoot: string('Optional exact workspace root filter.'), limit: integer('Maximum search results.', 1), sync: bool('Synchronize current Task/Subagent records before search; defaults true.') }, ['query']),
+  'history.sync': schema(),
+  'history.status': schema(),
+
+  'paths.check': schema({ path: string('Path to validate against allowed-paths policy.') }, ['path']),
+
+  'devspace.status': schema(),
+  'devspace.health': schema(),
+  'devspace.logs': schema({ lines: integer('Maximum log lines to return.', 1), tail: integer('Alias for lines.', 1), since: string('ISO timestamp; return log entries at or after this time when timestamps are available.'), errorOnly: bool('Only return error/failure-looking lines.') }),
+  'devspace.workspaceLookup': schema({ path: string('Absolute Project path whose active/recent DevSpace workspace should be located.'), mode: { type: 'string', enum: ['checkout', 'worktree'], description: 'Workspace mode to match. Defaults to checkout.' } }, ['path']),
+  'devspace.start': schema({ confirmToken: string('Confirmation token returned by dry-run.') }),
+  'devspace.stop': schema({ force: bool('Allow force termination. Requires destructive policy.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+  'devspace.restart': schema({ force: bool('Allow force termination when Gateway supervisor graceful stop is unavailable. Requires destructive policy.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+  'devspace.diagnose': schema(),
+  'devspace.recover': schema({ allowForce: bool('Allow force-stop escalation if supervisor graceful restart fails or is unavailable. Requires destructive policy.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+
+  'watchdog.status': schema(),
+  'watchdog.history': schema({ limit: integer('Maximum recovery/watchdog history entries to return.', 1) }),
+
+  'activity.start': schema({ title: string('Concise user-visible task title.'), request: string('Original user request or task description.'), actor: string('Actor id such as chatgpt or codex.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant, such as GPT-5.6 Sol or Terra.'), project: string('Project or repository label.'), workspaceRoot: string('Workspace root for the task.'), source: string('Task source such as chatgpt, discord, or idle_ui_qa.'), phase: string('Current work phase.'), message: string('Short current-work description.'), state: { type: 'string', enum: ['working', 'waiting_user', 'waiting_dependency', 'paused_timeout', 'paused', 'blocked'], description: 'User-visible execution/wait state.' }, reason: string('Short explanation for why the task is in the current state.') }, ['title', 'actor']),
+  'activity.update': schema({ id: string('Activity ID.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Current phase.'), message: string('Short progress description.'), status: { type: 'string', enum: ['running', 'blocked'], description: 'Overall active task status.' }, state: { type: 'string', enum: ['working', 'waiting_user', 'waiting_dependency', 'paused_timeout', 'paused', 'blocked'], description: 'User-visible execution/wait state. Non-working states imply blocked unless status is explicitly supplied.' }, reason: string('Short explanation for waiting, pause, timeout, or other stoppage.'), workerStatus: { type: 'string', enum: ['running', 'blocked', 'done'], description: 'This actor worker status.' }, takeOwnership: bool('Make this actor the current owner.') }, ['id', 'actor']),
+  'activity.complete': schema({ id: string('Activity ID.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), summary: string('Completion summary.'), changedFiles: stringArray('Changed files.'), tests: stringArray('Validation and test summaries.') }, ['id', 'actor']),
+  'activity.fail': schema({ id: string('Activity ID.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), summary: string('Failure summary.'), changedFiles: stringArray('Changed files.'), tests: stringArray('Validation and test summaries.') }, ['id', 'actor']),
+  'activity.cancel': schema({ id: string('Activity ID.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), summary: string('Cancellation summary.') }, ['id', 'actor']),
+  'activity.list': schema({ mode: { type: 'string', enum: ['active', 'recent', 'all', 'running', 'blocked', 'completed', 'failed', 'cancelled'], description: 'Activity view.' }, limit: integer('Maximum activities to return.', 1) }),
+  'activity.get': schema({ id: string('Activity ID.') }, ['id']),
+  'activity.paths': schema(),
+
+  'uiqa.status': schema(),
+  'uiqa.issues': schema({ status: { type: 'string', enum: ['open', 'resolved'], description: 'Finding status filter.' }, limit: integer('Maximum findings to return.', 1) }),
+  'uiqa.runOnce': schema({ force: bool('Run immediately instead of waiting for the idle gate. Intended for an explicit manual QA request.') }),
+  'uiqa.resolve': schema({ key: string('Stable Idle UI QA finding key.'), note: string('Resolution note.') }, ['key']),
+
+  'fs.exists': schema({ path: string('Path under an allowed root.') }, ['path']),
+  'fs.stat': schema({ path: string('Path under an allowed root.') }, ['path']),
+  'fs.list': schema({ path: string('Directory under an allowed root.'), limit: integer('Maximum entries to return.', 1) }, ['path']),
+  'fs.readText': schema({ path: string('Text file under an allowed root.'), maxBytes: integer('Maximum bytes to read; capped by the Gateway.', 1) }, ['path']),
+  'fs.delete': schema({ path: string('File, symlink, or empty directory under an allowed root.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['path']),
+  'fs.deleteRecursive': schema({ path: string('Directory tree under an allowed root.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['path']),
+
+  'process.list': schema({ limit: integer('Maximum processes to return.', 1) }),
+  'process.find': schema({ query: string('Literal process name/command-line text to find.'), limit: integer('Maximum matches to return.', 1) }, ['query']),
+  'process.info': schema({ pid: integer('Process ID.', 1) }, ['pid']),
+  'process.status': schema({ id: string('Registered process ID. Omit to show all registered processes.') }),
+  'process.start': schema({ id: string('Registered process ID.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['id']),
+  'process.stop': schema({ id: string('Registered process ID.'), force: bool('Force termination. Requires destructive policy.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['id']),
+
+  'git.status': schema({ repo: string('Git repository root.') }),
+  'git.log': schema({ repo: string('Git repository root.'), limit: integer('Maximum commits to return.', 1) }),
+  'git.diff': schema({ repo: string('Git repository root.'), path: string('Optional repository-relative path.'), staged: bool('Show staged diff instead of working-tree diff.') }),
+  'git.diffSummary': schema({ repo: string('Git repository root.') }),
+  'git.commit': schema({ repo: string('Git repository root.'), message: string('Commit message.'), all: bool('Stage all changes.'), paths: stringArray('Paths to stage.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this Git commit in the current task.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['repo', 'message']),
+  'git.push': schema({ repo: string('Git repository root.'), remote: string('Git remote name.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this Git push in the current task.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['repo']),
+
+  'discord.status': schema(),
+  'discord.post': schema({ message: string('Message content.'), contentFile: string('Path to a message text file.'), attachments: stringArray('Attachment paths.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this Discord post/upload in the current task.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+  'discord.restart': schema({ confirmToken: string('Confirmation token returned by dry-run.') }),
+
+  'image.list': schema({ root: string('Image search root.'), limit: integer('Maximum images to list.', 1) }),
+  'image.saveGenerated': schema({ source: string('Source image path.'), dest: string('Destination image path.'), overwrite: bool('Allow replacing an existing destination.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['source', 'dest']),
+
+  'windowsUi.windows': schema({ process: string('Optional process executable/name filter, for example Unity.exe.'), title: string('Optional top-level or child window title glob.'), limit: integer('Maximum matching windows.', 1) }),
+  'windowsUi.tree': schema({ process: string('Optional process executable/name filter.'), window: string('Window title glob. At least process or window is required.'), depth: integer('Maximum UIA tree depth.', 0), limit: integer('Maximum returned UIA elements.', 1) }),
+  'windowsUi.find': schema({ process: string('Optional process executable/name filter.'), window: string('Window title glob. At least process or window is required.'), controlType: string('Optional UIA control type, for example Button.'), name: string('Optional accessible-name glob.'), automationId: string('Optional AutomationId glob.'), limit: integer('Maximum matching controls.', 1) }),
+  'windowsUi.invoke': schema({ process: string('Target process executable/name. Required for invoke.'), window: string('Target window/dialog title glob. Required for invoke.'), controlType: string('Optional UIA control type, normally Button.'), name: string('Target accessible-name glob. Either name or automationId is required.'), automationId: string('Target AutomationId glob. Either name or automationId is required.'), confirmToken: string('Confirmation token returned by dry-run.') }, ['process', 'window']),
+
+  'blender.status': schema(),
+  'blender.render': schema({ blend: string('Blend file path.'), output: string('Render output path.'), frame: integer('Frame number.', 0), blenderExe: string('Blender executable.'), title: string('Task title.') }, ['blend']),
+  'blender.startMcp': schema(),
+
+  'localAi.status': schema(),
+  'localAi.workflows': schema(),
+  'localAi.models': schema({ folder: string('ComfyUI model folder such as checkpoints, diffusion_models, loras, vae, or clip.'), type: string('Alias for folder.') }),
+  'localAi.start': schema({ startupTimeoutMs: integer('Maximum milliseconds to wait for ComfyUI to become ready.', 5000), profile: { type: 'string', enum: ['standard', 'h3-fast'], description: 'Startup profile. h3-fast loads only the MiniMax H3 Turbo custom node.' }, title: string('Task title.') }),
+  'localAi.generate': schema({ workflow: string('Registered local-ai workflow ID.'), prompt: string('Positive prompt binding.'), negativePrompt: string('Negative prompt binding.'), seed: integer('Seed value.', 0), steps: integer('Sampling steps.', 1), width: integer('Output width.', 64), height: integer('Output height.', 64), cfg: { type: 'number', minimum: 0, description: 'CFG value.' }, sampler: string('Sampler binding.'), scheduler: string('Scheduler binding.'), paramsJson: string('Additional manifest-bound values as a JSON object.'), output: string('Output directory under local-ai/output.'), timeoutMs: integer('Generation timeout in milliseconds.', 10000), title: string('Task title.') }, ['workflow']),
+  'localAi.interrupt': schema({ confirmToken: string('Confirmation token returned by dry-run.') }),
+  'localAi.free': schema({ unloadModels: bool('Unload models from ComfyUI.'), freeMemory: bool('Request ComfyUI memory cleanup.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+
+  'video.status': schema(),
+  'video.remotionRender': schema({ root: string('Remotion project root.'), composition: string('Remotion composition name.'), output: string('Output video path.'), codec: string('Codec option.'), title: string('Task title.') }, ['composition']),
+  'video.hyperframesRender': schema({ root: string('HyperFrames root.'), project: string('HyperFrames project root.'), composition: string('Composition name.'), output: string('Output video path.'), title: string('Task title.') }),
+
+  'unity.status': schema({ project: string('Unity project root.') }),
+  'unity.batchMode': schema({ project: string('Unity project root.'), method: string('Static editor method to execute.'), unityExe: string('Unity executable.'), log: string('Unity log file path.'), title: string('Task title.') }, ['method']),
+  'unity.build': schema({ project: string('Unity project root.'), method: string('Build method.'), output: string('Expected build output path for post-run verification; it is not automatically passed to the Unity method.'), unityExe: string('Unity executable.'), log: string('Unity log file path.') }),
+
+  'task.list': schema({ limit: integer('Maximum tasks to list.', 1), status: string('Filter by task status.'), type: string('Task type filter.'), work: bool('List user-visible work tasks.'), mode: { type: 'string', enum: ['active', 'recent', 'all', 'running', 'blocked', 'completed', 'succeeded', 'failed', 'cancelled'], description: 'Work task view.' } }),
+  'task.get': schema({ taskId: string('Task ID.'), id: string('Task ID alias.'), work: bool('Require a user-visible work task.') }),
+  'task.resumable': schema({ limit: integer('Maximum resumable work tasks to list.', 1) }),
+  'task.start': schema({ title: string('Concise user-visible task title.'), request: string('Original user request or task description.'), actor: string('Actor id such as chatgpt or codex.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), project: string('Project or repository label.'), workspaceRoot: string('Workspace root for the task.'), source: string('Task source such as chatgpt, discord, or idle_ui_qa.'), phase: string('Current work phase.'), message: string('Short current-work description.'), state: { type: 'string', enum: ['working', 'waiting_user', 'waiting_dependency', 'paused_timeout', 'paused', 'blocked'], description: 'User-visible execution/wait state.' }, reason: string('Short explanation for why the task is in the current state.'), goalOutcome: string('Goal Contract desired outcome.'), goalCriteria: stringArray('Completion criteria for the Goal Contract.'), goalVerification: stringArray('Verification steps required before success.'), goalConstraints: stringArray('Goal constraints and boundaries.'), goalEnforce: bool('Require the Goal Contract to be satisfied before task.complete succeeds.'), progressSignature: string('Initial semantic progress signature.') }, ['title', 'actor']),
+  'task.update': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Current phase.'), message: string('Short progress description.'), status: { type: 'string', enum: ['running', 'blocked'], description: 'Overall active task status.' }, state: { type: 'string', enum: ['working', 'waiting_user', 'waiting_dependency', 'paused_timeout', 'paused', 'blocked'], description: 'User-visible execution/wait state. Non-working states imply blocked unless status is explicitly supplied.' }, reason: string('Short explanation for waiting, pause, timeout, or other stoppage.'), workerStatus: { type: 'string', enum: ['running', 'blocked', 'done'], description: 'This actor worker status.' }, takeOwnership: bool('Make this actor the current owner.'), progressSignature: string('Stable semantic progress signature for worker lifecycle tracking.'), progressMade: bool('Mark this heartbeat/update as meaningful progress.'), endReason: string('Reason a worker run ended or became blocked.'), resumeContextJson: string('Structured resume context as a JSON object.'), clearResumeContext: bool('Clear any persisted resume checkpoint.') }, ['actor']),
+  'task.checkpoint': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Current phase.'), message: string('Checkpoint summary.'), lastCompletedStep: string('Last completed step.'), nextStep: string('Next step after resume.'), workspacePath: string('Workspace or checkout path.'), worktreePath: string('Managed worktree path when applicable.'), branch: string('Current Git branch.'), hasUncommittedChanges: bool('Whether the checkout has uncommitted changes.'), activeOperation: string('Command or validation that was active.'), externalApps: stringArray('Relevant external app states.'), safetyChecks: stringArray('Safety checks required before resume.'), requiresUserConfirmation: bool('Whether the next action needs user confirmation.'), allowedExternalActions: stringArray('External actions already explicitly authorized for this Task.'), nextActionImpact: { type: 'string', enum: ['read', 'local_write', 'local_test', 'local_validation', 'local_generation', 'external', 'destructive', 'billing', 'production', 'account'], description: 'Impact class of the next action.' }, pendingAction: string('Canonical action id for the next action, e.g. git.push or discord.post.'), workspaceConflict: bool('Whether another Task owns the same checkout.'), progressSignature: string('Stable semantic progress signature for loop detection.'), progressMade: bool('Reset consecutive-timeout loop counters because meaningful progress was made.'), resumeContextJson: string('Additional structured resume context as a JSON object.') }, ['actor']),
+  'task.timeout': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Phase at timeout.'), message: string('Current work at timeout.'), lastCompletedStep: string('Last completed step.'), nextStep: string('Next step after resume.'), workspacePath: string('Workspace or checkout path.'), worktreePath: string('Managed worktree path.'), branch: string('Current Git branch.'), hasUncommittedChanges: bool('Whether the checkout has uncommitted changes.'), activeOperation: string('Command or validation active at timeout.'), externalApps: stringArray('Relevant external app states.'), safetyChecks: stringArray('Safety checks required before resume.'), requiresUserConfirmation: bool('Whether the next action needs user confirmation.'), allowedExternalActions: stringArray('External actions already explicitly authorized for this Task.'), nextActionImpact: { type: 'string', enum: ['read', 'local_write', 'local_test', 'local_validation', 'local_generation', 'external', 'destructive', 'billing', 'production', 'account'], description: 'Impact class of the next action.' }, pendingAction: string('Canonical next action id.'), workspaceConflict: bool('Whether another Task owns the same checkout.'), timeoutKind: { type: 'string', enum: ['gateway_task', 'command', 'chatgpt_execution', 'dependency', 'user'], description: 'Cause class for the timeout/wait boundary.' }, elapsedMs: integer('Elapsed milliseconds for this execution slice.', 0), progressSignature: string('Stable semantic progress signature for loop detection.'), autoResume: bool('Automatically transition paused_timeout back to working when safety policy allows.'), resumePhase: string('Phase label after automatic resume.'), resumeContextJson: string('Additional structured resume context as a JSON object.') }, ['actor']),
+  'task.resume': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Resume phase.'), message: string('Current work after resume.'), force: bool('Permit an explicitly requested manual resume even when automatic-resume policy rejects it.') }, ['actor']),
+  'task.goal': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), goalOutcome: string('Goal Contract desired outcome.'), goalCriteria: stringArray('Completion criteria.'), goalVerification: stringArray('Verification steps.'), goalConstraints: stringArray('Constraints and boundaries.'), goalEnforce: bool('Require a satisfied Goal judgement before task.complete.') }, ['actor', 'goalOutcome']),
+  'task.judge': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), goalResult: { type: 'string', enum: ['continue', 'satisfied', 'blocked'], description: 'Goal completion judgement.' }, summary: string('Short judgement explanation.'), evidence: stringArray('Verification evidence. Required when satisfying a goal that defines verification steps.') }, ['actor', 'goalResult']),
+  'task.heartbeat': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Current worker phase.'), message: string('Optional current worker work.'), progressSignature: string('Stable semantic progress signature.'), progressMade: bool('Whether this heartbeat represents meaningful progress.') }, ['actor']),
+  'task.reconcile': schema({ id: string('Optional Work Task ID; omit to reconcile active Work Tasks.'), taskId: string('Task ID alias.'), limit: integer('Maximum active Work Tasks to reconcile.', 1), at: string('Optional ISO timestamp for deterministic testing/diagnostics.') }),
+  'task.recover': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), phase: string('Recovery phase.'), message: string('Work to resume.'), progressSignature: string('New recovery progress signature.'), force: bool('Override an open worker circuit breaker after an explicit operator decision.') }, ['actor']),
+  'task.snapshot': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), paths: stringArray('Workspace-relative or absolute file paths to capture.'), path: string('Single file path alias.'), label: string('Snapshot label.') }),
+  'task.snapshots': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), snapshotId: string('Optional snapshot ID to inspect.'), snapshot: string('Snapshot ID alias.') }),
+  'task.snapshotRestore': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), snapshotId: string('Snapshot ID to restore.'), snapshot: string('Snapshot ID alias.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this local file restore.'), confirmToken: string('Confirmation token returned by preview.') }),
+  'task.inspect': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.') }),
+  'task.resumePrompt': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.') }),
+  'task.continueRequest': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), manualModelRole: string('Optional Codex role used for an explicit manual continuation, e.g. implementation.') }),
+  'task.skillCandidate': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), skillPath: string('Target SKILL.md path under an allowed root.'), skillName: string('Skill display name.'), reason: string('Concrete reusable correction or simplification discovered during the Task.'), summary: string('Short candidate summary.'), proposedBy: string('Agent label recorded on the eventual proposal.'), proposedContent: string('Complete proposed SKILL.md content captured while the evidence is fresh.'), proposedContentFile: string('Allowed local file containing the complete proposed SKILL.md content.') }, ['actor', 'skillPath', 'reason']),
+  'task.finishForgottenTask': schema({ id: string('Work Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), summary: string('Manual completion summary.'), expectedUpdatedAt: string('Task updatedAt value shown to the user, used to reject stale completion.'), userExplicitlyRequested: bool('Assert that the user explicitly confirmed this forgotten-task completion.') }),
+  'task.complete': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), status: { type: 'string', enum: ['succeeded', 'cancelled'], description: 'Terminal status; defaults to succeeded.' }, summary: string('Completion summary.'), changedFiles: stringArray('Changed files.'), tests: stringArray('Validation and test summaries.') }, ['actor']),
+  'task.fail': schema({ id: string('Task ID.'), taskId: string('Task ID alias.'), actor: string('Actor id.'), actorLabel: string('User-visible actor label.'), model: string('Model or worker variant.'), summary: string('Failure summary.'), changedFiles: stringArray('Changed files.'), tests: stringArray('Validation and test summaries.') }, ['actor']),
+  'task.create': schema({ type: string('Task type.'), title: string('Task title.'), summary: string('Task summary.'), status: { type: 'string', enum: ['planned', 'queued'], description: 'Initial status.' } }),
+  'task.run': schema({ taskId: string('Task ID.'), id: string('Task ID alias.'), userExplicitlyRequested: bool('Assert that the user explicitly requested this registered long-running task in the current task.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+  'task.kill': schema({ taskId: string('Task ID.'), id: string('Task ID alias.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+  'task.tailLog': schema({ taskId: string('Task ID.'), id: string('Task ID alias.'), limit: integer('Number of log lines.', 1), lines: integer('Number of log lines alias.', 1) }),
+  'task.cancel': schema({ taskId: string('Task ID.'), id: string('Task ID alias.'), reason: string('Cancel reason.'), confirmToken: string('Confirmation token returned by dry-run.') }),
+};
+
+function inputSchemaFor(name) {
+  return schemas[name] || { type: 'object', additionalProperties: true, properties: {} };
+}
+
+module.exports = {
+  inputSchemaFor,
+};

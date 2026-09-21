@@ -1,0 +1,26 @@
+id	ja	en	expected	difficulty	policy	vocab_ids
+cap_026	右手で顔の横にピースサインを作る。	Make a peace sign beside the face with the right hand.	right peace sign	basic	direct	peace_sign_right
+cap_027	両頬の横でダブルピースを作る。	Make peace signs beside both cheeks.	double peace	medium	direct	double_peace
+cap_028	胸の前で両手を使ってハートを作る。	Form a heart with both hands near the chest.	heart hands	hard	direct	heart_hands_chest
+cap_029	右手で指ハートを作る。	Make a finger-heart gesture with the right hand.	finger heart	hard	direct	finger_heart_right
+cap_030	両手を頬の横に添えて首をかしげる。	Place both hands beside the cheeks and tilt the head gently.	cheek pose + head tilt	medium	direct	double_cheek;head_tilt
+cap_031	あごの下で両手を花のように開く。	Open both hands under the chin like a flower.	flower pose	hard	direct	flower_pose
+cap_032	頭の横で両手を猫耳のように立てる。	Raise both hands beside the head like cat ears.	cat ears gesture	hard	direct	cat_ears
+cap_033	胸の前で両手を猫の手のように曲げる。	Bend both wrists in front like cat paws.	cat paws	hard	direct	cat_paws
+cap_034	人差し指を唇の前へそっと添える。	Place one index finger gently in front of the lips.	shushing gesture	medium	direct	shush
+cap_035	右手を小さく元気に振る。	Wave the right hand with a small cheerful motion.	right hand wave	basic	direct	wave_right
+cap_036	両手を肩の高さで左右に振る。	Wave both hands near shoulder height.	double hand wave	medium	direct	wave_both
+cap_037	軽く敬礼してから手を下ろす。	Make a light playful salute and lower the hand.	cute salute	medium	direct	salute_cute
+cap_038	胸の前で両手を合わせてお願いするようなポーズ。	Press both palms together in front of the chest in a gentle pleading pose.	palms together	medium	direct	hands_prayer
+cap_039	片手で口元を軽く隠しながら、少し首をかしげる。	Cover the mouth lightly with one hand and tilt the head slightly.	giggling hand + tilt	medium	direct	hand_mouth_giggle;head_tilt
+cap_040	両腕をV字に上げて元気な決めポーズ。	Raise both arms in a V shape in a cheerful finishing pose.	arms V pose	basic	direct	arms_v
+cap_041	小さくカーテシーをする。	Perform a small graceful curtsy.	curtsy	medium	direct	curtsy
+cap_042	投げキッスをする。	Bring one hand to the lips and blow a kiss outward.	blowing kiss	medium	direct	blow_kiss
+cap_043	片手で正面を指差しながら少し前へ出る。	Point forward with one hand while taking a small step forward.	point + step	medium	direct	point_viewer;step_forward
+cap_044	両手を後ろで組んで少し前傾し、そのまま首をかしげる。	Hold both hands behind the back, lean forward slightly, and tilt the head.	cute shy pose	medium	direct	hands_behind_lean;head_tilt
+cap_045	片方のかかとを上げて、顔の横でピースする。	Lift one heel playfully and make a peace sign beside the face.	heel pop + peace	hard	direct	idol_heel_pop;peace_sign_right
+cap_046	顔をかわいく傾けながらピースポーズを取る。	Tilt the head playfully while making a peace sign beside the face.	cute peace	medium	direct	wink_peace
+cap_047	両手を胸元へ重ねてから、ゆっくり両腕を開く。	Place both hands over the chest, then slowly open both arms to the sides.	hands chest -> arms open	hard	direct	hands_over_heart;arms_open
+cap_048	両手を頭上へ上げ、左右へ小さく振る。	Raise both hands overhead and wave them gently side to side.	overhead wave	medium	direct	idol_overhead_wave
+cap_049	小さくお辞儀をしてから、胸の前で両手ハートを作る。	Make a small cheerful bow, then form a heart with both hands near the chest.	bow -> heart	hard	direct	idol_bow;heart_hands_chest
+cap_050	手を振り、首をかしげ、かわいい決めポーズへ入る。	Wave, tilt the head, and settle into a cute finishing pose.	greeting combo	hard	direct	idol_greeting_combo

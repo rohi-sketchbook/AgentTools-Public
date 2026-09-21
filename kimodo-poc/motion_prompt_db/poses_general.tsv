@@ -1,0 +1,50 @@
+id	ja	canonical_en	temporal	sources
+standing_neutral	正面を向いて自然に立つ	stand facing forward	static	ururu_pose;ai_nante_pose;runway_image
+contrapposto	片脚に重心を乗せたコントラポスト	stand in contrapposto with weight on one leg	static	ururu_pose;fashion_show_prompt
+weight_left	左脚に重心を乗せる	shift weight onto the left leg	static	curated
+weight_right	右脚に重心を乗せる	shift weight onto the right leg	static	curated
+crossed_legs_stand	脚をクロスして立つ	stand with legs crossed	static	fashion_show_prompt
+one_knee_bent	片膝を軽く曲げて立つ	stand with one knee softly bent	static	curated
+hip_shift_left	腰を少し左へずらす	shift the hips slightly left	static	curated
+hip_shift_right	腰を少し右へずらす	shift the hips slightly right	static	curated
+s_curve	上体と腰で緩やかなS字を作る	form a gentle S-curve through the torso and hips	static	curated
+torso_twist	上体を少しひねる	twist the torso slightly	static	runway_video;curated
+shoulder_drop	片方の肩を少し下げる	lower one shoulder slightly	static	curated
+lean_wall	壁に軽く寄りかかる	lean lightly against a wall	static	ururu_gravure
+lean_forward	上体を少し前傾する	lean the upper body slightly forward	static	ai_nante_pose
+lean_back	上体を少し後傾する	lean the upper body slightly back	static	curated
+look_back	上体をひねって肩越しに振り返る	turn the upper body and look back over the shoulder	static	ururu_gravure;weel_gravure
+back_view_turn_head	背中を向けて顔だけ振り返る	stand with back to camera and turn the head back	short_action	ururu_gravure
+arms_behind_back	両手を後ろで組んで立つ	stand with both hands held behind the back	static	nano_pose72
+hand_on_hip	片手を腰に当てる	place one hand on the hip	static	nano_pose72;fashion_show_prompt
+both_hands_hips	両手を腰に当てる	place both hands on the hips	static	fashion_show_prompt
+hand_on_thigh	片手を太ももに軽く添える	rest one hand lightly on the thigh	static	curated
+hand_on_knee	片手を膝に置く	rest one hand on the knee	static	jikuchiyo_hands
+touch_hair	片手で髪にそっと触れる	gently touch the hair with one hand	static	meta_camp_pose
+brush_hair_back	片手で髪をかき上げる	brush the hair back with one hand	short_action	curated
+hand_near_face	片手を顔の近くに添える	hold one hand near the face	static	prompt_community
+hand_on_cheek	片手を頬にそっと当てる	place one hand gently on the cheek	static	nano_pose72
+chin_in_hand	片手にあごを軽く乗せる	rest the chin lightly on one hand	static	jikuchiyo_hands
+arms_crossed	腕を軽く組む	cross the arms loosely	static	meta_camp_pose
+hands_clasped_front	両手を体の前で組む	clasp both hands in front of the body	static	curated
+hands_clasped_chest	両手を胸の前で組む	clasp both hands in front of the chest	static	nano_pose72
+arms_open	両腕をやさしく左右に広げる	open both arms gently to the sides	short_action	curated
+sit_chair_upright	椅子に姿勢よく座る	sit upright on a chair	static	ai_nante_pose
+sit_chair_relaxed	椅子にリラックスして座る	sit on a chair in a relaxed pose	static	runway_image
+sit_edge	椅子の端に足を揃えて座る	sit near the edge of a chair with feet together	static	curated
+sit_cross_ankles	足首をクロスして座る	sit with ankles crossed	static	curated
+sit_cross_legs	脚を組んで座る	sit with legs crossed	static	ai_nante_pose
+sit_sideways	椅子に横向きに座り上体を正面へ向ける	sit sideways on a chair and turn the torso toward front	static	pixel_ai_gravure
+kneel_upright	膝立ちになる	kneel upright	static	ururu_gravure
+seiza	正座する	sit in seiza	static	meta_camp_pose
+floor_side_sit	床で両脚を片側へ流して座る	sit on the floor with both legs folded to one side	static	curated
+floor_knees_up	床で膝を抱えるように座る	sit on the floor with knees drawn up	static	ai_nante_pose
+sit_one_knee_up	片膝を立てて座る	sit with one knee raised	static	curated
+sit_hands_behind	両手を後ろについて座る	sit with both hands supporting the body behind	static	curated
+sit_hand_cheek	座って片手を頬に当てる	sit with one hand on the cheek	static	curated
+sit_touch_hair	座って髪にそっと触れる	sit while gently touching the hair	static	curated
+sit_look_back	座ったまま肩越しに振り返る	sit and look back over the shoulder	static	curated
+crouch_soft	膝を寄せ気味にしてしゃがむ	crouch with knees close together	static	curated
+squat_pose	バランスよくしゃがむ	squat down with balanced posture	static	meta_camp_pose
+half_kneel	片膝をつくハーフニーリング	take a half-kneeling pose with one knee down	static	curated
+hands_behind_head	両手を頭の後ろへ添える	place both hands behind the head	static	curated

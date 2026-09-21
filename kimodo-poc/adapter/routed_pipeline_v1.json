@@ -1,0 +1,35 @@
+{
+  "schema": "kimodo-routed-pipeline/v1",
+  "qwen_model": "models/qwen3-embedding-0.6b",
+  "qwen_instruction": "Map Japanese human motion descriptions into a semantic space for full-body motion generation.",
+  "router": "adapter/checkpoints/domain_router_h128.pt",
+  "router_threshold": 0.8,
+  "bridge": "adapter/checkpoints/qwen_bridge_h256.pt",
+  "base_adapter": "adapter/checkpoints/adapter_v3_instruct_h512.pt",
+  "promoted_anchor_gate": "adapter/checkpoints/promoted_anchor_gate_h64.pt",
+  "promoted_anchor_gate_threshold": 0.8,
+  "promoted_anchor_residual": "adapter/checkpoints/promoted_anchor_residual_h128.pt",
+  "motion_category_index": "adapter/motion_category_index.json",
+  "experts": {
+    "glamour_editorial": "adapter/checkpoints/residual_glamour_editorial_h128.pt",
+    "idol_cute": "adapter/checkpoints/residual_idol_cute_h128.pt",
+    "runway_fashion": "adapter/checkpoints/residual_runway_fashion_h128.pt",
+    "dynamic_cute_dance": "adapter/checkpoints/residual_dynamic_cute_dance_h128.pt",
+    "bold_sensual": "adapter/checkpoints/residual_bold_sensual_h128.pt"
+  },
+  "routing_policy": {
+    "generic": "bridge -> base_adapter",
+    "promoted_anchor": "bridge -> base_adapter + promoted anchor residual",
+    "specialist": "bridge -> base_adapter + selected residual",
+    "fallback": "generic",
+    "notes": [
+      "The promoted-anchor gate runs in preserved v3 Qwen space before specialist routing; when it fires, the promoted-anchor residual is used and specialist residuals are bypassed.",
+      "The promoted-anchor gate was validated at threshold 0.8 with 100/100 anchor examples detected and 0/6743 existing examples falsely detected.",
+      "Residual adapters are applied only when the router selects a specialist domain at or above the confidence threshold and the promoted-anchor gate does not fire.",
+      "Generic prompts that do not trigger the promoted-anchor gate retain the preserved v3 base path exactly.",
+      "An explicit motion category hint restricts semantic-neighbor lookup to reviewed concepts in that category; if similarity is at least 0.82, the nearest concept contributes a 0.20 blend in v3 Qwen space. Auto mode performs no category blend.",
+      "dynamic_cute_dance and multi-stage runway prompts remain single-VAC requests; exact temporal ordering is treated as a capability limitation rather than split into multiple clips.",
+      "Fine finger shapes such as peace signs and finger hearts remain Hand Layer responsibilities."
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "agenttools-xr-automation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared XR automation entry points for Meta VR CLI and Unity MCPBridge diagnostics."
+}

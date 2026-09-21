@@ -1,0 +1,31 @@
+id	ja	canonical_en	temporal	sources	notes
+peace_sign_right	右手で顔の横にピースサイン	make a peace sign beside the face with the right hand	static	nano_pose72	finger-level fidelity may require hand pose support
+peace_sign_left	左手で顔の横にピースサイン	make a peace sign beside the face with the left hand	static	nano_pose72	finger-level fidelity may require hand pose support
+double_peace	両頬の横でダブルピース	make peace signs beside both cheeks	static	nano_pose72	finger-level fidelity may require hand pose support
+heart_hands_chest	胸の前で両手ハート	form a heart with both hands near the chest	static	nano_pose72;aicuty	finger-level fidelity may require hand pose support
+heart_hands_face	顔の近くで両手ハート	form a heart with both hands near the face	static	nano_pose72	finger-level fidelity may require hand pose support
+finger_heart_right	右手で指ハート	make a finger-heart gesture with the right hand	static	nano_pose72;clipstudio_fingerheart	finger-level fidelity may require hand pose support
+finger_heart_left	左手で指ハート	make a finger-heart gesture with the left hand	static	nano_pose72;clipstudio_fingerheart	finger-level fidelity may require hand pose support
+cheek_point	人差し指で片頬を軽くつつく	touch one cheek lightly with an index finger	static	nano_pose72	
+double_cheek	両手を頬の横に添える	place both hands beside the cheeks	static	curated	
+flower_pose	あごの下で両手を花のように開く	open both hands under the chin like a flower	static	curated	finger-level fidelity may require hand pose support
+cat_ears	頭の横で両手を猫耳のように立てる	raise both hands beside the head like cat ears	static	nano_pose72	
+cat_paws	胸の前で両手を猫の手のように曲げる	bend both wrists in front like cat paws	static	curated	
+shush	人差し指を唇の前に添える	place one index finger gently in front of the lips	static	nano_pose72	
+blow_kiss	手を口元から前へ送り投げキッス	bring one hand to the lips and blow a kiss outward	short_action	nano_pose72	
+wave_right	右手を小さく元気に振る	wave the right hand with a small cheerful motion	short_action	nano_pose72;runway_video	
+wave_left	左手を小さく元気に振る	wave the left hand with a small cheerful motion	short_action	curated	
+wave_both	両手を肩の高さで振る	wave both hands near shoulder height	continuous	curated	
+thumbs_up	片手でサムズアップ	give a thumbs-up with one hand	static	nano_pose72;jikuchiyo_hands	
+point_viewer	正面を指差す	point toward the viewer	static	nano_pose72	
+salute_cute	軽くかわいく敬礼する	make a light playful salute	short_action	curated	
+hands_prayer	胸の前で両手を合わせる	press both palms together in front of the chest	static	jikuchiyo_hands	
+hands_over_heart	胸元に両手をそっと重ねる	place both hands gently over the heart	static	jikuchiyo_hands	
+hand_mouth_giggle	くすっと笑うように片手で口元を軽く隠す	cover the mouth lightly with one hand as if giggling	static	jikuchiyo_hands	
+both_arms_up	両腕を頭上へ上げる	raise both arms overhead	short_action	jikuchiyo_hands	
+one_arm_up	片腕を高く上げる	raise one arm high overhead	short_action	weel_gravure	
+arms_v	両腕をV字に上げる	raise both arms in a V shape	short_action	curated	
+curtsy	小さく優雅にカーテシー	perform a small graceful curtsy	short_action	nano_pose72	
+head_tilt	首をかわいくかしげる	tilt the head gently to one side	short_action	nano_pose72	
+wink_peace	ウインクしながら顔の横でピース	wink while making a peace sign beside the face	static	nano_pose72	finger-level fidelity may require hand pose support
+hands_behind_lean	両手を後ろで組み少し前傾する	hold hands behind the back and lean forward slightly	static	nano_pose72	

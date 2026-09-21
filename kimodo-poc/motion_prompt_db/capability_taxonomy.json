@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "model": {
+    "id": "Kimodo-SOMA-RP-v1.1",
+    "skeleton": "SOMA30",
+    "training_dataset": "Bones Rigplay",
+    "training_motion_hours": 700,
+    "prediction_scope": "body_motion",
+    "finger_detail": "not_directly_generated",
+    "evidence": [
+      {
+        "kind": "official_documentation",
+        "url": "https://research.nvidia.com/labs/sil/projects/kimodo/docs/key_concepts/model.html",
+        "note": "Bones Rigplay training coverage and 700-hour scale."
+      },
+      {
+        "kind": "official_documentation",
+        "url": "https://research.nvidia.com/labs/sil/projects/kimodo/docs/key_concepts/limitations.html",
+        "note": "Training behavior coverage and out-of-domain warning."
+      },
+      {
+        "kind": "official_documentation",
+        "url": "https://research.nvidia.com/labs/sil/projects/kimodo/docs/key_concepts/skeleton.html",
+        "note": "SOMA30 removes most finger and hand detail; SOMA77 is an export/visualization expansion."
+      }
+    ]
+  },
+  "claimed_training_domains": [
+    {
+      "id": "locomotion",
+      "label_ja": "移動",
+      "claimed_support": true,
+      "examples": ["walk", "run", "turn", "compositional locomotion"]
+    },
+    {
+      "id": "gesture",
+      "label_ja": "ジェスチャー",
+      "claimed_support": true,
+      "examples": ["coarse arm gesture", "body gesture"]
+    },
+    {
+      "id": "everyday_activity",
+      "label_ja": "日常動作",
+      "claimed_support": true,
+      "examples": ["common daily activities"]
+    },
+    {
+      "id": "object_interaction",
+      "label_ja": "物体インタラクション",
+      "claimed_support": true,
+      "examples": ["common object interactions"]
+    },
+    {
+      "id": "combat",
+      "label_ja": "ゲーム系戦闘動作",
+      "claimed_support": true,
+      "examples": ["videogame combat"]
+    },
+    {
+      "id": "dance",
+      "label_ja": "ダンス",
+      "claimed_support": true,
+      "examples": ["dancing"]
+    },
+    {
+      "id": "stunt_athletic",
+      "label_ja": "スタント・運動",
+      "claimed_support": true,
+      "examples": ["stunts", "athletic body motion"]
+    },
+    {
+      "id": "static_pose",
+      "label_ja": "静止ポーズ",
+      "claimed_support": "indirect",
+      "examples": ["pose constraints", "held body configurations"],
+      "note": "The model can form poses, but exact photo/editorial composition is evaluated separately in VR Avatar Studio."
+    }
+  ],
+  "ui_category_hints": [
+    {"id": "locomotion", "label_ja": "移動"},
+    {"id": "gesture", "label_ja": "ジェスチャー"},
+    {"id": "dance", "label_ja": "ダンス"},
+    {"id": "posture_transition", "label_ja": "姿勢・遷移"},
+    {"id": "everyday_activity", "label_ja": "日常動作"},
+    {"id": "object_interaction", "label_ja": "物体操作"},
+    {"id": "stunt_athletic", "label_ja": "アクロバット"}
+  ],
+  "claimed_style_modifiers": [
+    "tired",
+    "angry",
+    "happy",
+    "sad",
+    "scared",
+    "drunk",
+    "injured",
+    "stealthy",
+    "old",
+    "childlike"
+  ],
+  "routing_labels": {
+    "direct": "Kimodo body motion is the primary generator.",
+    "pose_library": "Use an authored pose for exact final composition; Kimodo may provide transitions.",
+    "hand_layer": "Use Kimodo for body/arm placement and a semantic hand layer for finger articulation.",
+    "direct_with_speed_control": "Use Kimodo directly but normalize root distance/speed after generation.",
+    "prop_constraint": "Use Kimodo only with explicit prop/contact constraints or authored contact handling."
+  },
+  "tested_support_labels": {
+    "untested": "No VR Avatar Studio use-case-specific generation review yet.",
+    "good": "The requested body semantics are represented reliably enough for the intended route.",
+    "partial": "Important parts are represented but exact semantics, ordering, contact, or pose composition are incomplete.",
+    "poor": "The generated body motion is not reliable enough for direct use.",
+    "not_applicable": "The request belongs to another layer such as camera or exact finger articulation."
+  },
+  "risk_flags": [
+    "finger_precision",
+    "ordered_sequence",
+    "prop_contact",
+    "exact_static_composition",
+    "root_distance",
+    "floor_contact",
+    "support_surface",
+    "seed_instability",
+    "out_of_domain"
+  ],
+  "policy": {
+    "claimed_support_is_not_tested_support": true,
+    "expand_by_semantic_gap_not_target_count": true,
+    "promote_gap_after_capability_review": true,
+    "fine_tune_only_after_router_and_asset_routes_are_insufficient": true,
+    "ai_motion_output_scope": "single_vac_only",
+    "ordered_sequences_are_not_split": true
+  }
+}

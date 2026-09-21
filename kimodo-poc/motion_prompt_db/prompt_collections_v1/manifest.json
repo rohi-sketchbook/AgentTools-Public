@@ -1,0 +1,36 @@
+{
+  "name": "VR Avatar Studio Motion Prompt Collection v1",
+  "created": "2026-08-25",
+  "total_prompts": 1000,
+  "subject_age_scope": "adult",
+  "composition": "derived_from_normalized_researched_vocabulary",
+  "genres": {
+    "glamour_editorial": 200,
+    "idol_cute": 200,
+    "runway_fashion": 200,
+    "dynamic_cute_dance": 200,
+    "bold_sensual": 200
+  },
+  "routes": {
+    "pose_library": 400,
+    "direct": 475,
+    "hand_layer": 125
+  },
+  "intensity_distribution": {
+    "1": 66,
+    "2": 265,
+    "3": 268,
+    "4": 301,
+    "5": 100
+  },
+  "bold_sensual_intensity": {
+    "4": 100,
+    "5": 100
+  },
+  "uniqueness": {
+    "unique_japanese_prompts": 1000,
+    "unique_english_prompts": 1000
+  },
+  "source_notes": "../SOURCES.md",
+  "catalog": "catalog.py"
+}

@@ -1,0 +1,97 @@
+{
+  "name": "codex-discord-connector",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Run and manage local Codex workflows from trusted Discord channels.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@9.15.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joungminsung/codex-discord-connector.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joungminsung/codex-discord-connector/issues"
+  },
+  "homepage": "https://github.com/joungminsung/codex-discord-connector#readme",
+  "bin": {
+    "cdc": "bin/cdc.js",
+    "codex-discord-connector": "bin/cdc.js"
+  },
+  "engines": {
+    "node": ">=20.12.0"
+  },
+  "keywords": [
+    "codex",
+    "discord",
+    "automation",
+    "cli",
+    "bot"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin/cdc.js",
+    "apps/connect-cli/src",
+    "apps/control-api/src",
+    "apps/discord-bot/src",
+    "apps/local-agent/src",
+    "packages/core/src",
+    "packages/codex-adapter/src",
+    "prisma/schema.prisma",
+    "docs/operator-guide.md",
+    "scripts/prisma-generate.mjs",
+    "scripts/windows",
+    "!apps/**/*.test.ts",
+    "!apps/**/package.json",
+    "!packages/**/*.test.ts",
+    "!packages/**/package.json",
+    "!**/test",
+    "!**/tests",
+    "README.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "LICENSE",
+    ".env.example",
+    "package.json",
+    "pnpm-workspace.yaml",
+    "tsconfig.json",
+    "tsconfig.base.json"
+  ],
+  "scripts": {
+    "test": "vitest run --passWithNoTests",
+    "test:watch": "vitest",
+    "pretypecheck": "node scripts/prisma-generate.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prepublishOnly": "pnpm test && pnpm typecheck && npm pack --dry-run",
+    "prisma:generate": "node scripts/prisma-generate.mjs",
+    "prisma:migrate": "prisma migrate dev",
+    "preconnect": "node scripts/prisma-generate.mjs",
+    "connect": "tsx apps/connect-cli/src/index.ts",
+    "connect:setup": "tsx apps/connect-cli/src/index.ts setup",
+    "preconnect:start": "node scripts/prisma-generate.mjs",
+    "connect:start": "tsx apps/connect-cli/src/index.ts start",
+    "bot:autostart:install": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts/windows/install-cdc-autostart.ps1",
+    "bot:autostart:status": "powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File scripts/windows/status-cdc-autostart.ps1",
+    "predev:control": "node scripts/prisma-generate.mjs",
+    "dev:control": "tsx apps/control-api/src/index.ts",
+    "dev:bot": "tsx apps/discord-bot/src/index.ts",
+    "dev:agent": "tsx apps/local-agent/src/index.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.6.0",
+    "discord.js": "^14.18.0",
+    "fastify": "^5.2.1",
+    "tsx": "^4.19.3",
+    "ws": "^8.18.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@types/ws": "^8.5.14",
+    "prisma": "^6.6.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  }
+}

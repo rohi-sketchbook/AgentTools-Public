@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "projectRoot": "D:/projects/my-unity-project",
+  "managedWorktreeRoots": [
+    "${USERPROFILE}/.devspace/worktrees"
+  ],
+  "localDependencies": [
+    { "path": "Packages/com.example.local-package", "required": true }
+  ]
+}

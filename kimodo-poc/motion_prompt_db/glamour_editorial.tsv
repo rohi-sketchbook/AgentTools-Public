@@ -1,0 +1,26 @@
+id	ja	canonical_en	temporal	adult_subject_only	sources	notes
+glamour_arch_back	立ったまま背中をやさしく反らす	gently arch the back while standing	static	true	weel_gravure;pixel_ai_gravure	non-explicit adult glamour/editorial
+glamour_swayback	腰を少し後ろへ引いたスウェイバック姿勢	stand with a subtle swayback posture	static	true	fashion_show_prompt	non-explicit adult glamour/editorial
+glamour_hip_pop	片側の腰を横へ出す	pop one hip to the side	static	true	curated	non-explicit adult glamour/editorial
+glamour_over_shoulder	上体をひねり肩越しに振り返る	look back over one shoulder with the torso turned	static	true	ururu_gravure;weel_gravure	non-explicit adult glamour/editorial
+glamour_hand_hair	片手を髪に入れて首を傾ける	raise one hand into the hair and tilt the head	static	true	curated	non-explicit adult glamour/editorial
+glamour_two_hands_hair	両手を髪に入れ肘を開く	lift both hands into the hair with elbows open	static	true	curated	non-explicit adult glamour/editorial
+glamour_one_arm_overhead	片腕を頭上へ上げ上体を長く見せる	raise one arm overhead and lengthen the torso	static	true	weel_gravure;fabricant_fashion	non-explicit adult glamour/editorial
+glamour_both_arms_overhead	両腕を頭上へ上げて長いボディラインを作る	raise both arms overhead with a long body line	static	true	jikuchiyo_hands;fabricant_fashion	non-explicit adult glamour/editorial
+glamour_hand_waist	片手を腰に置き片脚重心にする	place one hand at the waist and shift weight to one leg	static	true	fashion_show_prompt	non-explicit adult glamour/editorial
+glamour_cross_legs	脚をクロスして肩の力を抜いて立つ	stand with legs crossed and shoulders relaxed	static	true	fashion_show_prompt	non-explicit adult glamour/editorial
+glamour_knee_in	片膝を少し内側へ入れて立つ	stand with one knee turned slightly inward	static	true	curated	non-explicit adult glamour/editorial
+glamour_toe_point	片脚を伸ばしつま先を軽く伸ばす	extend one leg and point the toe lightly	static	true	curated	non-explicit adult glamour/editorial
+glamour_sit_side	両脚を片側へ流して座る	sit with both legs angled to one side	static	true	pixel_ai_gravure	non-explicit adult glamour/editorial
+glamour_floor_lean	床に座り両手を後ろについて上体を支える	sit on the floor and lean back on both hands	static	true	curated	non-explicit adult glamour/editorial
+glamour_kneel_turn	膝立ちで上体を少し正面へひねる	kneel and turn the torso slightly toward camera	static	true	ururu_gravure	non-explicit adult glamour/editorial
+glamour_chair_side	椅子に横向きに座って正面を見る	sit sideways on a chair and look toward camera	static	true	pixel_ai_gravure	non-explicit adult glamour/editorial
+glamour_wall_shoulder	片肩を壁へ軽く預ける	lean one shoulder lightly against a wall	static	true	ururu_gravure	non-explicit adult glamour/editorial
+glamour_doorframe	片手を高い位置に置き腰をずらす	rest one hand high on a doorframe and shift the hips	static	true	curated	non-explicit adult glamour/editorial
+glamour_walk_turn	一歩進みながら上体を振り返る	take a small step and turn the upper body back	short_action	true	curated	non-explicit adult glamour/editorial
+glamour_hair_flip	小さく髪を翻しながら顔を振る	turn the head with a small hair flip	short_action	true	curated	non-explicit adult glamour/editorial
+glamour_jacket_hold	ジャケットの端を軽く持ってポーズ	lightly hold the edge of a jacket while posing	static	true	promptmake_fashion	non-explicit adult glamour/editorial
+glamour_skirt_show	スカートの端を軽く持ちシルエットを見せる	lightly hold the side of a skirt to show its silhouette	static	true	curated	non-explicit adult glamour/editorial
+glamour_shoulder_touch	反対の手で片肩にそっと触れる	touch one shoulder gently with the opposite hand	static	true	curated	non-explicit adult glamour/editorial
+glamour_neck_touch	指先を首筋の近くに軽く添える	place fingertips lightly near the side of the neck	static	true	curated	non-explicit adult glamour/editorial
+glamour_relaxed_seated	肩の力を抜き手を整えて優雅に座る	sit elegantly with relaxed shoulders and carefully placed hands	static	true	fabricant_fashion	non-explicit adult glamour/editorial

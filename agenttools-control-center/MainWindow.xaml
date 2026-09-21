@@ -1,0 +1,392 @@
+<Window x:Class="AgentToolsControlCenter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="AgentTools Control Center"
+        Width="1240" Height="900"
+        MinWidth="980" MinHeight="720"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        StateChanged="Window_StateChanged">
+    <Grid Margin="26">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="16" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="14" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel>
+                <TextBlock Text="AgentTools Control Center"
+                           FontSize="28" FontWeight="SemiBold" />
+                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                    <Ellipse x:Name="OverallIndicator" Width="10" Height="10"
+                             Fill="#8A96A3" Margin="0,0,8,0" VerticalAlignment="Center" />
+                    <TextBlock x:Name="OverallText" Text="状態を確認しています…"
+                               Foreground="{StaticResource MutedTextBrush}" FontSize="14" />
+                </StackPanel>
+                <TextBlock x:Name="PlanUsageText" Text="Codex利用枠: 取得中…"
+                           Margin="18,5,0,0" Foreground="#AFC7E8" FontSize="11.5"
+                           TextWrapping="Wrap" MaxWidth="680" />
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="自動継続" Foreground="{StaticResource MutedTextBrush}" VerticalAlignment="Center" Margin="0,0,8,0" FontSize="12" />
+                <ComboBox x:Name="ContinuationModeComboBox" Width="132" Margin="0,0,12,0"
+                          VerticalAlignment="Center" SelectionChanged="ContinuationModeComboBox_SelectionChanged"
+                          ToolTip="ChatGPT実行が途切れたときの継続方法">
+                    <ComboBoxItem Content="Codexへ引継ぎ" Tag="codex" />
+                    <ComboBoxItem Content="ChatGPT待ち" Tag="chatgpt" />
+                    <ComboBoxItem Content="OFF" Tag="off" />
+                </ComboBox>
+                <Button x:Name="RefreshButton" Content="再確認" Click="RefreshButton_Click" />
+                <Button x:Name="SkillImprovementButton" Content="Skill改善候補" Click="SkillImprovementButton_Click" />
+                <Button Content="AgentToolsを開く" Click="OpenRootButton_Click" />
+                <Button Content="診断をコピー" Click="CopyDiagnosticsButton_Click" Margin="0" />
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="5*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="14" />
+                <RowDefinition Height="250" />
+            </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" Grid.Row="0" Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="12" Padding="16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="2,0,2,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="タスク" FontSize="17" FontWeight="SemiBold" Foreground="#F5F7FA" />
+                        <TextBlock Text="  ユーザー作業の進捗と履歴を表示"
+                                   Margin="10,3,0,0" FontSize="12" Foreground="{StaticResource MutedTextBrush}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Border Background="#202936" CornerRadius="10" Padding="10,4">
+                            <TextBlock x:Name="ActivityCountText" Text="確認中" Foreground="#65D4B6" FontSize="12" FontWeight="SemiBold" />
+                        </Border>
+                        <Button x:Name="TaskHistoryToggleButton" Content="履歴を表示"
+                                Click="TaskHistoryToggleButton_Click"
+                                Margin="8,0,0,0" Padding="10,3" MinHeight="28" />
+                    </StackPanel>
+                </Grid>
+
+                <TextBlock x:Name="ActivityEmptyText" Grid.Row="1"
+                           Text="表示できるユーザータスクはありません。"
+                           Foreground="{StaticResource MutedTextBrush}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                <ScrollViewer x:Name="TaskScrollViewer" Grid.Row="1"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              CanContentScroll="False">
+                <ListBox x:Name="ActivityList" Visibility="Collapsed"
+                         Background="Transparent" BorderThickness="0"
+                         SelectionChanged="ActivityList_SelectionChanged"
+                         PreviewMouseWheel="ActivityList_PreviewMouseWheel"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="0,0,0,10" />
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border MinHeight="132" BorderThickness="1" CornerRadius="10" Padding="14">
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="#1B2430" />
+                                        <Setter Property="BorderBrush" Value="#344252" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                <Setter Property="Background" Value="#223246" />
+                                                <Setter Property="BorderBrush" Value="#65D4B6" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=ListBoxItem}}" Value="True">
+                                                <Setter Property="BorderBrush" Value="#6F8195" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Title}" FontSize="15" FontWeight="SemiBold" Foreground="#F5F7FA"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Grid.Column="1" Text="{Binding StatusText}" Foreground="{Binding StatusColor}"
+                                               FontSize="11" FontWeight="SemiBold" Margin="12,1,0,0" />
+                                    <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding WorkersDisplay}"
+                                               Foreground="#AFC7E8" FontSize="11.5" Margin="0,7,0,0"
+                                               TextWrapping="Wrap" MaxHeight="38" LineHeight="17" />
+                                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding WorkDisplay}"
+                                               Foreground="{StaticResource MutedTextBrush}" TextWrapping="Wrap"
+                                               FontSize="12" Margin="0,6,0,5" MaxHeight="42" />
+                                    <TextBlock Grid.Row="3" Grid.ColumnSpan="2"
+                                               Text="{Binding ContinuationUsageDisplay}"
+                                               Foreground="#AFC7E8" FontSize="10" Margin="0,0,0,3" />
+                                    <TextBlock Grid.Row="4" Grid.ColumnSpan="2"
+                                               Text="{Binding UpdatedAt, StringFormat=更新 {0:HH:mm:ss}}"
+                                               Foreground="#687482" FontSize="10" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="0" Grid.Row="2" Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="12" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="TaskDetailGlyph" Text="?" Foreground="#8A96A3"
+                               FontSize="20" Margin="0,0,10,0" />
+                    <TextBlock x:Name="TaskDetailTitle" Text="タスクを選択してください"
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="#F5F7FA" />
+                    <TextBlock x:Name="TaskDetailStatus" Margin="14,3,0,0"
+                               Foreground="{StaticResource MutedTextBrush}" />
+                </StackPanel>
+
+                <WrapPanel Grid.Row="1" Margin="0,12,0,0">
+                    <Button x:Name="TaskInspectButton" Content="状況確認"
+                            Click="TaskInspectButton_Click" IsEnabled="False" Visibility="Collapsed" />
+                    <Button x:Name="TaskContinueButton" Content="再開文をコピー"
+                            ToolTip="ChatGPT (Sol) 再開用プロンプトをコピーします。AIは起動しません。"
+                            Click="TaskContinueButton_Click" IsEnabled="False" Visibility="Collapsed" />
+                    <Button x:Name="TaskCodexContinueButton" Content="Codex続行"
+                            ToolTip="GPT-5.6系のCodex使用枠を消費して続行します。"
+                            Click="TaskCodexContinueButton_Click" IsEnabled="False" Visibility="Collapsed" />
+                    <Button x:Name="TaskCompleteButton" Content="タスク終了"
+                            Click="TaskCompleteButton_Click" IsEnabled="False" Visibility="Collapsed" Margin="0" />
+                </WrapPanel>
+
+                <ScrollViewer Grid.Row="2" Margin="0,14,0,0"
+                              VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="TaskDetailText"
+                               Text="一覧からタスクを選択すると、依頼内容・担当・進捗・作業ログを表示します。"
+                               Foreground="{StaticResource MutedTextBrush}"
+                               FontFamily="Cascadia Mono, Consolas, Yu Gothic UI"
+                               FontSize="13" LineHeight="21" TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Column="2" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Margin="2,0,2,10">
+                <TextBlock Text="常駐サービス" FontSize="17" FontWeight="SemiBold" Foreground="#F5F7FA" />
+                <TextBlock Text="DevSpaceやGatewayなど、常時動かす基盤を監視"
+                           Margin="0,3,0,0" FontSize="12" Foreground="{StaticResource MutedTextBrush}" />
+            </StackPanel>
+
+        <ScrollViewer x:Name="ServicesScrollViewer" Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      CanContentScroll="False">
+        <ListBox x:Name="ServicesList"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                 SelectionChanged="ServicesList_SelectionChanged"
+                 PreviewMouseWheel="ServicesList_PreviewMouseWheel">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0,0,0,12" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="SelectionBorder" Background="Transparent" CornerRadius="13">
+                                    <ContentPresenter />
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="SelectionBorder" Property="Background" Value="#273647" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border MinHeight="145"
+                            Background="{StaticResource PanelBrush}"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="1" CornerRadius="12" Padding="18">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding StatusGlyph}" Foreground="{Binding StatusColor}"
+                                           FontSize="18" Margin="0,0,10,0" />
+                                <TextBlock Text="{Binding DisplayName}" FontSize="17" FontWeight="SemiBold"
+                                           Foreground="#F5F7FA" />
+                            </StackPanel>
+
+                            <Border Grid.Column="1" Background="#202936" CornerRadius="10" Padding="10,4">
+                                <TextBlock Text="{Binding StatusText}" Foreground="{Binding StatusColor}"
+                                           FontSize="12" FontWeight="SemiBold" />
+                            </Border>
+
+                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2"
+                                       Text="{Binding Summary}" TextWrapping="Wrap"
+                                       Foreground="{StaticResource MutedTextBrush}"
+                                       Margin="0,18,0,14" FontSize="14" />
+
+                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2"
+                                       Text="{Binding CheckedAt, StringFormat=確認 {0:HH:mm:ss}}"
+                                       Foreground="#687482" FontSize="11" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        </ScrollViewer>
+        </Grid>
+
+        <Border Grid.Column="2" Grid.Row="2" Background="{StaticResource PanelBrush}"
+                BorderBrush="{StaticResource BorderBrush}" BorderThickness="1"
+                CornerRadius="12" Padding="20">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="DetailGlyph" Text="?" Foreground="#8A96A3"
+                               FontSize="20" Margin="0,0,10,0" />
+                    <TextBlock x:Name="DetailTitle" Text="サービスを選択してください"
+                               FontSize="18" FontWeight="SemiBold"
+                               Foreground="#F5F7FA" />
+                    <TextBlock x:Name="DetailStatus" Margin="14,3,0,0"
+                               Foreground="{StaticResource MutedTextBrush}" />
+                </StackPanel>
+
+                <WrapPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="0,12,0,0">
+                    <Button x:Name="OpenLogsButton" Content="ログを開く"
+                            Click="OpenLogsButton_Click" IsEnabled="False" />
+                    <Button x:Name="DevSpaceStartButton" Content="起動"
+                            Click="DevSpaceStartButton_Click" IsEnabled="False" />
+                    <Button x:Name="DevSpaceStopButton" Content="停止"
+                            Click="DevSpaceStopButton_Click" IsEnabled="False" />
+                    <Button x:Name="DevSpaceDoctorButton" Content="診断"
+                            Click="DevSpaceDoctorButton_Click" IsEnabled="False" />
+                    <Button x:Name="RestartButton" Content="安全に再起動"
+                            Click="RestartButton_Click" IsEnabled="False" Margin="0" />
+                </WrapPanel>
+
+                <ScrollViewer Grid.Row="2" Grid.ColumnSpan="2" Margin="0,14,0,0"
+                              VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="DetailText" Text="一覧から確認対象を選択すると、疎通・PID・最終実行などの詳細を表示します。"
+                               Foreground="{StaticResource MutedTextBrush}"
+                               FontFamily="Cascadia Mono, Consolas, Yu Gothic UI"
+                               FontSize="13" LineHeight="21" TextWrapping="Wrap" />
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        </Grid>
+
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="FooterStatus" Text="準備中"
+                       Foreground="{StaticResource MutedTextBrush}" FontSize="12" />
+            <TextBlock Grid.Column="1" Text="起動時と再確認ボタンで更新"
+                       Foreground="#687482" FontSize="12" />
+        </Grid>
+
+        <Border x:Name="BusyOverlay" Grid.RowSpan="5" Background="#9911151C"
+                Visibility="Collapsed" CornerRadius="12">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ProgressBar Width="260" Height="4" IsIndeterminate="True" />
+                <TextBlock Text="状態を確認しています…" Margin="0,16,0,0"
+                           Foreground="{StaticResource MutedTextBrush}" HorizontalAlignment="Center" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

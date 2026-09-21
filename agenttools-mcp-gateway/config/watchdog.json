@@ -1,0 +1,15 @@
+{
+  "enabled": true,
+  "intervalMs": 10000,
+  "failureThreshold": 3,
+  "forceAfterFailures": 6,
+  "allowForceRecovery": true,
+  "recoveryCooldownMs": 20000,
+  "maxRecoveriesPerHour": 5,
+  "circuitBreakerMs": 900000,
+  "historyLimit": 200,
+  "historyMaxBytes": 1048576,
+  "stateFile": "state/devspace/watchdog-state.json",
+  "historyFile": "state/devspace/watchdog-history.jsonl",
+  "lockFile": "state/devspace/watchdog.lock"
+}

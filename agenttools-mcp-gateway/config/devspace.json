@@ -1,0 +1,32 @@
+{
+  "root": "${USERPROFILE}/.devspace/runtime",
+  "entry": "dist/cli.js",
+  "serverEntry": "dist/server.js",
+  "configEntry": "dist/config.js",
+  "shutdownEntry": "dist/server-shutdown.js",
+  "supervisorEntry": "src/devspace/supervisor.mjs",
+  "packageFile": "package.json",
+  "expectedVersion": "1.0.8",
+  "launcherBat": "Start-DevSpace-Local.bat",
+  "doctorBat": "Doctor-DevSpace-Local.bat",
+  "pinnedCommit": "c08bab17b3dada242119a9e0b6485504442cf701",
+  "processPattern": "dist[\\\\/]cli\\.js[\\\"']?\\s+serve",
+  "defaultHost": "127.0.0.1",
+  "defaultPort": 7676,
+  "healthPath": "/healthz",
+  "startupTimeoutMs": 15000,
+  "stopTimeoutMs": 10000,
+  "healthTimeoutMs": 2500,
+  "logFile": "state/devspace/devspace.log",
+  "logMaxBytes": 5242880,
+  "logBackupCount": 3,
+  "maxLogLines": 500,
+  "environment": {
+    "DEVSPACE_TOOL_MODE": "full",
+    "AGENTTOOLS_GIT_HELPER_SCRIPT": "${AGENTTOOLS_ROOT}/git-helper/scripts/git_commit_push.ps1",
+    "DEVSPACE_ARTIFACTS": "1",
+    "DEVSPACE_ALLOWED_ROOTS": "${AGENTTOOLS_ROOT},${USERPROFILE}/.devspace/worktrees,${USERPROFILE}/.codex",
+    "DEVSPACE_WORKTREE_ROOT": "${USERPROFILE}/.devspace/worktrees",
+    "DEVSPACE_SUBAGENTS": "1"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "agenttools-remotion-tools",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render:test": "remotion render src/index.ts HelloDevSpace out/hello-devspace.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@fontsource/m-plus-rounded-1c": "^5.3.0",
+    "@remotion/cli": "4.0.514",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "remotion": "4.0.514"
+  },
+  "devDependencies": {
+    "@types/react": "19.1.10",
+    "@types/react-dom": "19.1.7",
+    "typescript": "5.9.2"
+  }
+}

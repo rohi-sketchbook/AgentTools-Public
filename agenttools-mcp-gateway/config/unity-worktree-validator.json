@@ -1,0 +1,28 @@
+{
+  "enabled": false,
+  "projectRoot": "${AGENTTOOLS_ROOT}",
+  "deferWhenBusy": true,
+  "blockOnVrRuntime": false,
+  "unityTimeoutMs": 1800000,
+  "cacheDirectory": "state/unity-worktree-validator/dependency-cache",
+  "dependencySnapshotRetention": {
+    "keepPerDependency": 5,
+    "maxBytes": 2147483648,
+    "cleanupIntervalHours": 24,
+    "lastUsedTouchHours": 1
+  },
+  "logDirectory": "state/unity-worktree-validator/validation-logs",
+  "managedWorktreeRoots": [
+    "${USERPROFILE}/.devspace/worktrees"
+  ],
+  "busyProcessNames": [
+    "Unity.exe"
+  ],
+  "vrRuntimeProcessNames": [
+    "vrmonitor.exe",
+    "vrserver.exe",
+    "vrcompositor.exe",
+    "OVRServer_x64.exe"
+  ],
+  "localDependencies": []
+}

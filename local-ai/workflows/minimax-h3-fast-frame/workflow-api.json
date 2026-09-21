@@ -1,0 +1,100 @@
+{
+  "1": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "2": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "MiniMaxH3TurboLoRA",
+    "inputs": {
+      "model": ["1", 0],
+      "lora_name": "minimax_h3_turbo_4step_ckpt500_comfyui.safetensors",
+      "strength": 1.0
+    }
+  },
+  "5": {
+    "class_type": "MiniMaxH3ImageToVideo",
+    "inputs": {
+      "clip": ["2", 0],
+      "vae": ["3", 0],
+      "prompt": "A cute futuristic mascot in a clean white and blue studio, full body, anime-inspired design, soft cinematic lighting, gentle camera drift, crisp details, friendly expression.",
+      "width": 640,
+      "height": 480,
+      "length": 56
+    }
+  },
+  "6": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 123456789
+    }
+  },
+  "7": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": ["4", 0],
+      "conditioning": ["5", 0]
+    }
+  },
+  "8": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": ["4", 0],
+      "scheduler": "simple",
+      "steps": 4,
+      "denoise": 1.0
+    }
+  },
+  "9": {
+    "class_type": "MiniMaxH3TurboSampler",
+    "inputs": {}
+  },
+  "10": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": ["6", 0],
+      "guider": ["7", 0],
+      "sampler": ["9", 0],
+      "sigmas": ["8", 0],
+      "latent_image": ["5", 1]
+    }
+  },
+  "11": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["10", 0],
+      "vae": ["3", 0]
+    }
+  },
+  "12": {
+    "class_type": "ImageFromBatch",
+    "inputs": {
+      "image": ["11", 0],
+      "batch_index": 28,
+      "length": 1
+    }
+  },
+  "13": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["12", 0],
+      "filename_prefix": "AgentTools/minimax_h3_fast_frame"
+    }
+  }
+}

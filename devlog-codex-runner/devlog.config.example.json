@@ -1,0 +1,10 @@
+{
+  "siteRoot": "D:/projects/example-site",
+  "viewerRoot": "D:/projects/example-viewer",
+  "referenceImage": "D:/projects/example-viewer/Docs/Branding/author.png",
+  "pagesBaseUrl": "https://example.github.io/example-site/docs",
+  "pipelinePromptPath": "D:/optional/private/DEVLOG_CODEX_PIPELINE.local.md",
+  "specialPromptPath": "D:/optional/private/DEVLOG_SPECIAL_PREVIEW_PIPELINE.local.md",
+  "codexModel": "gpt-5.6-terra",
+  "codexReasoningEffort": "medium"
+}

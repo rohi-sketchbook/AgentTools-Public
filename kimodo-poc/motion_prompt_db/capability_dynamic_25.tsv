@@ -1,0 +1,26 @@
+id	ja	en	expected	difficulty	policy	vocab_ids
+cap_076	左右へ小さくサイドステップする。	Take small side steps left and right.	side steps	medium	direct	idol_side_step
+cap_077	シンプルなステップタッチを繰り返す。	Perform a simple step-touch pattern.	step-touch	medium	direct	idol_step_touch
+cap_078	リズムに合わせてその場で軽く弾む。	Bounce lightly in place to a steady rhythm.	light bounce	medium	direct	idol_bounce
+cap_079	元気よく小さくジャンプする。	Make a small cheerful jump.	small jump	basic	direct	idol_small_jump
+cap_080	軽く半回転する。	Make a light half turn.	half turn	medium	direct	idol_half_turn
+cap_081	軽く一回転する。	Spin around once lightly.	full turn	medium	direct	idol_full_turn
+cap_082	スカートが広がるように軽くくるっと回る。	Twirl lightly so the skirt flares outward.	twirl	medium	direct	idol_twirl_skirt
+cap_083	片手を振りながら左右へ小さくステップする。	Wave one hand while taking small side steps.	wave + side step	medium	direct	idol_wave_step
+cap_084	軽く弾みながら両手を振る。	Wave both hands while bouncing lightly.	double wave + bounce	medium	direct	idol_double_wave
+cap_085	横へステップしながら正面を指差す。	Point forward while stepping to the side.	point + side step	medium	direct	idol_point_step
+cap_086	胸元で両手ハートを作りながら小さく一歩前へ出る。	Form a heart near the chest while taking a small step forward.	heart + step	hard	direct	idol_heart_step
+cap_087	少しターンしながら顔の横でピースする。	Make a peace sign beside the face while turning slightly.	peace + turn	hard	direct	idol_peace_turn
+cap_088	両手を頬の近くに添えて左右へ揺れる。	Place both hands near the cheeks and sway gently side to side.	cheek sway	medium	direct	idol_cheek_sway
+cap_089	両前腕を左右へリズミカルに振る。	Swing both forearms gently left and right in rhythm.	arm swing	medium	direct	idol_arm_swing
+cap_090	胸の前でリズミカルに拍手する。	Clap rhythmically in front of the chest.	rhythmic clap	medium	direct	idol_clap
+cap_091	膝を少し内側にした小さなステップをして上体を照れたように傾ける。	Take a small inward-knee step with a shy upper-body tilt.	shy step	medium	direct	idol_shy_step
+cap_092	小さく前へキックしてすぐ元の姿勢へ戻す。	Make a small playful forward kick and return to the starting stance.	small kick return	medium	direct	idol_kick_step
+cap_093	両手を後ろで組んだポーズからダブルピースへ移る。	Transition from hands behind the back into a double peace pose.	pose change	hard	direct	idol_pose_change
+cap_094	明るく小さくステージお辞儀をする。	Make a small cheerful stage bow.	stage bow	medium	direct	idol_bow
+cap_095	軽いアイドル風カーテシーをする。	Perform a light idol-style curtsy.	idol curtsy	medium	direct	idol_curtsy
+cap_096	前へ歩きながら右手を振る。	Walk forward while waving the right hand.	walk + wave	medium	direct	walk_forward;wave_right
+cap_097	後ろへ歩きながら左手を振る。	Walk backward while waving the left hand.	backwalk + wave	medium	direct	walk_backward;wave_left
+cap_098	前へジョギングしながら右手で前を指差す。	Jog forward while pointing forward with the right hand.	jog + point	medium	direct	jog_forward;point_viewer
+cap_099	つま先立ちで慎重に前へ歩く。	Carefully walk forward on tiptoes.	tiptoe walk	medium	direct	tiptoe_forward;style_delicate
+cap_100	しゃがんだ姿勢のまま右へ移動する。	Crouch-walk to the right.	crouch walk right	medium	direct	crouch_walk

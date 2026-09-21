@@ -1,0 +1,10 @@
+id	ja	canonical_en	category	temporal	sources	notes
+body_hip_sway	腰を左右にゆっくり揺らす	sway the hips side to side	torso	continuous	curated	promoted after multi-seed Kimodo capability review; stable direct body primitive
+arm_reach_forward	片腕を前へ伸ばす	reach one arm forward	arm	short_action	curated	promoted after multi-seed Kimodo capability review; exact fingers remain outside Kimodo
+arm_reach_up	片腕を頭上へ伸ばす	reach one arm overhead	arm	short_action	curated	promoted after multi-seed Kimodo capability review; stable direct arm primitive
+transition_kneel_to_stand	膝立ちから立ち上がる	transition from kneeling to standing	transition	short_action	curated	promoted after multi-seed Kimodo capability review; floor contact may still need cleanup
+transition_stand_to_kneel	立った姿勢から膝立ちになり、その姿勢で止まる	lower from standing into a kneeling position and remain kneeling	transition	short_action	curated	promoted after explicit final-state wording passed two 100-step seeds; floor contact may still need cleanup
+transition_crouch_to_stand	しゃがみ姿勢から立ち上がる	stand up from a crouch	transition	short_action	curated	promoted after two 100-step seeds; consistently ends in standing
+transition_stand_to_crouch	立った姿勢からしゃがむ	lower from standing into a crouch	transition	short_action	curated	promoted after two 100-step seeds; consistently settles into a crouched configuration
+transition_stand_to_sit	立った姿勢から椅子に座るように腰を下ろし、座位で止まる	lower from standing into a chair-seated posture and remain seated	transition	short_action	curated	promoted after two 100-step seeds; body transition is stable but exact chair contact is not guaranteed by a VAC alone
+transition_sit_to_stand	椅子に座った姿勢から立ち上がり、立位で止まる	rise from a chair-seated posture to standing and remain standing	transition	short_action	curated	promoted after two 100-step seeds; body transition is stable but exact chair contact is not guaranteed by a VAC alone

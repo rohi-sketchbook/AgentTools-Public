@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>AgentToolsControlCenter.Web</AssemblyName>
+    <RootNamespace>AgentToolsControlCenter.Web</RootNamespace>
+    <DefaultItemExcludes>$(DefaultItemExcludes);dist\**;dist.update-backup-*\**;tests\**;state\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests\**\*.cs" />
+    <Compile Include="..\Models\ServiceStatus.cs" Link="Shared\Models\ServiceStatus.cs" />
+    <Compile Include="..\Models\WorkActivity.cs" Link="Shared\Models\WorkActivity.cs" />
+    <Compile Include="..\Models\SkillImprovementProposal.cs" Link="Shared\Models\SkillImprovementProposal.cs" />
+    <Compile Include="..\Services\CommandRunner.cs" Link="Shared\Services\CommandRunner.cs" />
+    <Compile Include="..\Services\StatusCollector.cs" Link="Shared\Services\StatusCollector.cs" />
+    <Compile Include="..\Services\ActivityCollector.cs" Link="Shared\Services\ActivityCollector.cs" />
+    <Compile Include="..\Services\PlanUsageCollector.cs" Link="Shared\Services\PlanUsageCollector.cs" />
+    <Compile Include="..\Services\SkillImprovementCollector.cs" Link="Shared\Services\SkillImprovementCollector.cs" />
+    <Compile Include="..\Services\TaskControlService.cs" Link="Shared\Services\TaskControlService.cs" />
+  </ItemGroup>
+</Project>

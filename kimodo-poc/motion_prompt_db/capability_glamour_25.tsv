@@ -1,0 +1,26 @@
+id	ja	en	expected	difficulty	policy	vocab_ids
+cap_001	片脚に重心を乗せ、片手を腰に当てて自然にポーズする。	Shift weight onto one leg and place one hand on the hip in a relaxed pose.	weight shift + hand on hip	medium	direct	contrapposto;hand_on_hip
+cap_002	上体を少しひねり、肩越しに振り返る。	Twist the torso slightly and look back over one shoulder.	torso twist + over-shoulder look	medium	direct	look_back
+cap_003	両手を後ろで組み、少し前傾してポーズする。	Hold both hands behind the back and lean the upper body slightly forward.	hands behind + forward lean	medium	direct	hands_behind_lean
+cap_004	片手で髪に触れながら首を少しかしげる。	Gently touch the hair with one hand and tilt the head slightly.	hair touch + head tilt	medium	direct	touch_hair;head_tilt
+cap_005	片脚を前に伸ばしてつま先を軽く伸ばし、腰を横へずらす。	Extend one leg forward, point the toe lightly, and shift the hips to the side.	toe point + hip shift	medium	direct	glamour_toe_point;glamour_hip_pop
+cap_006	脚をクロスして立ち、肩の力を抜く。	Stand with the legs crossed and shoulders relaxed.	crossed-leg standing pose	medium	direct	glamour_cross_legs
+cap_007	片膝を少し内側に入れ、顔の近くに片手を添える。	Turn one knee slightly inward and hold one hand near the face.	inward knee + hand near face	medium	direct	glamour_knee_in;hand_near_face
+cap_008	片腕を頭上へ上げ、上体を長く見せるように伸びる。	Raise one arm overhead and lengthen the torso in an elegant pose.	one arm overhead + elongated torso	medium	direct	glamour_one_arm_overhead
+cap_009	両腕を頭上へ上げ、背中をやさしく反らす。	Raise both arms overhead and gently arch the back.	arms overhead + back arch	medium	direct	glamour_both_arms_overhead;glamour_arch_back
+cap_010	壁に片肩を軽く預け、片脚へ重心を乗せる。	Lean one shoulder lightly against a wall and shift weight onto one leg.	wall lean + weight shift	medium	direct	glamour_wall_shoulder;contrapposto
+cap_011	床に座って両手を後ろにつき、上体を少し後ろへ預ける。	Sit on the floor and support the upper body with both hands placed behind.	floor seated lean	medium	direct	glamour_floor_lean
+cap_012	床で両脚を片側へ流して座り、上体を正面へ向ける。	Sit on the floor with both legs folded to one side and turn the torso forward.	side-sit pose	medium	direct	glamour_sit_side
+cap_013	膝立ちになり、上体を少しひねって正面を見る。	Kneel upright and turn the torso slightly toward the front.	kneeling turn	medium	direct	glamour_kneel_turn
+cap_014	椅子に横向きに座り、上体だけ正面へ向ける。	Sit sideways on a chair and turn only the upper body toward the front.	side chair pose	medium	direct	glamour_chair_side
+cap_015	片手で髪をかき上げながら、顔をゆっくり横へ向ける。	Brush the hair back with one hand while slowly turning the head to the side.	hair brush + head turn	medium	direct	brush_hair_back
+cap_016	一歩だけ前へ出て、上体をひねりながら振り返る。	Take one small step forward and turn the upper body to look back.	step + look back	medium	direct	glamour_walk_turn
+cap_017	片手を首筋の近くに添え、反対側の腰へ重心を移す。	Place fingertips lightly near the side of the neck and shift the hips to the opposite side.	neck touch + hip shift	medium	direct	glamour_neck_touch
+cap_018	椅子に姿勢よく座り、両手を膝の上へ整えて置く。	Sit upright on a chair and place both hands neatly on the knees.	elegant seated pose	medium	direct	glamour_relaxed_seated
+cap_019	片手を肩へ添えながら、頭をわずかに反対側へ傾ける。	Touch one shoulder gently and tilt the head slightly to the opposite side.	shoulder touch + head tilt	medium	direct	glamour_shoulder_touch
+cap_020	ジャケットの端を片手で軽く持ち、片脚重心で立つ。	Lightly hold the edge of a jacket with one hand and stand with weight on one leg.	jacket hold + contrapposto	medium	direct	glamour_jacket_hold
+cap_021	スカートの端を軽く持ち、身体を少し横へ向ける。	Lightly hold the side of the skirt and turn the body slightly sideways.	skirt hold + body turn	medium	direct	glamour_skirt_show
+cap_022	片手を頬に当て、もう片方の手を腰に置く。	Place one hand on the cheek and the other hand on the hip.	cheek + hip pose	medium	direct	hand_on_cheek;hand_on_hip
+cap_023	腰を軽く後ろへ引いた姿勢から、ゆっくり自然な立ち姿へ戻る。	Move from a subtle swayback posture into a natural standing pose.	pose transition	hard	direct	glamour_swayback;standing_neutral
+cap_024	片脚重心のS字ポーズへゆっくり移る。	Slowly shift into an S-curve pose with weight on one leg.	S-curve transition	medium	direct	s_curve;contrapposto
+cap_025	背中を向けて立ち、顔だけゆっくり振り返る。	Stand with the back turned and slowly turn the head to look back.	back-view head turn	medium	direct	back_view_turn_head

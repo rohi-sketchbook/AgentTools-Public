@@ -1,0 +1,21 @@
+{
+  "components": {
+    "agentToolsRoot": "${AGENTTOOLS_ROOT}",
+    "discordBot": "${AGENTTOOLS_ROOT}/discord-bot",
+    "imageBridge": "${AGENTTOOLS_ROOT}/image-bridge",
+    "windowsUi": "${AGENTTOOLS_ROOT}/windows-ui",
+    "blenderMcp": "${AGENTTOOLS_ROOT}/blender-mcp",
+    "localAi": "${AGENTTOOLS_ROOT}/local-ai",
+    "gitHelper": "${AGENTTOOLS_ROOT}/git-helper",
+    "img2blender": "${AGENTTOOLS_ROOT}/img2blender",
+    "remotion": "${AGENTTOOLS_ROOT}/remotion",
+    "hyperframes": "${AGENTTOOLS_ROOT}/hyperframes",
+    "devspace": null,
+    "vrmAvatarStudio": null,
+    "vrAvatarViewerSite": null,
+    "backgrounds": null
+  },
+  "ports": {
+    "blenderMcp": 9876
+  }
+}

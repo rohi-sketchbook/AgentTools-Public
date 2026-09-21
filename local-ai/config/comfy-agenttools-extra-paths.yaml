@@ -1,0 +1,4 @@
+# Compatibility template only. start-comfyui.js generates the active file under local-ai/state at runtime.
+agenttools_local_ai:
+  custom_nodes: |-
+    __AGENTTOOLS_LOCAL_AI_ROOT__/comfy-custom-nodes

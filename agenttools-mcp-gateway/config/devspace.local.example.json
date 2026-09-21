@@ -1,0 +1,7 @@
+{
+  "root": "D:/tools/devspace",
+  "environment": {
+    "DEVSPACE_ALLOWED_ROOTS": "D:/projects,${USERPROFILE}/.devspace/worktrees,${USERPROFILE}/.codex",
+    "DEVSPACE_WORKTREE_ROOT": "${USERPROFILE}/.devspace/worktrees"
+  }
+}

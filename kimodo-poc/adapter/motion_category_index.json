@@ -1,0 +1,1234 @@
+{
+  "schema": "kimodo-motion-category-index/v1",
+  "categories": [
+    {
+      "id": "locomotion",
+      "label_ja": "移動"
+    },
+    {
+      "id": "gesture",
+      "label_ja": "ジェスチャー"
+    },
+    {
+      "id": "dance",
+      "label_ja": "ダンス"
+    },
+    {
+      "id": "posture_transition",
+      "label_ja": "姿勢・遷移"
+    },
+    {
+      "id": "everyday_activity",
+      "label_ja": "日常動作"
+    },
+    {
+      "id": "object_interaction",
+      "label_ja": "物体操作"
+    },
+    {
+      "id": "stunt_athletic",
+      "label_ja": "アクロバット"
+    }
+  ],
+  "concept_blend": {
+    "similarity_threshold": 0.82,
+    "weight": 0.2
+  },
+  "concepts": [
+    {
+      "id": "standing_neutral",
+      "category": "posture_transition",
+      "ja": "正面を向いて自然に立つ",
+      "canonical_en": "stand facing forward"
+    },
+    {
+      "id": "contrapposto",
+      "category": "posture_transition",
+      "ja": "片脚に重心を乗せたコントラポスト",
+      "canonical_en": "stand in contrapposto with weight on one leg"
+    },
+    {
+      "id": "weight_left",
+      "category": "posture_transition",
+      "ja": "左脚に重心を乗せる",
+      "canonical_en": "shift weight onto the left leg"
+    },
+    {
+      "id": "weight_right",
+      "category": "posture_transition",
+      "ja": "右脚に重心を乗せる",
+      "canonical_en": "shift weight onto the right leg"
+    },
+    {
+      "id": "crossed_legs_stand",
+      "category": "posture_transition",
+      "ja": "脚をクロスして立つ",
+      "canonical_en": "stand with legs crossed"
+    },
+    {
+      "id": "one_knee_bent",
+      "category": "posture_transition",
+      "ja": "片膝を軽く曲げて立つ",
+      "canonical_en": "stand with one knee softly bent"
+    },
+    {
+      "id": "hip_shift_left",
+      "category": "posture_transition",
+      "ja": "腰を少し左へずらす",
+      "canonical_en": "shift the hips slightly left"
+    },
+    {
+      "id": "hip_shift_right",
+      "category": "posture_transition",
+      "ja": "腰を少し右へずらす",
+      "canonical_en": "shift the hips slightly right"
+    },
+    {
+      "id": "s_curve",
+      "category": "posture_transition",
+      "ja": "上体と腰で緩やかなS字を作る",
+      "canonical_en": "form a gentle S-curve through the torso and hips"
+    },
+    {
+      "id": "torso_twist",
+      "category": "posture_transition",
+      "ja": "上体を少しひねる",
+      "canonical_en": "twist the torso slightly"
+    },
+    {
+      "id": "shoulder_drop",
+      "category": "posture_transition",
+      "ja": "片方の肩を少し下げる",
+      "canonical_en": "lower one shoulder slightly"
+    },
+    {
+      "id": "lean_wall",
+      "category": "posture_transition",
+      "ja": "壁に軽く寄りかかる",
+      "canonical_en": "lean lightly against a wall"
+    },
+    {
+      "id": "lean_forward",
+      "category": "posture_transition",
+      "ja": "上体を少し前傾する",
+      "canonical_en": "lean the upper body slightly forward"
+    },
+    {
+      "id": "lean_back",
+      "category": "posture_transition",
+      "ja": "上体を少し後傾する",
+      "canonical_en": "lean the upper body slightly back"
+    },
+    {
+      "id": "look_back",
+      "category": "posture_transition",
+      "ja": "上体をひねって肩越しに振り返る",
+      "canonical_en": "turn the upper body and look back over the shoulder"
+    },
+    {
+      "id": "back_view_turn_head",
+      "category": "posture_transition",
+      "ja": "背中を向けて顔だけ振り返る",
+      "canonical_en": "stand with back to camera and turn the head back"
+    },
+    {
+      "id": "arms_behind_back",
+      "category": "posture_transition",
+      "ja": "両手を後ろで組んで立つ",
+      "canonical_en": "stand with both hands held behind the back"
+    },
+    {
+      "id": "hand_on_hip",
+      "category": "posture_transition",
+      "ja": "片手を腰に当てる",
+      "canonical_en": "place one hand on the hip"
+    },
+    {
+      "id": "both_hands_hips",
+      "category": "posture_transition",
+      "ja": "両手を腰に当てる",
+      "canonical_en": "place both hands on the hips"
+    },
+    {
+      "id": "hand_on_thigh",
+      "category": "posture_transition",
+      "ja": "片手を太ももに軽く添える",
+      "canonical_en": "rest one hand lightly on the thigh"
+    },
+    {
+      "id": "hand_on_knee",
+      "category": "posture_transition",
+      "ja": "片手を膝に置く",
+      "canonical_en": "rest one hand on the knee"
+    },
+    {
+      "id": "touch_hair",
+      "category": "posture_transition",
+      "ja": "片手で髪にそっと触れる",
+      "canonical_en": "gently touch the hair with one hand"
+    },
+    {
+      "id": "brush_hair_back",
+      "category": "posture_transition",
+      "ja": "片手で髪をかき上げる",
+      "canonical_en": "brush the hair back with one hand"
+    },
+    {
+      "id": "hand_near_face",
+      "category": "posture_transition",
+      "ja": "片手を顔の近くに添える",
+      "canonical_en": "hold one hand near the face"
+    },
+    {
+      "id": "hand_on_cheek",
+      "category": "posture_transition",
+      "ja": "片手を頬にそっと当てる",
+      "canonical_en": "place one hand gently on the cheek"
+    },
+    {
+      "id": "chin_in_hand",
+      "category": "posture_transition",
+      "ja": "片手にあごを軽く乗せる",
+      "canonical_en": "rest the chin lightly on one hand"
+    },
+    {
+      "id": "arms_crossed",
+      "category": "posture_transition",
+      "ja": "腕を軽く組む",
+      "canonical_en": "cross the arms loosely"
+    },
+    {
+      "id": "hands_clasped_front",
+      "category": "posture_transition",
+      "ja": "両手を体の前で組む",
+      "canonical_en": "clasp both hands in front of the body"
+    },
+    {
+      "id": "hands_clasped_chest",
+      "category": "posture_transition",
+      "ja": "両手を胸の前で組む",
+      "canonical_en": "clasp both hands in front of the chest"
+    },
+    {
+      "id": "arms_open",
+      "category": "posture_transition",
+      "ja": "両腕をやさしく左右に広げる",
+      "canonical_en": "open both arms gently to the sides"
+    },
+    {
+      "id": "sit_chair_upright",
+      "category": "posture_transition",
+      "ja": "椅子に姿勢よく座る",
+      "canonical_en": "sit upright on a chair"
+    },
+    {
+      "id": "sit_chair_relaxed",
+      "category": "posture_transition",
+      "ja": "椅子にリラックスして座る",
+      "canonical_en": "sit on a chair in a relaxed pose"
+    },
+    {
+      "id": "sit_edge",
+      "category": "posture_transition",
+      "ja": "椅子の端に足を揃えて座る",
+      "canonical_en": "sit near the edge of a chair with feet together"
+    },
+    {
+      "id": "sit_cross_ankles",
+      "category": "posture_transition",
+      "ja": "足首をクロスして座る",
+      "canonical_en": "sit with ankles crossed"
+    },
+    {
+      "id": "sit_cross_legs",
+      "category": "posture_transition",
+      "ja": "脚を組んで座る",
+      "canonical_en": "sit with legs crossed"
+    },
+    {
+      "id": "sit_sideways",
+      "category": "posture_transition",
+      "ja": "椅子に横向きに座り上体を正面へ向ける",
+      "canonical_en": "sit sideways on a chair and turn the torso toward front"
+    },
+    {
+      "id": "kneel_upright",
+      "category": "posture_transition",
+      "ja": "膝立ちになる",
+      "canonical_en": "kneel upright"
+    },
+    {
+      "id": "seiza",
+      "category": "posture_transition",
+      "ja": "正座する",
+      "canonical_en": "sit in seiza"
+    },
+    {
+      "id": "floor_side_sit",
+      "category": "posture_transition",
+      "ja": "床で両脚を片側へ流して座る",
+      "canonical_en": "sit on the floor with both legs folded to one side"
+    },
+    {
+      "id": "floor_knees_up",
+      "category": "posture_transition",
+      "ja": "床で膝を抱えるように座る",
+      "canonical_en": "sit on the floor with knees drawn up"
+    },
+    {
+      "id": "sit_one_knee_up",
+      "category": "posture_transition",
+      "ja": "片膝を立てて座る",
+      "canonical_en": "sit with one knee raised"
+    },
+    {
+      "id": "sit_hands_behind",
+      "category": "posture_transition",
+      "ja": "両手を後ろについて座る",
+      "canonical_en": "sit with both hands supporting the body behind"
+    },
+    {
+      "id": "sit_hand_cheek",
+      "category": "posture_transition",
+      "ja": "座って片手を頬に当てる",
+      "canonical_en": "sit with one hand on the cheek"
+    },
+    {
+      "id": "sit_touch_hair",
+      "category": "posture_transition",
+      "ja": "座って髪にそっと触れる",
+      "canonical_en": "sit while gently touching the hair"
+    },
+    {
+      "id": "sit_look_back",
+      "category": "posture_transition",
+      "ja": "座ったまま肩越しに振り返る",
+      "canonical_en": "sit and look back over the shoulder"
+    },
+    {
+      "id": "crouch_soft",
+      "category": "posture_transition",
+      "ja": "膝を寄せ気味にしてしゃがむ",
+      "canonical_en": "crouch with knees close together"
+    },
+    {
+      "id": "squat_pose",
+      "category": "posture_transition",
+      "ja": "バランスよくしゃがむ",
+      "canonical_en": "squat down with balanced posture"
+    },
+    {
+      "id": "half_kneel",
+      "category": "posture_transition",
+      "ja": "片膝をつくハーフニーリング",
+      "canonical_en": "take a half-kneeling pose with one knee down"
+    },
+    {
+      "id": "hands_behind_head",
+      "category": "posture_transition",
+      "ja": "両手を頭の後ろへ添える",
+      "canonical_en": "place both hands behind the head"
+    },
+    {
+      "id": "peace_sign_right",
+      "category": "gesture",
+      "ja": "右手で顔の横にピースサイン",
+      "canonical_en": "make a peace sign beside the face with the right hand"
+    },
+    {
+      "id": "peace_sign_left",
+      "category": "gesture",
+      "ja": "左手で顔の横にピースサイン",
+      "canonical_en": "make a peace sign beside the face with the left hand"
+    },
+    {
+      "id": "double_peace",
+      "category": "gesture",
+      "ja": "両頬の横でダブルピース",
+      "canonical_en": "make peace signs beside both cheeks"
+    },
+    {
+      "id": "heart_hands_chest",
+      "category": "gesture",
+      "ja": "胸の前で両手ハート",
+      "canonical_en": "form a heart with both hands near the chest"
+    },
+    {
+      "id": "heart_hands_face",
+      "category": "gesture",
+      "ja": "顔の近くで両手ハート",
+      "canonical_en": "form a heart with both hands near the face"
+    },
+    {
+      "id": "finger_heart_right",
+      "category": "gesture",
+      "ja": "右手で指ハート",
+      "canonical_en": "make a finger-heart gesture with the right hand"
+    },
+    {
+      "id": "finger_heart_left",
+      "category": "gesture",
+      "ja": "左手で指ハート",
+      "canonical_en": "make a finger-heart gesture with the left hand"
+    },
+    {
+      "id": "cheek_point",
+      "category": "gesture",
+      "ja": "人差し指で片頬を軽くつつく",
+      "canonical_en": "touch one cheek lightly with an index finger"
+    },
+    {
+      "id": "double_cheek",
+      "category": "gesture",
+      "ja": "両手を頬の横に添える",
+      "canonical_en": "place both hands beside the cheeks"
+    },
+    {
+      "id": "flower_pose",
+      "category": "gesture",
+      "ja": "あごの下で両手を花のように開く",
+      "canonical_en": "open both hands under the chin like a flower"
+    },
+    {
+      "id": "cat_ears",
+      "category": "gesture",
+      "ja": "頭の横で両手を猫耳のように立てる",
+      "canonical_en": "raise both hands beside the head like cat ears"
+    },
+    {
+      "id": "cat_paws",
+      "category": "gesture",
+      "ja": "胸の前で両手を猫の手のように曲げる",
+      "canonical_en": "bend both wrists in front like cat paws"
+    },
+    {
+      "id": "shush",
+      "category": "gesture",
+      "ja": "人差し指を唇の前に添える",
+      "canonical_en": "place one index finger gently in front of the lips"
+    },
+    {
+      "id": "blow_kiss",
+      "category": "gesture",
+      "ja": "手を口元から前へ送り投げキッス",
+      "canonical_en": "bring one hand to the lips and blow a kiss outward"
+    },
+    {
+      "id": "wave_right",
+      "category": "gesture",
+      "ja": "右手を小さく元気に振る",
+      "canonical_en": "wave the right hand with a small cheerful motion"
+    },
+    {
+      "id": "wave_left",
+      "category": "gesture",
+      "ja": "左手を小さく元気に振る",
+      "canonical_en": "wave the left hand with a small cheerful motion"
+    },
+    {
+      "id": "wave_both",
+      "category": "gesture",
+      "ja": "両手を肩の高さで振る",
+      "canonical_en": "wave both hands near shoulder height"
+    },
+    {
+      "id": "thumbs_up",
+      "category": "gesture",
+      "ja": "片手でサムズアップ",
+      "canonical_en": "give a thumbs-up with one hand"
+    },
+    {
+      "id": "point_viewer",
+      "category": "gesture",
+      "ja": "正面を指差す",
+      "canonical_en": "point toward the viewer"
+    },
+    {
+      "id": "salute_cute",
+      "category": "gesture",
+      "ja": "軽くかわいく敬礼する",
+      "canonical_en": "make a light playful salute"
+    },
+    {
+      "id": "hands_prayer",
+      "category": "gesture",
+      "ja": "胸の前で両手を合わせる",
+      "canonical_en": "press both palms together in front of the chest"
+    },
+    {
+      "id": "hands_over_heart",
+      "category": "gesture",
+      "ja": "胸元に両手をそっと重ねる",
+      "canonical_en": "place both hands gently over the heart"
+    },
+    {
+      "id": "hand_mouth_giggle",
+      "category": "gesture",
+      "ja": "くすっと笑うように片手で口元を軽く隠す",
+      "canonical_en": "cover the mouth lightly with one hand as if giggling"
+    },
+    {
+      "id": "both_arms_up",
+      "category": "gesture",
+      "ja": "両腕を頭上へ上げる",
+      "canonical_en": "raise both arms overhead"
+    },
+    {
+      "id": "one_arm_up",
+      "category": "gesture",
+      "ja": "片腕を高く上げる",
+      "canonical_en": "raise one arm high overhead"
+    },
+    {
+      "id": "arms_v",
+      "category": "gesture",
+      "ja": "両腕をV字に上げる",
+      "canonical_en": "raise both arms in a V shape"
+    },
+    {
+      "id": "curtsy",
+      "category": "gesture",
+      "ja": "小さく優雅にカーテシー",
+      "canonical_en": "perform a small graceful curtsy"
+    },
+    {
+      "id": "head_tilt",
+      "category": "gesture",
+      "ja": "首をかわいくかしげる",
+      "canonical_en": "tilt the head gently to one side"
+    },
+    {
+      "id": "wink_peace",
+      "category": "gesture",
+      "ja": "ウインクしながら顔の横でピース",
+      "canonical_en": "wink while making a peace sign beside the face"
+    },
+    {
+      "id": "hands_behind_lean",
+      "category": "gesture",
+      "ja": "両手を後ろで組み少し前傾する",
+      "canonical_en": "hold hands behind the back and lean forward slightly"
+    },
+    {
+      "id": "glamour_arch_back",
+      "category": "posture_transition",
+      "ja": "立ったまま背中をやさしく反らす",
+      "canonical_en": "gently arch the back while standing"
+    },
+    {
+      "id": "glamour_swayback",
+      "category": "posture_transition",
+      "ja": "腰を少し後ろへ引いたスウェイバック姿勢",
+      "canonical_en": "stand with a subtle swayback posture"
+    },
+    {
+      "id": "glamour_hip_pop",
+      "category": "posture_transition",
+      "ja": "片側の腰を横へ出す",
+      "canonical_en": "pop one hip to the side"
+    },
+    {
+      "id": "glamour_over_shoulder",
+      "category": "posture_transition",
+      "ja": "上体をひねり肩越しに振り返る",
+      "canonical_en": "look back over one shoulder with the torso turned"
+    },
+    {
+      "id": "glamour_hand_hair",
+      "category": "posture_transition",
+      "ja": "片手を髪に入れて首を傾ける",
+      "canonical_en": "raise one hand into the hair and tilt the head"
+    },
+    {
+      "id": "glamour_two_hands_hair",
+      "category": "posture_transition",
+      "ja": "両手を髪に入れ肘を開く",
+      "canonical_en": "lift both hands into the hair with elbows open"
+    },
+    {
+      "id": "glamour_one_arm_overhead",
+      "category": "posture_transition",
+      "ja": "片腕を頭上へ上げ上体を長く見せる",
+      "canonical_en": "raise one arm overhead and lengthen the torso"
+    },
+    {
+      "id": "glamour_both_arms_overhead",
+      "category": "posture_transition",
+      "ja": "両腕を頭上へ上げて長いボディラインを作る",
+      "canonical_en": "raise both arms overhead with a long body line"
+    },
+    {
+      "id": "glamour_hand_waist",
+      "category": "posture_transition",
+      "ja": "片手を腰に置き片脚重心にする",
+      "canonical_en": "place one hand at the waist and shift weight to one leg"
+    },
+    {
+      "id": "glamour_cross_legs",
+      "category": "posture_transition",
+      "ja": "脚をクロスして肩の力を抜いて立つ",
+      "canonical_en": "stand with legs crossed and shoulders relaxed"
+    },
+    {
+      "id": "glamour_knee_in",
+      "category": "posture_transition",
+      "ja": "片膝を少し内側へ入れて立つ",
+      "canonical_en": "stand with one knee turned slightly inward"
+    },
+    {
+      "id": "glamour_toe_point",
+      "category": "posture_transition",
+      "ja": "片脚を伸ばしつま先を軽く伸ばす",
+      "canonical_en": "extend one leg and point the toe lightly"
+    },
+    {
+      "id": "glamour_sit_side",
+      "category": "posture_transition",
+      "ja": "両脚を片側へ流して座る",
+      "canonical_en": "sit with both legs angled to one side"
+    },
+    {
+      "id": "glamour_floor_lean",
+      "category": "posture_transition",
+      "ja": "床に座り両手を後ろについて上体を支える",
+      "canonical_en": "sit on the floor and lean back on both hands"
+    },
+    {
+      "id": "glamour_kneel_turn",
+      "category": "posture_transition",
+      "ja": "膝立ちで上体を少し正面へひねる",
+      "canonical_en": "kneel and turn the torso slightly toward camera"
+    },
+    {
+      "id": "glamour_chair_side",
+      "category": "posture_transition",
+      "ja": "椅子に横向きに座って正面を見る",
+      "canonical_en": "sit sideways on a chair and look toward camera"
+    },
+    {
+      "id": "glamour_wall_shoulder",
+      "category": "posture_transition",
+      "ja": "片肩を壁へ軽く預ける",
+      "canonical_en": "lean one shoulder lightly against a wall"
+    },
+    {
+      "id": "glamour_doorframe",
+      "category": "posture_transition",
+      "ja": "片手を高い位置に置き腰をずらす",
+      "canonical_en": "rest one hand high on a doorframe and shift the hips"
+    },
+    {
+      "id": "glamour_walk_turn",
+      "category": "posture_transition",
+      "ja": "一歩進みながら上体を振り返る",
+      "canonical_en": "take a small step and turn the upper body back"
+    },
+    {
+      "id": "glamour_hair_flip",
+      "category": "posture_transition",
+      "ja": "小さく髪を翻しながら顔を振る",
+      "canonical_en": "turn the head with a small hair flip"
+    },
+    {
+      "id": "glamour_jacket_hold",
+      "category": "posture_transition",
+      "ja": "ジャケットの端を軽く持ってポーズ",
+      "canonical_en": "lightly hold the edge of a jacket while posing"
+    },
+    {
+      "id": "glamour_skirt_show",
+      "category": "posture_transition",
+      "ja": "スカートの端を軽く持ちシルエットを見せる",
+      "canonical_en": "lightly hold the side of a skirt to show its silhouette"
+    },
+    {
+      "id": "glamour_shoulder_touch",
+      "category": "posture_transition",
+      "ja": "反対の手で片肩にそっと触れる",
+      "canonical_en": "touch one shoulder gently with the opposite hand"
+    },
+    {
+      "id": "glamour_neck_touch",
+      "category": "posture_transition",
+      "ja": "指先を首筋の近くに軽く添える",
+      "canonical_en": "place fingertips lightly near the side of the neck"
+    },
+    {
+      "id": "glamour_relaxed_seated",
+      "category": "posture_transition",
+      "ja": "肩の力を抜き手を整えて優雅に座る",
+      "canonical_en": "sit elegantly with relaxed shoulders and carefully placed hands"
+    },
+    {
+      "id": "runway_walk",
+      "category": "locomotion",
+      "ja": "自信を持ってランウェイを歩く",
+      "canonical_en": "walk confidently down a runway"
+    },
+    {
+      "id": "runway_power_walk",
+      "category": "locomotion",
+      "ja": "力強く自信のあるモデル歩きをする",
+      "canonical_en": "stride forward with a confident power walk"
+    },
+    {
+      "id": "runway_cross_step",
+      "category": "locomotion",
+      "ja": "脚をややクロスさせるようにモデル歩きする",
+      "canonical_en": "walk with each step crossing slightly toward the center line"
+    },
+    {
+      "id": "runway_relaxed_arms",
+      "category": "posture_transition",
+      "ja": "肩をリラックスさせ腕振りを小さくして歩く",
+      "canonical_en": "walk with shoulders relaxed and arms swinging minimally"
+    },
+    {
+      "id": "runway_long_stride",
+      "category": "locomotion",
+      "ja": "長く一定のストライドで歩く",
+      "canonical_en": "walk with long measured strides"
+    },
+    {
+      "id": "runway_slow_stride",
+      "category": "locomotion",
+      "ja": "ゆっくり意識的なランウェイ歩行",
+      "canonical_en": "walk slowly with deliberate runway steps"
+    },
+    {
+      "id": "runway_fast_stride",
+      "category": "locomotion",
+      "ja": "姿勢を崩さず速めにランウェイを歩く",
+      "canonical_en": "walk briskly with controlled runway posture"
+    },
+    {
+      "id": "runway_stop_pose",
+      "category": "posture_transition",
+      "ja": "前進して止まりモデルポーズを取る",
+      "canonical_en": "walk forward, stop, and settle into a model pose"
+    },
+    {
+      "id": "runway_stop_contrapposto",
+      "category": "posture_transition",
+      "ja": "停止してコントラポストへ移る",
+      "canonical_en": "stop and shift into contrapposto"
+    },
+    {
+      "id": "runway_stop_hand_hip",
+      "category": "posture_transition",
+      "ja": "停止して片手を腰に当てる",
+      "canonical_en": "stop and place one hand on the hip"
+    },
+    {
+      "id": "runway_pivot_90",
+      "category": "posture_transition",
+      "ja": "きれいに90度ピボットターンする",
+      "canonical_en": "perform a clean ninety-degree pivot turn"
+    },
+    {
+      "id": "runway_pivot_180",
+      "category": "posture_transition",
+      "ja": "きれいに180度ピボットターンする",
+      "canonical_en": "perform a clean 180-degree pivot turn"
+    },
+    {
+      "id": "runway_turn_lookback",
+      "category": "posture_transition",
+      "ja": "向きを変えて肩越しに振り返る",
+      "canonical_en": "turn away and look back over the shoulder"
+    },
+    {
+      "id": "runway_turn_walk_back",
+      "category": "locomotion",
+      "ja": "滑らかにターンして戻る方向へ歩く",
+      "canonical_en": "turn around smoothly and walk back"
+    },
+    {
+      "id": "runway_coat_reveal",
+      "category": "gesture",
+      "ja": "歩きながら片手でコートを少し開いて見せる",
+      "canonical_en": "open the coat slightly with one hand while walking"
+    },
+    {
+      "id": "runway_skirt_flow",
+      "category": "gesture",
+      "ja": "歩行に合わせてスカートを自然に揺らす",
+      "canonical_en": "walk while letting the skirt move naturally with each step"
+    },
+    {
+      "id": "runway_dress_sweep",
+      "category": "posture_transition",
+      "ja": "ドレスが広がるように制御したターンをする",
+      "canonical_en": "make a controlled turn that sweeps the dress outward"
+    },
+    {
+      "id": "runway_pose_long_line",
+      "category": "posture_transition",
+      "ja": "身体の縦ラインを強調した長いポーズを取る",
+      "canonical_en": "hold an elongated pose emphasizing the body line"
+    },
+    {
+      "id": "runway_sculptural_pose",
+      "category": "posture_transition",
+      "ja": "シャープで彫刻的なファッションポーズ",
+      "canonical_en": "hold a sharp sculptural fashion pose"
+    },
+    {
+      "id": "runway_architectural_pose",
+      "category": "posture_transition",
+      "ja": "腕と上体で角のある建築的ポーズを作る",
+      "canonical_en": "form an angular architectural pose with arms and torso"
+    },
+    {
+      "id": "runway_seated_editorial",
+      "category": "posture_transition",
+      "ja": "手の位置を整えた洗練されたエディトリアル座り",
+      "canonical_en": "sit in a sophisticated editorial pose with careful hand placement"
+    },
+    {
+      "id": "runway_balletic_turn",
+      "category": "dance",
+      "ja": "優雅なバレエ風ターン",
+      "canonical_en": "perform a graceful balletic turn"
+    },
+    {
+      "id": "runway_pirouette",
+      "category": "dance",
+      "ja": "制御されたピルエット風ターン",
+      "canonical_en": "perform a controlled pirouette-like turn"
+    },
+    {
+      "id": "runway_pause_gaze",
+      "category": "gesture",
+      "ja": "一瞬止まり観客側へ顔を向ける",
+      "canonical_en": "pause briefly and turn the head toward the audience"
+    },
+    {
+      "id": "runway_final_pose",
+      "category": "posture_transition",
+      "ja": "中央で力強い決めポーズを取って終える",
+      "canonical_en": "finish with a strong centered model pose"
+    },
+    {
+      "id": "idol_side_step",
+      "category": "dance",
+      "ja": "左右へ小さくサイドステップする",
+      "canonical_en": "take small side steps left and right"
+    },
+    {
+      "id": "dance_sway_step",
+      "category": "dance",
+      "ja": "腰を揺らしながら左右へステップする",
+      "canonical_en": "step side to side while swaying the hips"
+    },
+    {
+      "id": "dance_grapevine",
+      "category": "dance",
+      "ja": "足を横へ出し、反対の足を後ろへ交差し、横へ踏んで足を寄せるグレープバインステップを繰り返す",
+      "canonical_en": "perform a repeating grapevine step with side step, behind-cross, side step, and close"
+    },
+    {
+      "id": "dance_cross_step",
+      "category": "dance",
+      "ja": "足を交差させるリズムステップをする",
+      "canonical_en": "perform a rhythmic cross-step"
+    },
+    {
+      "id": "dance_bounce_step",
+      "category": "dance",
+      "ja": "軽く弾みながら左右へステップする",
+      "canonical_en": "step side to side with a light bounce"
+    },
+    {
+      "id": "dance_step_turn",
+      "category": "dance",
+      "ja": "一歩踏み出して半回転し、反対向きで止まる",
+      "canonical_en": "take one step and make a 180-degree half turn, ending facing the opposite direction"
+    },
+    {
+      "id": "idol_step_touch",
+      "category": "dance",
+      "ja": "シンプルなステップタッチ（ツーステップ）をする",
+      "canonical_en": "perform a simple side-to-side step-touch pattern"
+    },
+    {
+      "id": "idol_bounce",
+      "category": "dance",
+      "ja": "リズムに合わせてその場で軽く弾む",
+      "canonical_en": "bounce lightly in place to the rhythm"
+    },
+    {
+      "id": "idol_small_jump",
+      "category": "dance",
+      "ja": "元気よく小さくジャンプする",
+      "canonical_en": "make a small cheerful jump"
+    },
+    {
+      "id": "idol_two_jumps",
+      "category": "dance",
+      "ja": "リズムに合わせて小さく2回跳ぶ",
+      "canonical_en": "make two small rhythmic jumps"
+    },
+    {
+      "id": "idol_half_turn",
+      "category": "dance",
+      "ja": "軽く半回転する",
+      "canonical_en": "make a light half turn"
+    },
+    {
+      "id": "idol_full_turn",
+      "category": "dance",
+      "ja": "軽く一回転する",
+      "canonical_en": "spin around once lightly"
+    },
+    {
+      "id": "idol_twirl_skirt",
+      "category": "dance",
+      "ja": "スカートが広がるように軽くくるっと回る",
+      "canonical_en": "twirl lightly so the skirt flares outward"
+    },
+    {
+      "id": "idol_wave_step",
+      "category": "dance",
+      "ja": "片手を振りながら小さくサイドステップ",
+      "canonical_en": "wave one hand while taking small side steps"
+    },
+    {
+      "id": "idol_double_wave",
+      "category": "dance",
+      "ja": "軽く弾みながら両手を振る",
+      "canonical_en": "wave both hands while bouncing lightly"
+    },
+    {
+      "id": "idol_point_step",
+      "category": "dance",
+      "ja": "横へステップしながら前を指差す",
+      "canonical_en": "point forward while stepping to the side"
+    },
+    {
+      "id": "idol_heart_step",
+      "category": "dance",
+      "ja": "胸元でハートを作りながら小さく一歩前へ出る",
+      "canonical_en": "form a heart near the chest while taking a small step forward"
+    },
+    {
+      "id": "idol_peace_turn",
+      "category": "dance",
+      "ja": "少しターンしながら顔の横でピース",
+      "canonical_en": "make a peace sign near the face while turning slightly"
+    },
+    {
+      "id": "idol_cheek_sway",
+      "category": "dance",
+      "ja": "両手を頬の近くに添え左右へ揺れる",
+      "canonical_en": "place both hands near the cheeks and sway side to side"
+    },
+    {
+      "id": "idol_arm_swing",
+      "category": "dance",
+      "ja": "リズムに合わせて両前腕を左右へ振る",
+      "canonical_en": "swing both forearms gently left and right in rhythm"
+    },
+    {
+      "id": "idol_overhead_wave",
+      "category": "dance",
+      "ja": "両手を頭上で左右に振る",
+      "canonical_en": "raise both hands overhead and wave them side to side"
+    },
+    {
+      "id": "idol_clap",
+      "category": "dance",
+      "ja": "胸の前でリズミカルに拍手する",
+      "canonical_en": "clap rhythmically in front of the chest"
+    },
+    {
+      "id": "idol_shy_step",
+      "category": "dance",
+      "ja": "膝を少し内側にした小さなステップと照れた上体傾き",
+      "canonical_en": "take a small inward-knee step with a shy upper-body tilt"
+    },
+    {
+      "id": "idol_kick_step",
+      "category": "dance",
+      "ja": "小さくかわいく前へキックして戻す",
+      "canonical_en": "make a small playful forward kick and return"
+    },
+    {
+      "id": "idol_heel_pop",
+      "category": "dance",
+      "ja": "片方のかかとをかわいく上げてポーズ",
+      "canonical_en": "lift one heel playfully while posing"
+    },
+    {
+      "id": "idol_pose_change",
+      "category": "dance",
+      "ja": "両手後ろ組みからダブルピースへ移る",
+      "canonical_en": "transition from hands behind the back to a double peace pose"
+    },
+    {
+      "id": "idol_bow",
+      "category": "dance",
+      "ja": "明るく小さくステージお辞儀",
+      "canonical_en": "make a small cheerful stage bow"
+    },
+    {
+      "id": "idol_curtsy",
+      "category": "dance",
+      "ja": "軽いアイドル風カーテシー",
+      "canonical_en": "perform a light idol-style curtsy"
+    },
+    {
+      "id": "idol_greeting_combo",
+      "category": "dance",
+      "ja": "手を振って首をかしげ、かわいい決めポーズへ入る",
+      "canonical_en": "wave, tilt the head, and settle into a cute pose"
+    },
+    {
+      "id": "idol_finish_heart",
+      "category": "dance",
+      "ja": "最後に胸元で両手ハートを作る",
+      "canonical_en": "finish by forming a heart with both hands near the chest"
+    },
+    {
+      "id": "nod_once",
+      "category": "gesture",
+      "ja": "一度うなずく",
+      "canonical_en": "nod once"
+    },
+    {
+      "id": "nod_gently",
+      "category": "gesture",
+      "ja": "やさしくうなずく",
+      "canonical_en": "nod gently"
+    },
+    {
+      "id": "shake_head",
+      "category": "gesture",
+      "ja": "首を左右に振る",
+      "canonical_en": "shake the head side to side"
+    },
+    {
+      "id": "head_tilt_left",
+      "category": "gesture",
+      "ja": "首を左にかしげる",
+      "canonical_en": "tilt the head left"
+    },
+    {
+      "id": "head_tilt_right",
+      "category": "gesture",
+      "ja": "首を右にかしげる",
+      "canonical_en": "tilt the head right"
+    },
+    {
+      "id": "look_left",
+      "category": "gesture",
+      "ja": "顔を左へ向ける",
+      "canonical_en": "turn the head to look left"
+    },
+    {
+      "id": "look_right",
+      "category": "gesture",
+      "ja": "顔を右へ向ける",
+      "canonical_en": "turn the head to look right"
+    },
+    {
+      "id": "look_up",
+      "category": "gesture",
+      "ja": "あごを上げて上を見る",
+      "canonical_en": "raise the chin and look upward"
+    },
+    {
+      "id": "look_down",
+      "category": "gesture",
+      "ja": "あごを下げて下を見る",
+      "canonical_en": "lower the chin and look downward"
+    },
+    {
+      "id": "look_back_head",
+      "category": "gesture",
+      "ja": "肩越しに顔を後ろへ向ける",
+      "canonical_en": "turn the head back over the shoulder"
+    },
+    {
+      "id": "small_head_sway",
+      "category": "gesture",
+      "ja": "リズムに合わせて頭を軽く揺らす",
+      "canonical_en": "sway the head gently with the rhythm"
+    },
+    {
+      "id": "walk_forward",
+      "category": "locomotion",
+      "ja": "前へ歩く",
+      "canonical_en": "walk forward"
+    },
+    {
+      "id": "walk_backward",
+      "category": "locomotion",
+      "ja": "後ろへ歩く",
+      "canonical_en": "walk backward"
+    },
+    {
+      "id": "walk_left",
+      "category": "locomotion",
+      "ja": "左へ歩く",
+      "canonical_en": "walk to the left"
+    },
+    {
+      "id": "walk_right",
+      "category": "locomotion",
+      "ja": "右へ歩く",
+      "canonical_en": "walk to the right"
+    },
+    {
+      "id": "jog_forward",
+      "category": "locomotion",
+      "ja": "前へジョギングする",
+      "canonical_en": "jog forward"
+    },
+    {
+      "id": "run_forward",
+      "category": "locomotion",
+      "ja": "前へ走る",
+      "canonical_en": "run forward"
+    },
+    {
+      "id": "march_forward",
+      "category": "locomotion",
+      "ja": "前へ行進する",
+      "canonical_en": "march forward"
+    },
+    {
+      "id": "skip_forward",
+      "category": "locomotion",
+      "ja": "前へスキップする",
+      "canonical_en": "skip forward"
+    },
+    {
+      "id": "tiptoe_forward",
+      "category": "locomotion",
+      "ja": "つま先立ちで前へ歩く",
+      "canonical_en": "walk forward on tiptoes"
+    },
+    {
+      "id": "crouch_walk",
+      "category": "locomotion",
+      "ja": "しゃがんだ姿勢で前へ歩く",
+      "canonical_en": "crouch-walk forward"
+    },
+    {
+      "id": "step_forward",
+      "category": "locomotion",
+      "ja": "小さく一歩前へ出る",
+      "canonical_en": "take one small step forward"
+    },
+    {
+      "id": "step_back",
+      "category": "locomotion",
+      "ja": "小さく一歩後ろへ下がる",
+      "canonical_en": "take one small step backward"
+    },
+    {
+      "id": "side_step_left",
+      "category": "locomotion",
+      "ja": "左へ小さくサイドステップ",
+      "canonical_en": "take a small side step left"
+    },
+    {
+      "id": "side_step_right",
+      "category": "locomotion",
+      "ja": "右へ小さくサイドステップ",
+      "canonical_en": "take a small side step right"
+    },
+    {
+      "id": "pivot_in_place",
+      "category": "locomotion",
+      "ja": "その場でピボットターンする",
+      "canonical_en": "pivot in place"
+    },
+    {
+      "id": "locomotion_hop_forward",
+      "category": "locomotion",
+      "ja": "両足で小さく前へ跳ぶ",
+      "canonical_en": "hop forward with both feet"
+    },
+    {
+      "id": "locomotion_soft_stop",
+      "category": "locomotion",
+      "ja": "歩行速度を落として自然に停止する",
+      "canonical_en": "decelerate from walking into a soft stop"
+    },
+    {
+      "id": "locomotion_start_walk",
+      "category": "locomotion",
+      "ja": "静止姿勢から自然に歩き始める",
+      "canonical_en": "start walking naturally from a standstill"
+    },
+    {
+      "id": "locomotion_turn_around",
+      "category": "locomotion",
+      "ja": "歩きながら向きを反転する",
+      "canonical_en": "turn around while walking"
+    },
+    {
+      "id": "locomotion_quick_stop",
+      "category": "locomotion",
+      "ja": "歩行から素早く停止する",
+      "canonical_en": "come to a quick controlled stop from walking"
+    },
+    {
+      "id": "body_hip_sway",
+      "category": "gesture",
+      "ja": "腰を左右にゆっくり揺らす",
+      "canonical_en": "sway the hips side to side"
+    },
+    {
+      "id": "arm_reach_forward",
+      "category": "gesture",
+      "ja": "片腕を前へ伸ばす",
+      "canonical_en": "reach one arm forward"
+    },
+    {
+      "id": "arm_reach_up",
+      "category": "gesture",
+      "ja": "片腕を頭上へ伸ばす",
+      "canonical_en": "reach one arm overhead"
+    },
+    {
+      "id": "transition_kneel_to_stand",
+      "category": "posture_transition",
+      "ja": "膝立ちから立ち上がる",
+      "canonical_en": "transition from kneeling to standing"
+    },
+    {
+      "id": "transition_stand_to_kneel",
+      "category": "posture_transition",
+      "ja": "立った姿勢から膝立ちになり、その姿勢で止まる",
+      "canonical_en": "lower from standing into a kneeling position and remain kneeling"
+    },
+    {
+      "id": "transition_crouch_to_stand",
+      "category": "posture_transition",
+      "ja": "しゃがみ姿勢から立ち上がる",
+      "canonical_en": "stand up from a crouch"
+    },
+    {
+      "id": "transition_stand_to_crouch",
+      "category": "posture_transition",
+      "ja": "立った姿勢からしゃがむ",
+      "canonical_en": "lower from standing into a crouch"
+    },
+    {
+      "id": "transition_stand_to_sit",
+      "category": "posture_transition",
+      "ja": "立った姿勢から椅子に座るように腰を下ろし、座位で止まる",
+      "canonical_en": "lower from standing into a chair-seated posture and remain seated"
+    },
+    {
+      "id": "transition_sit_to_stand",
+      "category": "posture_transition",
+      "ja": "椅子に座った姿勢から立ち上がり、立位で止まる",
+      "canonical_en": "rise from a chair-seated posture to standing and remain standing"
+    }
+  ],
+  "note": "Only reviewed/current vocabulary concepts are used as semantic prototypes. Categories without reviewed prototypes leave the prompt embedding unchanged."
+}

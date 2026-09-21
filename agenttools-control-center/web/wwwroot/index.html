@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <title>AgentTools Control Center</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">REMOTE TASK CONTROL</p>
+        <h1>AgentTools Control Center</h1>
+        <div class="overall-row">
+          <span id="overall-dot" class="status-dot unknown"></span>
+          <span id="overall-text">状態を取得しています…</span>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <span id="control-update-status" class="control-update-status" aria-live="polite">更新確認中…</span>
+        <button id="apply-control-update" class="refresh-button update-button" type="button" disabled>更新なし</button>
+        <button id="refresh-services" class="refresh-button" type="button">サービス再確認</button>
+      </div>
+    </header>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PLAN USAGE</p>
+          <h2>Codex利用枠</h2>
+        </div>
+        <span id="plan-usage-updated" class="updated-text">未取得</span>
+      </div>
+      <p id="plan-usage-summary" class="readonly-note">ChatGPTプランに紐づくCodex利用枠を確認しています…</p>
+      <p id="plan-usage-error" class="notice error hidden"></p>
+      <div id="plan-usage-list" class="resource-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SYSTEM RESOURCES</p>
+          <h2>PCリソース</h2>
+        </div>
+        <span id="resources-updated" class="updated-text">未取得</span>
+      </div>
+      <p id="resource-error" class="notice error hidden"></p>
+      <div id="resource-list" class="resource-grid" aria-live="polite"></div>
+    </section>
+
+    <section class="section dashboard-workspace">
+      <div class="dashboard-tabs" role="tablist" aria-label="Control Center主要表示">
+        <button id="dashboard-tab-tasks" class="dashboard-tab active" type="button" role="tab" aria-selected="true" aria-controls="dashboard-panel-tasks" data-dashboard-tab="tasks">タスク</button>
+        <button id="dashboard-tab-services" class="dashboard-tab" type="button" role="tab" aria-selected="false" aria-controls="dashboard-panel-services" data-dashboard-tab="services" tabindex="-1">常駐アプリ</button>
+        <button id="dashboard-tab-communications" class="dashboard-tab" type="button" role="tab" aria-selected="false" aria-controls="dashboard-panel-communications" data-dashboard-tab="communications" tabindex="-1">通信</button>
+      </div>
+
+      <div id="dashboard-panel-tasks" class="dashboard-tab-panel" role="tabpanel" aria-labelledby="dashboard-tab-tasks" data-dashboard-panel="tasks">
+        <div class="section-heading dashboard-panel-heading">
+          <div>
+            <p class="eyebrow">TASKS</p>
+            <h2>タスク</h2>
+          </div>
+          <div class="task-heading-actions">
+            <span id="activity-count" class="count-badge">確認中</span>
+            <button id="task-history-toggle" class="task-history-toggle" type="button">履歴を表示</button>
+          </div>
+        </div>
+        <p id="activity-error" class="notice error hidden"></p>
+        <div id="activity-list" class="activity-strip" aria-live="polite"></div>
+        <p id="activity-empty" class="empty hidden">表示できるユーザータスクはありません。</p>
+
+        <section id="detail-panel" class="detail-panel hidden tab-detail-panel" aria-live="polite">
+          <div class="detail-header">
+            <div>
+              <p class="eyebrow">TASK DETAIL</p>
+              <h2 id="detail-title">作業詳細</h2>
+            </div>
+            <button id="detail-close" class="icon-button" type="button" aria-label="詳細を閉じる">×</button>
+          </div>
+          <div class="detail-meta">
+            <span id="detail-status" class="status-pill"></span>
+            <span id="detail-owner"></span>
+            <span id="detail-updated"></span>
+          </div>
+          <div id="task-action-bar" class="task-action-bar">
+            <button id="task-inspect" class="task-action-button" type="button">状況確認</button>
+            <button id="task-inspect-detailed" class="task-action-button primary" type="button">状況確認（詳細）</button>
+            <button id="task-continue" class="task-action-button" type="button">作業続行</button>
+            <button id="task-continue-codex" class="task-action-button" type="button">Codexで続行</button>
+            <button id="task-complete" class="task-action-button danger" type="button">タスク終了</button>
+            <span id="task-action-status" class="task-action-status"></span>
+          </div>
+          <p class="task-action-note">「状況確認」は即時の軽量確認です。「状況確認（詳細）」はread-only調査を、「作業続行」はChatGPT Hostによる安全なローカル実装・テスト・検証の再開をHost Request Queueへ登録します。どちらも次回のChatGPT Scheduled Taskで処理され、結果は「通信」にレポートされます。「Codexで続行」は別経路です。</p>
+          <div class="detail-grid">
+            <div class="detail-card">
+              <h3>現在の作業</h3>
+              <p id="detail-current"></p>
+            </div>
+            <div class="detail-card">
+              <h3>プロジェクト</h3>
+              <p id="detail-project"></p>
+            </div>
+          </div>
+          <div id="detail-continuation-card" class="detail-card detail-wide hidden">
+            <h3>Codex自動継続</h3>
+            <p id="detail-continuation"></p>
+          </div>
+          <div id="detail-reason-card" class="detail-card detail-wide hidden">
+            <h3>この状態の理由</h3>
+            <p id="detail-reason"></p>
+          </div>
+          <div id="detail-inspection-card" class="detail-card detail-wide hidden">
+            <h3>状況確認結果</h3>
+            <pre id="detail-inspection"></pre>
+          </div>
+          <div class="detail-card detail-wide">
+            <div class="detail-card-heading">
+              <h3>通信履歴</h3>
+              <span id="detail-communication-count" class="count-badge">最新10件</span>
+            </div>
+            <p class="readonly-note">このタスクに紐づくHost Requestだけを最新10件まで表示します。</p>
+            <p id="detail-communication-error" class="notice error hidden"></p>
+            <div id="detail-communication-list" class="communication-list task-communication-list" aria-live="polite"></div>
+            <p id="detail-communication-empty" class="empty hidden">このタスクの通信履歴はありません。</p>
+          </div>
+          <div class="detail-card detail-wide">
+            <h3>参加者</h3>
+            <pre id="detail-contributors"></pre>
+          </div>
+        </section>
+      </div>
+
+      <div id="dashboard-panel-services" class="dashboard-tab-panel hidden" role="tabpanel" aria-labelledby="dashboard-tab-services" data-dashboard-panel="services">
+        <div class="section-heading dashboard-panel-heading">
+          <div>
+            <p class="eyebrow">RESIDENT APPS</p>
+            <h2>常駐アプリ</h2>
+          </div>
+          <span id="services-updated" class="updated-text">未取得</span>
+        </div>
+        <p id="service-error" class="notice error hidden"></p>
+        <div id="service-list" class="service-grid" aria-live="polite"></div>
+      </div>
+
+      <div id="dashboard-panel-communications" class="dashboard-tab-panel hidden" role="tabpanel" aria-labelledby="dashboard-tab-communications" data-dashboard-panel="communications">
+        <div class="section-heading dashboard-panel-heading">
+          <div>
+            <p class="eyebrow">COMMUNICATION</p>
+            <h2>通信</h2>
+          </div>
+          <span id="communication-count" class="count-badge">確認中</span>
+        </div>
+        <p class="readonly-note">「状況確認（詳細）」と「作業続行」のHost Request、およびChatGPT Scheduled Taskが作成した実施レポートを最新20件まで表示します。</p>
+        <p id="communication-error" class="notice error hidden"></p>
+        <div id="communication-list" class="communication-list" aria-live="polite"></div>
+        <p id="communication-empty" class="empty hidden">通信履歴はありません。</p>
+
+        <section id="communication-detail-panel" class="detail-panel hidden tab-detail-panel" aria-live="polite">
+          <div class="detail-header">
+            <div>
+              <p class="eyebrow">HOST REQUEST REPORT</p>
+              <h2 id="communication-detail-title">Host Requestレポート</h2>
+            </div>
+            <button id="communication-detail-close" class="icon-button" type="button" aria-label="Host Requestレポートを閉じる">×</button>
+          </div>
+          <div class="detail-meta">
+            <span id="communication-detail-status" class="status-pill"></span>
+            <span id="communication-detail-time"></span>
+            <span id="communication-detail-size"></span>
+          </div>
+          <div class="detail-card detail-wide">
+            <h3>通信結果</h3>
+            <p id="communication-detail-summary"></p>
+          </div>
+          <div class="detail-card detail-wide report-card">
+            <h3>実施レポート</h3>
+            <pre id="communication-detail-report" class="report-block"></pre>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SKILL IMPROVEMENTS</p>
+          <h2>Skill改善候補</h2>
+        </div>
+        <span id="skill-count" class="count-badge">確認中</span>
+      </div>
+      <p class="readonly-note">Web版は閲覧専用です。承認・却下・適用はローカルのDesktop Control Centerから行います。</p>
+      <p id="skill-error" class="notice error hidden"></p>
+      <div id="skill-list" class="activity-strip" aria-live="polite"></div>
+      <p id="skill-empty" class="empty hidden">Skill改善候補はありません。</p>
+    </section>
+
+    <section id="skill-detail-panel" class="detail-panel hidden" aria-live="polite">
+      <div class="detail-header">
+        <div>
+          <p class="eyebrow">SKILL DIFF</p>
+          <h2 id="skill-detail-title">Skill改善候補</h2>
+        </div>
+        <button id="skill-detail-close" class="icon-button" type="button" aria-label="Skill差分を閉じる">×</button>
+      </div>
+      <div class="detail-meta">
+        <span id="skill-detail-status" class="status-pill"></span>
+        <span id="skill-detail-source"></span>
+        <span id="skill-detail-updated"></span>
+      </div>
+      <div class="detail-card detail-wide">
+        <h3>改善理由</h3>
+        <p id="skill-detail-reason"></p>
+      </div>
+      <pre id="skill-detail-diff" class="diff-block"></pre>
+    </section>
+
+
+    <footer>
+      <span>Cloudflare Access前提 / Task操作・Control Center更新反映のみ許可</span>
+      <span id="activity-updated">Task: 未取得</span>
+    </footer>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>

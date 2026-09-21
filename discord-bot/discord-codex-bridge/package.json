@@ -1,0 +1,11 @@
+{
+  "name": "agenttools-discord-chatgpt-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --import ../codex-discord-connector/node_modules/tsx/dist/loader.mjs --test tests/*.test.ts",
+    "check": "node --import ../codex-discord-connector/node_modules/tsx/dist/loader.mjs --test tests/*.test.ts",
+    "bot:restart": "powershell -NoProfile -ExecutionPolicy Bypass -File ./restart-localized-bot.ps1"
+  }
+}

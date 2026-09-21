@@ -1,0 +1,4 @@
+output/*
+!output/.gitkeep
+state/*
+!state/.gitkeep

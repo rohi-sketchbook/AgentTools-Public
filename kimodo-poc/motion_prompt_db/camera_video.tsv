@@ -1,0 +1,21 @@
+id	ja	canonical_en	kimodo_candidate	sources	notes
+cam_locked	固定カメラ	locked camera	false	runway_video;runway_camera	preview/video prompt only
+cam_tracking	被写体を追うトラッキングショット	tracking shot following the subject	false	runway_video;runway_camera	preview/video prompt only
+cam_dolly_in	ゆっくりドリーイン	slow dolly in	false	runway_camera;veo_guide	preview/video prompt only
+cam_dolly_out	ゆっくりドリーアウト	slow dolly out	false	runway_camera;veo_guide	preview/video prompt only
+cam_pan_left	ゆっくり左へパン	slow pan left	false	runway_camera;veo_guide	preview/video prompt only
+cam_pan_right	ゆっくり右へパン	slow pan right	false	runway_camera;veo_guide	preview/video prompt only
+cam_arc	被写体の周囲を弧を描いて回るカメラ	camera arcs around the subject	false	runway_camera	preview/video prompt only
+cam_crane_up	上昇するクレーンショット	crane shot rising upward	false	veo_guide	preview/video prompt only
+cam_pedestal_up	カメラを垂直に上げる	pedestal up	false	runway_camera	preview/video prompt only
+cam_pedestal_down	カメラを垂直に下げる	pedestal down	false	runway_camera	preview/video prompt only
+cam_handheld	自然な揺れのハンドヘルド	handheld camera with natural movement	false	runway_video	preview/video prompt only
+cam_low_angle	ローアングルの追従ショット	low-angle tracking shot	false	runway_camera	preview/video prompt only
+cam_full_body	全身ショット	full-body shot	false	veo_guide;promptmake_fashion	composition only
+cam_medium	ミディアムショット	medium shot	false	veo_guide	composition only
+cam_closeup	クローズアップ	close-up	false	veo_guide	composition only
+cam_rule_thirds	三分割構図	rule-of-thirds composition	false	runway_image	composition only
+cam_centered	被写体中央構図	centered subject composition	false	runway_image	composition only
+cam_shallow_dof	浅い被写界深度	shallow depth of field	false	veo_guide	lens/focus only
+cam_slow_motion	スローモーション	slow-motion timing	false	runway_video	video timing only
+cam_continuous	切れ目のない連続ショット	continuous seamless shot	false	runway_video	video continuity only

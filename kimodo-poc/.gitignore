@@ -1,0 +1,13 @@
+.venv/
+models/
+downloads/
+upstream/
+results/
+adapter/data/*
+!adapter/data/.gitkeep
+adapter/checkpoints/*
+!adapter/checkpoints/.gitkeep
+__pycache__/
+*.pyc
+*.pyo
+*.log

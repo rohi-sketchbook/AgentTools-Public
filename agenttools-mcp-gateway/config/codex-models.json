@@ -1,0 +1,29 @@
+{
+  "schema": "agenttools-codex-model-policy/v1",
+  "roles": {
+    "complex": {
+      "model": "gpt-5.6-terra",
+      "thinking": "high"
+    },
+    "implementation": {
+      "model": "gpt-5.6-terra",
+      "thinking": "medium"
+    },
+    "review": {
+      "model": "gpt-5.6-terra",
+      "thinking": "medium"
+    },
+    "lightweight": {
+      "model": "gpt-5.6-luna",
+      "thinking": "low"
+    },
+    "idleQa": {
+      "model": "gpt-5.6-luna",
+      "thinking": "low"
+    },
+    "continuation": {
+      "model": "gpt-5.6-terra",
+      "thinking": "medium"
+    }
+  }
+}

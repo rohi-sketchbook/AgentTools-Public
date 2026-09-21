@@ -1,0 +1,26 @@
+id	ja	canonical_en	temporal	sources
+runway_walk	自信を持ってランウェイを歩く	walk confidently down a runway	continuous	fabricant_fashion;promptmake_fashion
+runway_power_walk	力強く自信のあるモデル歩きをする	stride forward with a confident power walk	continuous	fabricant_fashion
+runway_cross_step	脚をややクロスさせるようにモデル歩きする	walk with each step crossing slightly toward the center line	continuous	curated
+runway_relaxed_arms	肩をリラックスさせ腕振りを小さくして歩く	walk with shoulders relaxed and arms swinging minimally	continuous	promptmake_fashion
+runway_long_stride	長く一定のストライドで歩く	walk with long measured strides	continuous	curated
+runway_slow_stride	ゆっくり意識的なランウェイ歩行	walk slowly with deliberate runway steps	continuous	curated
+runway_fast_stride	姿勢を崩さず速めにランウェイを歩く	walk briskly with controlled runway posture	continuous	curated
+runway_stop_pose	前進して止まりモデルポーズを取る	walk forward, stop, and settle into a model pose	sequence	curated
+runway_stop_contrapposto	停止してコントラポストへ移る	stop and shift into contrapposto	short_action	fashion_show_prompt
+runway_stop_hand_hip	停止して片手を腰に当てる	stop and place one hand on the hip	short_action	fashion_show_prompt
+runway_pivot_90	きれいに90度ピボットターンする	perform a clean ninety-degree pivot turn	short_action	curated
+runway_pivot_180	きれいに180度ピボットターンする	perform a clean 180-degree pivot turn	short_action	curated
+runway_turn_lookback	向きを変えて肩越しに振り返る	turn away and look back over the shoulder	short_action	ururu_gravure;fashion_show_prompt
+runway_turn_walk_back	滑らかにターンして戻る方向へ歩く	turn around smoothly and walk back	sequence	curated
+runway_coat_reveal	歩きながら片手でコートを少し開いて見せる	open the coat slightly with one hand while walking	continuous	promptmake_fashion
+runway_skirt_flow	歩行に合わせてスカートを自然に揺らす	walk while letting the skirt move naturally with each step	continuous	promptmake_fashion
+runway_dress_sweep	ドレスが広がるように制御したターンをする	make a controlled turn that sweeps the dress outward	short_action	fabricant_fashion
+runway_pose_long_line	身体の縦ラインを強調した長いポーズを取る	hold an elongated pose emphasizing the body line	static	fabricant_fashion
+runway_sculptural_pose	シャープで彫刻的なファッションポーズ	hold a sharp sculptural fashion pose	static	fabricant_fashion
+runway_architectural_pose	腕と上体で角のある建築的ポーズを作る	form an angular architectural pose with arms and torso	static	fabricant_fashion
+runway_seated_editorial	手の位置を整えた洗練されたエディトリアル座り	sit in a sophisticated editorial pose with careful hand placement	static	fabricant_fashion
+runway_balletic_turn	優雅なバレエ風ターン	perform a graceful balletic turn	short_action	fabricant_fashion
+runway_pirouette	制御されたピルエット風ターン	perform a controlled pirouette-like turn	short_action	fabricant_fashion
+runway_pause_gaze	一瞬止まり観客側へ顔を向ける	pause briefly and turn the head toward the audience	short_action	curated
+runway_final_pose	中央で力強い決めポーズを取って終える	finish with a strong centered model pose	static	curated

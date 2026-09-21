@@ -1,0 +1,62 @@
+id	domain	ja	canonical_en	temporal	route_hint	priority	risk_flags	reason
+body_chest_pop	gesture	足を固定して腕を自然に下ろしたまま、胸だけを前へ小さく突き出す	briefly pop only the chest forward while keeping the feet planted and both arms relaxed at the sides	short_action	direct	medium		Reviewed at 100 steps with refined wording; Kimodo still expands the isolation into larger body/root motion, so keep as a motion-model gap.
+body_chest_retract	gesture	胸を後ろへ小さく引く	pull the chest backward briefly	short_action	direct	medium		Pairs with chest pop for body-isolation phrases.
+body_chest_circle	gesture	足を固定して腕を自然に下ろしたまま、胸郭だけを滑らかに円運動させる	circle only the chest smoothly while keeping the feet planted and both arms relaxed at the sides	continuous	direct	medium		Reviewed with refined wording; root stays controlled but arm/upper-body compensation prevents a reliable chest-only isolation.
+body_shoulder_roll_forward	gesture	足を固定して両腕を自然に下ろしたまま、両肩だけを前方向へ小さく回す	roll only both shoulders forward in small circles while keeping the feet planted and both arms relaxed at the sides	continuous	direct	medium		Reviewed with refined wording; shoulder intent appears but broad arm compensation remains seed-sensitive.
+body_shoulder_roll_backward	gesture	足を固定して両腕を自然に下ろしたまま、両肩だけを後ろ方向へ小さく回す	roll only both shoulders backward in small circles while keeping the feet planted and both arms relaxed at the sides	continuous	direct	medium		Reviewed with refined wording; root stability improved but isolated shoulder semantics remain inconsistent.
+body_shoulder_shimmy	gesture	足を固定して腕を自然に下ろしたまま、左右の肩だけを交互に小刻みに前後させる	alternate only the shoulders forward and backward in a small shimmy while keeping the feet planted and arms relaxed	continuous	direct	medium		Reviewed with refined wording; root travel is suppressed but the shoulder-only alternating motion is too subtle/inconsistent for promotion.
+body_hip_roll	gesture	足を固定して上半身をほぼ静止したまま、骨盤だけを滑らかに円運動させる	circle only the pelvis smoothly while keeping the feet planted and the upper body mostly still	continuous	direct	medium		Reviewed with refined wording; motion remains dominated by compensating upper-body/arm changes rather than a clean pelvis-only circle.
+body_hip_circle	gesture	腰で大きめの円を描く	circle the hips in a controlled motion	continuous	direct	medium		Distinct from simple lateral hip shift.
+body_wave_forward	gesture	胸から腰へ波を送るようにボディウェーブする	perform a body wave from chest to hips	continuous	direct	medium		Reviewed at 100 steps; output is dominated by arm/shoulder motion and does not reliably show a chest-to-hips wave.
+body_wave_reverse	gesture	腰から胸へ波を戻すようにボディウェーブする	perform a reverse body wave from hips to chest	continuous	direct	medium		Keep with the body-wave model-gap cluster until torso-isolation capability improves.
+body_side_bend_left	gesture	上体を左へしならせる	bend the torso smoothly to the left	short_action	direct	medium		Adds directional torso articulation.
+body_side_bend_right	gesture	上体を右へしならせる	bend the torso smoothly to the right	short_action	direct	medium		Adds directional torso articulation.
+body_torso_circle	gesture	上体で円を描くように回す	circle the torso smoothly	continuous	direct	medium		Useful for dance transitions.
+body_pelvis_tuck	gesture	骨盤を軽く前へ巻き込む	tuck the pelvis slightly forward	short_action	direct	medium		Fine body-shape primitive not represented explicitly.
+body_pelvis_release	gesture	骨盤の巻き込みを戻して自然な姿勢へ戻る	release the pelvis back to neutral	short_action	direct	medium		Needed as a paired transition primitive.
+arm_reach_side	gesture	片腕を横へ伸ばす	reach one arm out to the side	short_action	direct	medium		Basic directional arm primitive.
+arm_push_forward	gesture	両手を前へ押し出す	push both hands forward	short_action	direct	medium	finger_precision	Coarse arm placement is useful even when fingers are layered.
+arm_pull_to_chest	gesture	両腕を胸元へ引き寄せる	pull both arms inward toward the chest	short_action	direct	medium		Useful transition/gesture primitive.
+arm_circle_right	gesture	右腕を大きく円を描くように回す	circle the right arm broadly	continuous	direct	medium		Dance/warm-up primitive.
+arm_circle_left	gesture	左腕を大きく円を描くように回す	circle the left arm broadly	continuous	direct	medium		Dance/warm-up primitive.
+arm_wave_motion	gesture	腕から手首へ波を送るように動かす	perform a flowing arm wave	continuous	direct	medium	finger_precision	Reviewed body semantics are usable but exact wave propagation and wrist/finger detail remain partial; defer promotion.
+self_hug	gesture	自分の肩を抱くように両腕を回す	wrap both arms around the shoulders in a self-hug	static	pose_library	medium	exact_static_composition	Useful emotional/cute pose semantic.
+cover_face_both_hands	gesture	両手で顔を覆う	cover the face with both hands	short_action	direct	medium	finger_precision	Common emotional reaction gesture.
+peek_through_hands	gesture	顔を覆った手の間から覗く	peek through hands covering the face	static	hand_layer	medium	finger_precision;exact_static_composition	Requires hand geometry and body placement coordination.
+locomotion_diagonal_forward_left	locomotion	左斜め前へ歩く	walk diagonally forward to the left	continuous	direct	medium		Directional locomotion gap.
+locomotion_diagonal_forward_right	locomotion	右斜め前へ歩く	walk diagonally forward to the right	continuous	direct	medium		Directional locomotion gap.
+locomotion_circle_walk	locomotion	円を描くように歩く	walk along a circular path	continuous	direct	medium	root_distance	Useful for stage/fashion blocking.
+locomotion_arc_walk	locomotion	緩い弧を描きながら歩く	walk forward along a gentle arc	continuous	direct	medium	root_distance	Useful camera-aware and runway movement.
+locomotion_hop_back	locomotion	両足で小さく後ろへ跳ぶ	hop backward with both feet	short_action	direct	medium	floor_contact	Complements forward hop.
+locomotion_hop_left	locomotion	両足で小さく左へ跳ぶ	hop to the left with both feet	short_action	direct	medium	floor_contact	Directional hop primitive.
+locomotion_hop_right	locomotion	両足で小さく右へ跳ぶ	hop to the right with both feet	short_action	direct	medium	floor_contact	Directional hop primitive.
+dance_chasse_left	dance	左へシャッセする	chasse to the left	continuous	direct	medium		Useful idol/fashion dance step.
+dance_chasse_right	dance	右へシャッセする	chasse to the right	continuous	direct	medium		Useful idol/fashion dance step.
+dance_kick_step	dance	小さく蹴り出してステップする	make a small kick followed by a step	continuous	direct	medium	floor_contact	Useful cute/idol dance primitive.
+dance_arm_wave_step	dance	ステップしながら腕を波打たせる	step rhythmically while performing an arm wave	continuous	direct	medium	finger_precision	Reviewed as a composite; arm action appears but step/wave coupling is seed-sensitive and overlaps existing step+wave vocabulary.
+transition_floor_to_stand	stunt_athletic	床に近い姿勢から立ち上がる	rise from a floor-level pose to standing	short_action	direct	medium	floor_contact	Important for floor-pose choreography.
+transition_step_into_pose	static_pose	一歩踏み出して決めポーズへ入る	step into a held pose	short_action	pose_library	medium	exact_static_composition	The target pose is unspecified, so this remains context-dependent rather than a standalone physical-action anchor.
+transition_release_pose	static_pose	決めポーズを解いて自然な立ち姿へ戻る	release a held pose back to neutral standing	short_action	direct	medium	exact_static_composition	Requires knowledge of the source pose; standalone single-VAC generation is best-effort and may not preserve the intended starting pose.
+everyday_pick_up_floor	everyday_activity	床の物を拾い上げる	bend down and pick up an object from the floor	short_action	prop_constraint	medium	prop_contact	Official training domain is underrepresented in local vocabulary.
+everyday_put_down_floor	everyday_activity	持っている物を床へ置く	bend down and place an object on the floor	short_action	prop_constraint	medium	prop_contact	Pairs with pick-up behavior.
+everyday_reach_shelf	everyday_activity	棚の高さへ手を伸ばす	reach up toward an object on a shelf	short_action	prop_constraint	medium	prop_contact	Tests common reach/object interaction semantics.
+everyday_carry_one_hand	object_interaction	片手で物を持って歩く	walk while carrying an object in one hand	continuous	prop_constraint	medium	prop_contact;root_distance	Compositional locomotion plus object interaction.
+everyday_carry_two_hands	object_interaction	両手で物を抱えて歩く	walk while carrying an object with both hands	continuous	prop_constraint	medium	prop_contact;root_distance	Compositional locomotion plus object interaction.
+everyday_open_door	object_interaction	ドアに手を伸ばして開ける	reach for and open a door	short_action	prop_constraint	medium	prop_contact	Officially covered domain but absent from local seed.
+everyday_close_door	object_interaction	ドアを引いて閉じる	pull a door closed	short_action	prop_constraint	low	prop_contact	Complements open-door interaction.
+everyday_drink_cup	object_interaction	コップを口元へ運んで飲む	bring a cup to the mouth and drink	short_action	prop_constraint	medium	prop_contact	Useful common object interaction.
+everyday_phone_look	object_interaction	片手のスマートフォンを見る	look down at a phone held in one hand	static	prop_constraint	medium	prop_contact;exact_static_composition	Common modern idle pose/action.
+everyday_phone_walk	object_interaction	スマートフォンを見ながら歩く	walk while looking at a phone	continuous	prop_constraint	low	prop_contact;root_distance	Compositional everyday locomotion.
+athletic_forward_lunge	stunt_athletic	片脚を前へ出して深くランジする	step into a forward lunge	short_action	direct	medium	floor_contact	Basic athletic body primitive.
+athletic_side_lunge_left	stunt_athletic	左へサイドランジする	perform a side lunge to the left	short_action	direct	low	floor_contact	Broadens athletic vocabulary.
+athletic_side_lunge_right	stunt_athletic	右へサイドランジする	perform a side lunge to the right	short_action	direct	low	floor_contact	Broadens athletic vocabulary.
+athletic_squat_jump	stunt_athletic	しゃがんでから上へジャンプする	squat down and jump upward	short_action	direct	medium	floor_contact	Useful dynamic body primitive and capability probe.
+athletic_jumping_jack	stunt_athletic	ジャンピングジャックを繰り返す	perform repeated jumping jacks	continuous	direct	low	floor_contact	Simple whole-body athletic benchmark.
+athletic_high_knees	stunt_athletic	その場で膝を高く上げて走る	run in place with high knees	continuous	direct	low	floor_contact	Tests rhythmic athletic locomotion.
+style_happy	gesture	明るく嬉しそうな雰囲気で動く	move with a happy upbeat style	modifier	direct	medium		Officially claimed style not represented explicitly.
+style_sad	gesture	落ち込んだ悲しそうな雰囲気で動く	move with a sad subdued style	modifier	direct	medium		Officially claimed style not represented explicitly.
+style_angry	gesture	怒った力強い雰囲気で動く	move with an angry forceful style	modifier	direct	medium		Officially claimed style not represented explicitly.
+style_tired	gesture	疲れて力の抜けた雰囲気で動く	move with a tired low-energy style	modifier	direct	medium		Officially claimed style not represented explicitly.
+style_scared	gesture	怖がって身を縮めるような雰囲気で動く	move with a scared guarded style	modifier	direct	low		Officially claimed style not represented explicitly.
+style_injured	gesture	怪我をかばうような動き方をする	move as if protecting an injury	modifier	direct	low		Officially claimed style; useful capability probe.
+style_stealthy	gesture	気配を抑えるように慎重に動く	move in a cautious stealthy style	modifier	direct	low		Officially claimed style; useful capability probe.

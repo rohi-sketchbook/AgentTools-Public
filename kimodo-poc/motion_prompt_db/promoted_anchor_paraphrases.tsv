@@ -1,0 +1,101 @@
+id	anchor_id	split	ja	canonical_en
+anchor_body_hip_sway_v0	body_hip_sway	train	腰を左右にゆっくり揺らす	sway the hips side to side
+anchor_body_hip_sway_v1	body_hip_sway	train	腰を左右へスウェイさせる	sway the hips side to side
+anchor_body_hip_sway_v2	body_hip_sway	train	腰を左と右に交互に揺らす	sway the hips side to side
+anchor_body_hip_sway_v3	body_hip_sway	train	その場で腰を左右に振る	sway the hips side to side
+anchor_body_hip_sway_v4	body_hip_sway	val	ゆったりと腰を左右へ動かす	sway the hips side to side
+anchor_arm_reach_forward_v0	arm_reach_forward	train	片腕を前へ伸ばす	reach one arm forward
+anchor_arm_reach_forward_v1	arm_reach_forward	train	片方の腕をまっすぐ前に差し出す	reach one arm forward
+anchor_arm_reach_forward_v2	arm_reach_forward	train	片腕を前方へ伸ばす	reach one arm forward
+anchor_arm_reach_forward_v3	arm_reach_forward	train	片手を前へ届かせるように腕を伸ばす	reach one arm forward
+anchor_arm_reach_forward_v4	arm_reach_forward	val	片腕を身体の前へまっすぐ伸ばす	reach one arm forward
+anchor_arm_reach_up_v0	arm_reach_up	train	片腕を頭上へ伸ばす	reach one arm overhead
+anchor_arm_reach_up_v1	arm_reach_up	train	片方の腕を上へ高く伸ばす	reach one arm overhead
+anchor_arm_reach_up_v2	arm_reach_up	train	片腕を頭の上まで持ち上げる	reach one arm overhead
+anchor_arm_reach_up_v3	arm_reach_up	train	片手を空へ伸ばすように腕を上げる	reach one arm overhead
+anchor_arm_reach_up_v4	arm_reach_up	val	片腕を真上へ伸ばす	reach one arm overhead
+anchor_transition_kneel_to_stand_v0	transition_kneel_to_stand	train	膝立ちから立ち上がる	transition from kneeling to standing
+anchor_transition_kneel_to_stand_v1	transition_kneel_to_stand	train	膝をついた姿勢から立つ	transition from kneeling to standing
+anchor_transition_kneel_to_stand_v2	transition_kneel_to_stand	train	膝立ちの状態から身体を起こして立位になる	transition from kneeling to standing
+anchor_transition_kneel_to_stand_v3	transition_kneel_to_stand	train	膝をついた状態から立ち上がる	transition from kneeling to standing
+anchor_transition_kneel_to_stand_v4	transition_kneel_to_stand	val	膝立ちをやめてまっすぐ立つ	transition from kneeling to standing
+anchor_transition_stand_to_kneel_v0	transition_stand_to_kneel	train	立った姿勢から膝立ちになり、その姿勢で止まる	lower from standing into a kneeling position and remain kneeling
+anchor_transition_stand_to_kneel_v1	transition_stand_to_kneel	train	立位から膝をついて膝立ちになり、そのまま止まる	lower from standing into a kneeling position and remain kneeling
+anchor_transition_stand_to_kneel_v2	transition_stand_to_kneel	train	立った状態から身体を下ろして膝立ちで静止する	lower from standing into a kneeling position and remain kneeling
+anchor_transition_stand_to_kneel_v3	transition_stand_to_kneel	train	立った姿勢から両膝を下ろして膝立ちを保つ	lower from standing into a kneeling position and remain kneeling
+anchor_transition_stand_to_kneel_v4	transition_stand_to_kneel	val	立位から膝立ちへ移り、膝立ちのまま待つ	lower from standing into a kneeling position and remain kneeling
+anchor_transition_crouch_to_stand_v0	transition_crouch_to_stand	train	しゃがみ姿勢から立ち上がる	stand up from a crouch
+anchor_transition_crouch_to_stand_v1	transition_crouch_to_stand	train	しゃがんだ状態からまっすぐ立つ	stand up from a crouch
+anchor_transition_crouch_to_stand_v2	transition_crouch_to_stand	train	腰を落とした姿勢から身体を起こして立つ	stand up from a crouch
+anchor_transition_crouch_to_stand_v3	transition_crouch_to_stand	train	低くしゃがんだところから立ち上がる	stand up from a crouch
+anchor_transition_crouch_to_stand_v4	transition_crouch_to_stand	val	しゃがみを解いて立位になる	stand up from a crouch
+anchor_transition_stand_to_crouch_v0	transition_stand_to_crouch	train	立った姿勢からしゃがむ	lower from standing into a crouch
+anchor_transition_stand_to_crouch_v1	transition_stand_to_crouch	train	立った状態から腰を落としてしゃがむ	lower from standing into a crouch
+anchor_transition_stand_to_crouch_v2	transition_stand_to_crouch	train	立位から膝を曲げて低い姿勢になる	lower from standing into a crouch
+anchor_transition_stand_to_crouch_v3	transition_stand_to_crouch	train	立った姿勢から身体を下げてしゃがみ込む	lower from standing into a crouch
+anchor_transition_stand_to_crouch_v4	transition_stand_to_crouch	val	まっすぐ立った状態からしゃがみ姿勢へ移る	lower from standing into a crouch
+anchor_transition_stand_to_sit_v0	transition_stand_to_sit	train	立った姿勢から椅子に座るように腰を下ろし、座位で止まる	lower from standing into a chair-seated posture and remain seated
+anchor_transition_stand_to_sit_v1	transition_stand_to_sit	train	立った状態から腰掛ける動作をして座った姿勢で止まる	lower from standing into a chair-seated posture and remain seated
+anchor_transition_stand_to_sit_v2	transition_stand_to_sit	train	立位から椅子へ座るように身体を下ろして座位を保つ	lower from standing into a chair-seated posture and remain seated
+anchor_transition_stand_to_sit_v3	transition_stand_to_sit	train	立っている状態から腰を下ろし、椅子に座った姿勢になる	lower from standing into a chair-seated posture and remain seated
+anchor_transition_stand_to_sit_v4	transition_stand_to_sit	val	立位から座位へ移り、そのまま座っている	lower from standing into a chair-seated posture and remain seated
+anchor_transition_sit_to_stand_v0	transition_sit_to_stand	train	椅子に座った姿勢から立ち上がり、立位で止まる	rise from a chair-seated posture to standing and remain standing
+anchor_transition_sit_to_stand_v1	transition_sit_to_stand	train	座った状態から身体を起こして立つ	rise from a chair-seated posture to standing and remain standing
+anchor_transition_sit_to_stand_v2	transition_sit_to_stand	train	椅子に腰掛けた姿勢から立ち上がって静止する	rise from a chair-seated posture to standing and remain standing
+anchor_transition_sit_to_stand_v3	transition_sit_to_stand	train	座位から立位へ移ってまっすぐ立つ	rise from a chair-seated posture to standing and remain standing
+anchor_transition_sit_to_stand_v4	transition_sit_to_stand	val	座っている状態から立ち上がり、そのまま立つ	rise from a chair-seated posture to standing and remain standing
+anchor_locomotion_hop_forward_v0	locomotion_hop_forward	train	両足で小さく前へ跳ぶ	hop forward with both feet
+anchor_locomotion_hop_forward_v1	locomotion_hop_forward	train	両足をそろえて前方へ軽く跳ねる	hop forward with both feet
+anchor_locomotion_hop_forward_v2	locomotion_hop_forward	train	その場から両足で前へホップする	hop forward with both feet
+anchor_locomotion_hop_forward_v3	locomotion_hop_forward	train	両足で小さく前方へジャンプする	hop forward with both feet
+anchor_locomotion_hop_forward_v4	locomotion_hop_forward	val	両足を使って軽く前へ飛び移る	hop forward with both feet
+anchor_locomotion_soft_stop_v0	locomotion_soft_stop	train	歩行速度を落として自然に停止する	decelerate from walking into a soft stop
+anchor_locomotion_soft_stop_v1	locomotion_soft_stop	train	歩きながら徐々に減速して止まる	decelerate from walking into a soft stop
+anchor_locomotion_soft_stop_v2	locomotion_soft_stop	train	歩く速さをゆるめて滑らかに立ち止まる	decelerate from walking into a soft stop
+anchor_locomotion_soft_stop_v3	locomotion_soft_stop	train	歩行からゆっくり速度を落として停止する	decelerate from walking into a soft stop
+anchor_locomotion_soft_stop_v4	locomotion_soft_stop	val	歩いている状態から自然に減速して止まる	decelerate from walking into a soft stop
+anchor_locomotion_start_walk_v0	locomotion_start_walk	train	静止姿勢から自然に歩き始める	start walking naturally from a standstill
+anchor_locomotion_start_walk_v1	locomotion_start_walk	train	立ち止まった状態から歩き出す	start walking naturally from a standstill
+anchor_locomotion_start_walk_v2	locomotion_start_walk	train	静止状態から一歩踏み出して歩行を始める	start walking naturally from a standstill
+anchor_locomotion_start_walk_v3	locomotion_start_walk	train	その場で立っている状態から自然に歩き出す	start walking naturally from a standstill
+anchor_locomotion_start_walk_v4	locomotion_start_walk	val	止まっているところから歩行へ移る	start walking naturally from a standstill
+anchor_locomotion_turn_around_v0	locomotion_turn_around	train	歩きながら向きを反転する	turn around while walking
+anchor_locomotion_turn_around_v1	locomotion_turn_around	train	歩行中に身体の向きを180度変える	turn around while walking
+anchor_locomotion_turn_around_v2	locomotion_turn_around	train	歩きながら反対方向へ向き直る	turn around while walking
+anchor_locomotion_turn_around_v3	locomotion_turn_around	train	歩行を続けながらくるりと向きを変える	turn around while walking
+anchor_locomotion_turn_around_v4	locomotion_turn_around	val	歩いている途中で方向を反転する	turn around while walking
+anchor_locomotion_quick_stop_v0	locomotion_quick_stop	train	歩行から素早く停止する	come to a quick controlled stop from walking
+anchor_locomotion_quick_stop_v1	locomotion_quick_stop	train	歩いている状態からすぐに立ち止まる	come to a quick controlled stop from walking
+anchor_locomotion_quick_stop_v2	locomotion_quick_stop	train	歩行中に素早く減速して止まる	come to a quick controlled stop from walking
+anchor_locomotion_quick_stop_v3	locomotion_quick_stop	train	歩いていて急に制御された停止をする	come to a quick controlled stop from walking
+anchor_locomotion_quick_stop_v4	locomotion_quick_stop	val	歩行からピタッと止まる	come to a quick controlled stop from walking
+anchor_dance_sway_step_v0	dance_sway_step	train	腰を揺らしながら左右へステップする	step side to side while swaying the hips
+anchor_dance_sway_step_v1	dance_sway_step	train	腰をスウェイさせながら左右に足を運ぶ	step side to side while swaying the hips
+anchor_dance_sway_step_v2	dance_sway_step	train	左右へステップしつつ腰を揺らす	step side to side while swaying the hips
+anchor_dance_sway_step_v3	dance_sway_step	train	腰を左右に振りながらサイドステップする	step side to side while swaying the hips
+anchor_dance_sway_step_v4	dance_sway_step	val	リズムに合わせて腰を揺らし左右へステップする	step side to side while swaying the hips
+anchor_dance_grapevine_v0	dance_grapevine	train	足を横へ出し、反対の足を後ろへ交差し、横へ踏んで足を寄せるグレープバインステップを繰り返す	perform a repeating grapevine step with side step, behind-cross, side step, and close
+anchor_dance_grapevine_v1	dance_grapevine	train	横に一歩出し、反対の足を後ろへクロスしてまた横へ踏むグレープバインをする	perform a repeating grapevine step with side step, behind-cross, side step, and close
+anchor_dance_grapevine_v2	dance_grapevine	train	サイドステップと後ろ交差を繰り返すグレープバインステップをする	perform a repeating grapevine step with side step, behind-cross, side step, and close
+anchor_dance_grapevine_v3	dance_grapevine	train	横へ踏み、反対足を後ろに交差し、もう一度横へ踏んで足をそろえる	perform a repeating grapevine step with side step, behind-cross, side step, and close
+anchor_dance_grapevine_v4	dance_grapevine	val	足を横、後ろクロス、横、クローズの順で動かすグレープバインを繰り返す	perform a repeating grapevine step with side step, behind-cross, side step, and close
+anchor_dance_cross_step_v0	dance_cross_step	train	足を交差させるリズムステップをする	perform a rhythmic cross-step
+anchor_dance_cross_step_v1	dance_cross_step	train	左右の足を交差させながらリズミカルにステップする	perform a rhythmic cross-step
+anchor_dance_cross_step_v2	dance_cross_step	train	足をクロスさせるステップを繰り返す	perform a rhythmic cross-step
+anchor_dance_cross_step_v3	dance_cross_step	train	リズムに合わせて足を交差しながら踏む	perform a rhythmic cross-step
+anchor_dance_cross_step_v4	dance_cross_step	val	交差歩のように左右の足をクロスしてステップする	perform a rhythmic cross-step
+anchor_dance_bounce_step_v0	dance_bounce_step	train	軽く弾みながら左右へステップする	step side to side with a light bounce
+anchor_dance_bounce_step_v1	dance_bounce_step	train	小さくバウンドしながら左右に足を運ぶ	step side to side with a light bounce
+anchor_dance_bounce_step_v2	dance_bounce_step	train	弾むリズムでサイドステップする	step side to side with a light bounce
+anchor_dance_bounce_step_v3	dance_bounce_step	train	軽く上下に弾みつつ左右へステップする	step side to side with a light bounce
+anchor_dance_bounce_step_v4	dance_bounce_step	val	軽いバウンスを入れながら左右にステップする	step side to side with a light bounce
+anchor_dance_step_turn_v0	dance_step_turn	train	一歩踏み出して半回転し、反対向きで止まる	take one step and make a 180-degree half turn, ending facing the opposite direction
+anchor_dance_step_turn_v1	dance_step_turn	train	一歩出て180度ターンし、反対方向を向いて止まる	take one step and make a 180-degree half turn, ending facing the opposite direction
+anchor_dance_step_turn_v2	dance_step_turn	train	一歩踏んで半回転し、向きを反対に変えて静止する	take one step and make a 180-degree half turn, ending facing the opposite direction
+anchor_dance_step_turn_v3	dance_step_turn	train	ステップして180度回転し、逆向きで止まる	take one step and make a 180-degree half turn, ending facing the opposite direction
+anchor_dance_step_turn_v4	dance_step_turn	val	一歩から半回転につなげて反対方向を向く	take one step and make a 180-degree half turn, ending facing the opposite direction
+anchor_hands_behind_head_v0	hands_behind_head	train	両手を頭の後ろへ添える	place both hands behind the head
+anchor_hands_behind_head_v1	hands_behind_head	train	両手を頭の後ろに回す	place both hands behind the head
+anchor_hands_behind_head_v2	hands_behind_head	train	両手を後頭部のあたりに置く	place both hands behind the head
+anchor_hands_behind_head_v3	hands_behind_head	train	両腕を上げて両手を頭の後ろへ持っていく	place both hands behind the head
+anchor_hands_behind_head_v4	hands_behind_head	val	両手を頭の後ろで構える	place both hands behind the head

@@ -1,0 +1,31 @@
+id	ja	canonical_en	temporal	sources	notes
+idol_side_step	左右へ小さくサイドステップする	take small side steps left and right	continuous	curated	one-scene Kimodo candidate
+dance_sway_step	腰を揺らしながら左右へステップする	step side to side while swaying the hips	continuous	curated	promoted after multi-seed Kimodo capability review; direct compositional body primitive
+dance_grapevine	足を横へ出し、反対の足を後ろへ交差し、横へ踏んで足を寄せるグレープバインステップを繰り返す	perform a repeating grapevine step with side step, behind-cross, side step, and close	continuous	curated	promoted as direction-neutral concept after two 100-step seeds showed stable foot crossing but unstable requested left/right travel direction
+dance_cross_step	足を交差させるリズムステップをする	perform a rhythmic cross-step	continuous	curated	promoted after two 100-step seeds; foot-order crossing observed repeatedly
+dance_bounce_step	軽く弾みながら左右へステップする	step side to side with a light bounce	continuous	curated	promoted after two 100-step seeds; lateral stepping with vertical bounce is stable
+dance_step_turn	一歩踏み出して半回転し、反対向きで止まる	take one step and make a 180-degree half turn, ending facing the opposite direction	short_action	curated	promoted after explicit final-heading wording; about 173-178 degree heading change in reviewed seeds
+idol_step_touch	シンプルなステップタッチ（ツーステップ）をする	perform a simple side-to-side step-touch pattern	continuous	curated	covers the generic Japanese two-step wording; one-scene Kimodo candidate
+idol_bounce	リズムに合わせてその場で軽く弾む	bounce lightly in place to the rhythm	continuous	curated	one-scene Kimodo candidate
+idol_small_jump	元気よく小さくジャンプする	make a small cheerful jump	short_action	curated	one-scene Kimodo candidate
+idol_two_jumps	リズムに合わせて小さく2回跳ぶ	make two small rhythmic jumps	short_action	curated	count-sensitive
+idol_half_turn	軽く半回転する	make a light half turn	short_action	curated	one-scene Kimodo candidate
+idol_full_turn	軽く一回転する	spin around once lightly	short_action	nano_pose72	count-sensitive
+idol_twirl_skirt	スカートが広がるように軽くくるっと回る	twirl lightly so the skirt flares outward	short_action	nano_pose72	cloth is scene response, body motion is Kimodo candidate
+idol_wave_step	片手を振りながら小さくサイドステップ	wave one hand while taking small side steps	continuous	curated	compound simultaneous action
+idol_double_wave	軽く弾みながら両手を振る	wave both hands while bouncing lightly	continuous	curated	compound simultaneous action
+idol_point_step	横へステップしながら前を指差す	point forward while stepping to the side	continuous	curated	compound simultaneous action
+idol_heart_step	胸元でハートを作りながら小さく一歩前へ出る	form a heart near the chest while taking a small step forward	short_action	curated	finger-level fidelity may require hand pose support
+idol_peace_turn	少しターンしながら顔の横でピース	make a peace sign near the face while turning slightly	short_action	curated	finger-level fidelity may require hand pose support
+idol_cheek_sway	両手を頬の近くに添え左右へ揺れる	place both hands near the cheeks and sway side to side	continuous	curated	compound simultaneous action
+idol_arm_swing	リズムに合わせて両前腕を左右へ振る	swing both forearms gently left and right in rhythm	continuous	curated	one-scene Kimodo candidate
+idol_overhead_wave	両手を頭上で左右に振る	raise both hands overhead and wave them side to side	continuous	curated	one-scene Kimodo candidate
+idol_clap	胸の前でリズミカルに拍手する	clap rhythmically in front of the chest	continuous	curated	hand contact fidelity may vary
+idol_shy_step	膝を少し内側にした小さなステップと照れた上体傾き	take a small inward-knee step with a shy upper-body tilt	short_action	curated	compound simultaneous action
+idol_kick_step	小さくかわいく前へキックして戻す	make a small playful forward kick and return	short_action	curated	return-to-pose timing may need VAC cleanup
+idol_heel_pop	片方のかかとをかわいく上げてポーズ	lift one heel playfully while posing	static	curated	pose candidate
+idol_pose_change	両手後ろ組みからダブルピースへ移る	transition from hands behind the back to a double peace pose	sequence	curated	ordered single-VAC sequence; timing may be approximate
+idol_bow	明るく小さくステージお辞儀	make a small cheerful stage bow	short_action	curated	one-scene Kimodo candidate
+idol_curtsy	軽いアイドル風カーテシー	perform a light idol-style curtsy	short_action	nano_pose72	one-scene Kimodo candidate
+idol_greeting_combo	手を振って首をかしげ、かわいい決めポーズへ入る	wave, tilt the head, and settle into a cute pose	sequence	curated	ordered single-VAC sequence; timing may be approximate
+idol_finish_heart	最後に胸元で両手ハートを作る	finish by forming a heart with both hands near the chest	short_action	curated	finger-level fidelity may require hand pose support

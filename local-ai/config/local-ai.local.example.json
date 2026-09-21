@@ -1,0 +1,12 @@
+{
+  "stabilityMatrixRoot": "D:/StabilityMatrix",
+  "stabilityMatrixExecutable": "D:/StabilityMatrix/StabilityMatrix.exe",
+  "stabilityMatrixSettings": "D:/StabilityMatrix/Data/settings.json",
+  "detectedWorkflowSources": [
+    {
+      "id": "comfyui-user",
+      "displayName": "ComfyUI user workflows",
+      "path": "D:/StabilityMatrix/Data/Packages/ComfyUI/user/default/workflows"
+    }
+  ]
+}

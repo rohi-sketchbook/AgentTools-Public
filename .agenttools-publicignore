@@ -1,0 +1,16 @@
+# Paths kept in the private development repository but omitted from public exports.
+# Syntax: exact repository-relative file path or directory prefix ending in "/".
+
+# Product-specific HyperFrames projects and embedded screenshots.
+hyperframes/vras-feature-promo-template/
+hyperframes/vras-shorts-clean/
+hyperframes/vras-shorts-pop/
+hyperframes/vras-vrc-import-promo/
+
+# Product-specific Remotion compositions. The generic HelloDevSpace project remains public.
+remotion/src/RootVRASFeatureComic.tsx
+remotion/src/RootVRASShortVariants.tsx
+remotion/src/VRASFeatureComic.tsx
+remotion/src/VRASShortVariants.tsx
+remotion/src/index-vras-feature-comic.ts
+remotion/src/index-vras-short-variants.ts

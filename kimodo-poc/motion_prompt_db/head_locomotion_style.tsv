@@ -1,0 +1,47 @@
+id	ja	canonical_en	category	temporal	sources	notes
+nod_once	一度うなずく	nod once	head	short_action	runway_video	count-sensitive
+nod_gently	やさしくうなずく	nod gently	head	short_action	runway_video	
+shake_head	首を左右に振る	shake the head side to side	head	short_action	runway_video	
+head_tilt_left	首を左にかしげる	tilt the head left	head	short_action	nano_pose72	
+head_tilt_right	首を右にかしげる	tilt the head right	head	short_action	nano_pose72	
+look_left	顔を左へ向ける	turn the head to look left	head	short_action	runway_video	
+look_right	顔を右へ向ける	turn the head to look right	head	short_action	runway_video	
+look_up	あごを上げて上を見る	raise the chin and look upward	head	short_action	curated	
+look_down	あごを下げて下を見る	lower the chin and look downward	head	short_action	curated	
+look_back_head	肩越しに顔を後ろへ向ける	turn the head back over the shoulder	head	short_action	ururu_gravure	
+small_head_sway	リズムに合わせて頭を軽く揺らす	sway the head gently with the rhythm	head	continuous	curated	
+walk_forward	前へ歩く	walk forward	locomotion	continuous	existing_kimodo	
+walk_backward	後ろへ歩く	walk backward	locomotion	continuous	existing_kimodo	
+walk_left	左へ歩く	walk to the left	locomotion	continuous	existing_kimodo	
+walk_right	右へ歩く	walk to the right	locomotion	continuous	existing_kimodo	
+jog_forward	前へジョギングする	jog forward	locomotion	continuous	existing_kimodo	
+run_forward	前へ走る	run forward	locomotion	continuous	existing_kimodo	
+march_forward	前へ行進する	march forward	locomotion	continuous	existing_kimodo	
+skip_forward	前へスキップする	skip forward	locomotion	continuous	existing_kimodo	
+tiptoe_forward	つま先立ちで前へ歩く	walk forward on tiptoes	locomotion	continuous	existing_kimodo	
+crouch_walk	しゃがんだ姿勢で前へ歩く	crouch-walk forward	locomotion	continuous	existing_kimodo	
+step_forward	小さく一歩前へ出る	take one small step forward	locomotion	short_action	curated	
+step_back	小さく一歩後ろへ下がる	take one small step backward	locomotion	short_action	curated	
+side_step_left	左へ小さくサイドステップ	take a small side step left	locomotion	short_action	curated	
+side_step_right	右へ小さくサイドステップ	take a small side step right	locomotion	short_action	curated	
+pivot_in_place	その場でピボットターンする	pivot in place	locomotion	short_action	curated	
+locomotion_hop_forward	両足で小さく前へ跳ぶ	hop forward with both feet	locomotion	short_action	curated	promoted after multi-seed Kimodo review; both feet clear the floor in reviewed runs
+locomotion_soft_stop	歩行速度を落として自然に停止する	decelerate from walking into a soft stop	locomotion	short_action	curated	promoted after multi-seed Kimodo review; direct with root speed/distance control
+locomotion_start_walk	静止姿勢から自然に歩き始める	start walking naturally from a standstill	locomotion	short_action	curated	promoted after multi-seed Kimodo review; useful entry transition
+locomotion_turn_around	歩きながら向きを反転する	turn around while walking	locomotion	short_action	curated	promoted after multi-seed Kimodo review; about 175-179 degree heading change in reviewed runs
+locomotion_quick_stop	歩行から素早く停止する	come to a quick controlled stop from walking	locomotion	short_action	curated	promoted after two 100-step seeds; stop semantics stable but root distance/speed normalization remains recommended
+style_slow	ゆっくりやさしく動く	move slowly and gently	motion_style	modifier	runway_video;veo_guide	combine with a concrete base action
+style_quick	素早く制御して動く	move quickly with control	motion_style	modifier	runway_video;veo_guide	combine with a concrete base action
+style_playful	軽く遊び心のある動き	move with playful light energy	motion_style	modifier	curated	combine with a concrete base action
+style_shy	小さく照れたような仕草で動く	move with small shy gestures	motion_style	modifier	curated	combine with a concrete base action
+style_elegant	滑らかなラインで優雅に動く	move elegantly with smooth lines	motion_style	modifier	fabricant_fashion	combine with a concrete base action
+style_confident	自信のある姿勢で動く	move with confident posture	motion_style	modifier	fabricant_fashion	combine with a concrete base action
+style_graceful	しなやかで流れるように動く	move gracefully and fluidly	motion_style	modifier	fabricant_fashion	combine with a concrete base action
+style_bouncy	軽く弾むリズムで動く	move with a light bouncy rhythm	motion_style	modifier	curated	combine with a concrete base action
+style_delicate	小さく制御された繊細な仕草	move delicately with small controlled gestures	motion_style	modifier	curated	combine with a concrete base action
+style_energetic	メリハリのある元気な動き	move energetically with clear accents	motion_style	modifier	curated	combine with a concrete base action
+style_soft	柔らかく力の抜けた身体動作	use soft relaxed body motion	motion_style	modifier	runway_image	combine with a concrete base action
+style_model_like	抑制されたモデルらしい自信のある動き	move with restrained model-like confidence	motion_style	modifier	fabricant_fashion	combine with a concrete base action
+style_idol_like	明るくかわいいアイドル風の仕草	move with bright cute idol-like gestures	motion_style	modifier	curated	combine with a concrete base action
+style_camera_aware	カメラを意識したポーズと動き	pose and move as if aware of the camera	motion_style	modifier	curated	combine with a concrete base action
+style_rhythmic	一定のシンプルなリズムで動く	move in a steady simple rhythm	motion_style	modifier	runway_video	combine with a concrete base action

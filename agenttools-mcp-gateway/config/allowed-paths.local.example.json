@@ -1,0 +1,7 @@
+{
+  "allowedRoots": [
+    "${AGENTTOOLS_ROOT}",
+    "D:/projects",
+    "${USERPROFILE}/.devspace/worktrees"
+  ]
+}

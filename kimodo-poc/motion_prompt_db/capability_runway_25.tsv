@@ -1,0 +1,26 @@
+id	ja	en	expected	difficulty	policy	vocab_ids
+cap_051	自信を持ってまっすぐランウェイを歩く。	Walk confidently straight down a runway.	runway walk	medium	direct	runway_walk
+cap_052	長いストライドで一定のテンポを保って歩く。	Walk forward with long measured strides and controlled posture.	long runway stride	medium	direct	runway_long_stride
+cap_053	脚をややクロスさせるようにモデル歩きする。	Walk forward with each step crossing slightly toward the center line.	cross-step runway walk	medium	direct	runway_cross_step
+cap_054	肩をリラックスさせ、腕振りを小さくして歩く。	Walk with relaxed shoulders and minimal arm swing.	restrained runway walk	medium	direct	runway_relaxed_arms
+cap_055	力強いモデル歩きで正面へ進む。	Stride forward with a confident power walk.	power walk	medium	direct	runway_power_walk
+cap_056	ゆっくり意識的なランウェイ歩行をする。	Walk slowly with deliberate runway steps.	slow runway stride	medium	direct	runway_slow_stride
+cap_057	速めに歩くが、上体はまっすぐ保つ。	Walk briskly while keeping the torso upright and controlled.	fast controlled runway	medium	direct	runway_fast_stride
+cap_058	前へ歩き、停止して片脚重心のモデルポーズへ入る。	Walk forward, stop, and shift into a contrapposto model pose.	walk -> stop pose	hard	direct	runway_stop_pose;runway_stop_contrapposto
+cap_059	前へ歩いて止まり、片手を腰に当てる。	Walk forward, stop, and place one hand on the hip.	walk -> hand hip	hard	direct	runway_stop_hand_hip
+cap_060	停止した状態から90度ピボットターンする。	Perform a clean ninety-degree pivot turn from a standing pose.	90 pivot	medium	direct	runway_pivot_90
+cap_061	停止した状態から180度ピボットターンする。	Perform a clean 180-degree pivot turn from a standing pose.	180 pivot	medium	direct	runway_pivot_180
+cap_062	向きを変え、肩越しに振り返る。	Turn away and look back over one shoulder.	turn + lookback	medium	direct	runway_turn_lookback
+cap_063	滑らかに180度ターンして戻る方向へ歩き始める。	Turn around smoothly and begin walking back.	turn -> walk back	hard	direct	runway_turn_walk_back
+cap_064	歩きながら片手でコートを少し開いて見せる。	Walk while opening the coat slightly with one hand.	coat reveal walk	medium	direct	runway_coat_reveal
+cap_065	歩行に合わせてスカートが自然に揺れるように進む。	Walk forward while allowing the skirt to move naturally with each step.	skirt-flow walk	medium	direct	runway_skirt_flow
+cap_066	ドレスが広がるように制御されたターンをする。	Perform a controlled turn that sweeps the dress outward.	dress sweep turn	medium	direct	runway_dress_sweep
+cap_067	身体の縦ラインを強調した長いファッションポーズを取る。	Hold an elongated fashion pose emphasizing the body line.	elongated fashion pose	medium	direct	runway_pose_long_line
+cap_068	腕と上体でシャープな彫刻的ポーズを取る。	Hold a sharp sculptural fashion pose using the arms and torso.	sculptural pose	medium	direct	runway_sculptural_pose
+cap_069	腕と上体で角のある建築的なポーズを取る。	Form an angular architectural pose with the arms and torso.	architectural pose	medium	direct	runway_architectural_pose
+cap_070	椅子に洗練された姿勢で座り、手をきれいに配置する。	Sit in a sophisticated editorial pose with carefully placed hands.	editorial seated	medium	direct	runway_seated_editorial
+cap_071	優雅なバレエ風ターンをする。	Perform a graceful balletic turn.	balletic turn	medium	direct	runway_balletic_turn
+cap_072	制御されたピルエット風ターンをする。	Perform a controlled pirouette-like turn.	pirouette-like turn	medium	direct	runway_pirouette
+cap_073	一瞬停止して観客側へ顔を向ける。	Pause briefly and turn the head toward the audience.	pause + gaze	medium	direct	runway_pause_gaze
+cap_074	中央で強いモデルポーズを取って終える。	Finish with a strong centered model pose.	final model pose	medium	direct	runway_final_pose
+cap_075	歩く、停止する、180度ターンする、戻る方向へ歩く。	Walk forward, stop, perform a 180-degree turn, and walk back.	runway sequence	hard	direct	runway_walk;runway_pivot_180;runway_turn_walk_back

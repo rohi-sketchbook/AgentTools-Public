@@ -1,0 +1,25 @@
+{
+  "name": "MiniMax H3 Fast Frame",
+  "description": "MiniMax H3 Turbo 4-step T2V draft workflow. Uses pruned INT8 FL2VA + NVFP4 text encoder + SageAttention and saves one representative video frame as PNG.",
+  "type": "image-from-video",
+  "workflowFile": "workflow-api.json",
+  "bindings": {
+    "prompt": { "node": "5", "input": "prompt" },
+    "seed": { "node": "6", "input": "noise_seed" },
+    "steps": { "node": "8", "input": "steps" },
+    "width": { "node": "5", "input": "width" },
+    "height": { "node": "5", "input": "height" },
+    "length": { "node": "5", "input": "length" },
+    "outputPrefix": { "node": "13", "input": "filename_prefix" },
+    "frameIndex": { "node": "12", "input": "batch_index" },
+    "loraStrength": { "node": "4", "input": "strength" }
+  },
+  "defaults": {
+    "width": 640,
+    "height": 480,
+    "length": 56,
+    "steps": 4,
+    "frameIndex": 28,
+    "loraStrength": 1.0
+  }
+}

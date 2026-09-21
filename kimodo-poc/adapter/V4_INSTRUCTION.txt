@@ -1,0 +1,1 @@
+Map Japanese human motion descriptions into a semantic space for full-body motion generation.

@@ -1,0 +1,17 @@
+# Copy this file outside the repository, for example:
+#   C:/Users/<USER>/.cloudflared/agenttools-control-center.yml
+# Never commit the real tunnel credentials or Access identifiers.
+
+tunnel: <TUNNEL_ID>
+credentials-file: C:/Users/<USER>/.cloudflared/<TUNNEL_ID>.json
+
+ingress:
+  - hostname: control.example.com
+    service: http://127.0.0.1:47832
+    originRequest:
+      access:
+        required: true
+        teamName: <CLOUDFLARE_ZERO_TRUST_TEAM_NAME>
+        audTag:
+          - <ACCESS_APPLICATION_AUD_TAG>
+  - service: http_status:404

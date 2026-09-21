@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=640, height=360" />
+  <title>HyperFrames Smoke Test</title>
+  <style>
+    html, body { margin: 0; width: 640px; height: 360px; background: #101418; }
+    #root { position: relative; width: 640px; height: 360px; overflow: hidden; }
+    .clip { position: absolute; inset: 0; display: grid; place-items: center; }
+    h1 { margin: 0; color: white; font: 700 42px system-ui, sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="smoke" data-no-timeline data-start="0" data-width="640" data-height="360" data-duration="1" data-fps="30">
+    <section id="title-card" class="clip" data-start="0" data-duration="1" data-track-index="1">
+      <h1>HyperFrames OK</h1>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+  "writeActionsEnabled": false,
+  "externalActionsEnabled": false,
+  "destructiveActionsEnabled": false,
+  "longRunningActionsEnabled": false,
+  "actionPolicy": {
+    "enabled": true,
+    "allowedWriteActions": [
+      "git.commit",
+      "skill.apply",
+      "task.snapshotRestore",
+      "devspace.restart"
+    ],
+    "allowedExternalActions": [
+      "discord.post",
+      "git.push"
+    ],
+    "allowedDestructiveActions": [],
+    "allowedLongRunningActions": [
+      "task.run"
+    ],
+    "allowedLongRunningAdapters": [
+      "blender",
+      "blender-mcp",
+      "local-ai-start",
+      "local-ai-generate",
+      "unity",
+      "remotion",
+      "hyperframes"
+    ],
+    "allowedNetworkTaskAdapters": [],
+    "explicitUserRequestRequired": [
+      "discord.post",
+      "git.commit",
+      "git.push",
+      "skill.apply",
+      "task.snapshotRestore",
+      "task.run"
+    ]
+  },
+  "confirmationTtlMs": 900000,
+  "maxPreviewChars": 12000,
+  "maxCommandLineChars": 1200,
+  "maxLogLineChars": 4000,
+  "maxTaskLogLines": 2000,
+  "maxTaskLogBytes": 8388608,
+  "maxConcurrentTasks": 1,
+  "defaultTaskTimeoutMs": 1800000,
+  "taskStallDetectionEnabled": true,
+  "defaultTaskStallTimeoutMs": 900000,
+  "taskHeartbeatPersistIntervalMs": 30000,
+  "workTaskAutoResumePolicy": {
+    "enabled": true,
+    "maxAutoResumeCount": 3,
+    "maxConsecutiveTimeouts": 3,
+    "maxTotalRuntimeMs": 14400000,
+    "maxRepeatedProgressCount": 2,
+    "continuationScanIntervalMs": 60000,
+    "codexHandoffAfterMs": 600000,
+    "codexUsageThresholdPercent": 90,
+    "reuseCodexSession": true,
+    "maxContinuationTasksPerSweep": 8
+  },
+  "workTaskWorkerPolicy": {
+    "stallAfterMs": 600000,
+    "crashAfterMs": 1800000,
+    "maxConsecutiveFailures": 3,
+    "circuitBreakerMs": 900000,
+    "maxRunsPerWorker": 20
+  },
+  "allowedUnityMethodPrefixes": [],
+  "note": "Legacy global execution flags remain false. Runtime authorization is action-scoped: only allowlisted actions may execute. discord.post/git.commit/git.push/skill.apply/task.snapshotRestore/task.run require an explicit user-request assertion plus a matching confirmToken. skill.apply additionally requires an already-approved proposal and matching Skill base hash. task.snapshotRestore is limited to bounded Work Task snapshots and never deletes files. task.run is restricted to registered trusted adapters and network-requiring task adapters remain denied. Destructive and arbitrary external/write/command execution remain blocked."
+}

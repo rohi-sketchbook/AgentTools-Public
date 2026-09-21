@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "providers": {
+    "meta-vr-cli": {
+      "status": "ready",
+      "kind": "mcp-stdio",
+      "command": "npx.cmd",
+      "args": ["-y", "metavr", "mcp", "server", "--no-telemetry"],
+      "lifecycle": "on-demand",
+      "purpose": [
+        "quest-device-management",
+        "app-install-launch-stop",
+        "capture",
+        "logs",
+        "perfetto",
+        "meta-doc-search"
+      ]
+    }
+  }
+}
