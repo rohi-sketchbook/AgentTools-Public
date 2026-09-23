@@ -9,7 +9,7 @@
   "expectedVersion": "1.0.8",
   "launcherBat": "Start-DevSpace-Local.bat",
   "doctorBat": "Doctor-DevSpace-Local.bat",
-  "pinnedCommit": "c08bab17b3dada242119a9e0b6485504442cf701",
+  "pinnedCommit": "5a8510fd3106b8e788d99d683d7382e368ccd487",
   "processPattern": "dist[\\\\/]cli\\.js[\\\"']?\\s+serve",
   "defaultHost": "127.0.0.1",
   "defaultPort": 7676,

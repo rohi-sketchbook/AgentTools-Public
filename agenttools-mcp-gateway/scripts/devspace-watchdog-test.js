@@ -18,9 +18,11 @@ function createRuntime(overrides = {}) {
   let nowMs = overrides.nowMs || Date.parse('2026-07-28T00:00:00.000Z');
   const history = [];
   const recoverCalls = [];
+  let writeStateCalls = 0;
   const config = {
     enabled: true,
     intervalMs: 10000,
+    healthyPersistIntervalMs: 60000,
     failureThreshold: 3,
     forceAfterFailures: 6,
     allowForceRecovery: true,
@@ -41,7 +43,7 @@ function createRuntime(overrides = {}) {
       return { ok: true, changed: true, action: allowForce ? 'force-restart' : 'restart' };
     },
     readState: async () => JSON.parse(JSON.stringify(state)),
-    writeState: async (next) => { state = JSON.parse(JSON.stringify(next)); },
+    writeState: async (next) => { writeStateCalls += 1; state = JSON.parse(JSON.stringify(next)); },
     appendHistory: async (entry) => { history.push(JSON.parse(JSON.stringify(entry))); },
     readMaintenance: async () => overrides.readMaintenance ? overrides.readMaintenance() : overrides.maintenance || { active: false },
   };
@@ -50,6 +52,7 @@ function createRuntime(overrides = {}) {
     getState: () => state,
     getHistory: () => history,
     getRecoverCalls: () => recoverCalls,
+    getWriteStateCalls: () => writeStateCalls,
     setStatus: (value) => { current = value; },
     advance: (ms) => { nowMs += ms; },
   };
@@ -110,6 +113,35 @@ async function main() {
     assert.equal(result.event, 'healthy');
     assert.equal(fake.getRecoverCalls().length, 0);
     assert.equal(fake.getState().consecutiveFailures, 0);
+  });
+
+  await test('healthy state persistence is throttled without slowing health checks', async () => {
+    const fake = createRuntime();
+    await watchdog.runCheck(fake.runtime);
+    assert.equal(fake.getWriteStateCalls(), 1);
+    const firstPersistedAt = fake.getState().lastCheckAt;
+
+    fake.advance(10000);
+    const second = await watchdog.runCheck(fake.runtime);
+    assert.equal(second.event, 'healthy');
+    assert.equal(fake.getWriteStateCalls(), 1);
+    assert.equal(fake.getState().lastCheckAt, firstPersistedAt);
+
+    fake.advance(50000);
+    await watchdog.runCheck(fake.runtime);
+    assert.equal(fake.getWriteStateCalls(), 2);
+    assert.notEqual(fake.getState().lastCheckAt, firstPersistedAt);
+  });
+
+  await test('failure state is persisted immediately during healthy throttle window', async () => {
+    const fake = createRuntime({ config: { failureThreshold: 3 } });
+    await watchdog.runCheck(fake.runtime);
+    fake.advance(10000);
+    fake.setStatus(unhealthy());
+    const result = await watchdog.runCheck(fake.runtime);
+    assert.equal(result.event, 'waiting-threshold');
+    assert.equal(fake.getWriteStateCalls(), 2);
+    assert.equal(fake.getState().consecutiveFailures, 1);
   });
 
   await test('recovery waits for consecutive failure threshold', async () => {

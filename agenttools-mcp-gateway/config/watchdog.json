@@ -1,6 +1,7 @@
 {
   "enabled": true,
   "intervalMs": 10000,
+  "healthyPersistIntervalMs": 60000,
   "failureThreshold": 3,
   "forceAfterFailures": 6,
   "allowForceRecovery": true,

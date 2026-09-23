@@ -1,9 +1,9 @@
 ---
 name: blender-mcp
-description: "Operate Blender through BlenderMCP for scene inspection/editing, rendering, asset work, and BlenderMCP start/stop/restart. Shared root: <AgentToolsRoot>\\blender-mcp; endpoint: 127.0.0.1:9876."
+description: 'Operate Blender through MCP for Blender for scene inspection/editing, rendering, asset work, and MCP start/stop/restart. Shared root: <AgentToolsRoot>\blender-mcp; endpoint: 127.0.0.1:9876.'
 ---
 
-# BlenderMCP
+# MCP for Blender
 
 Use this as the shared Blender automation tool across projects.
 
@@ -32,7 +32,7 @@ The Blender executable is discovered automatically. Prefer BLENDER_EXE or explic
 
 ## Project separation
 
-BlenderMCP is a shared Agent Tool. Production assets remain in the calling project's own directory; do not move them into the shared AgentTools checkout.
+MCP for Blender is a shared Agent Tool. Production assets remain in the calling project's own directory; do not move them into the shared AgentTools checkout.
 
 ## Scene authoring / modification contract
 

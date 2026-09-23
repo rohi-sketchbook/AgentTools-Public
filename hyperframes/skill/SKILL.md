@@ -10,12 +10,12 @@ Use this skill for local HyperFrames video production.
 ## Environment
 
 - Shared root: `<AgentToolsRoot>\hyperframes`
-- Maintained CLI baseline: **HyperFrames 0.8.23** (updated 2026-09-02).
+- Maintained CLI baseline: **HyperFrames 0.8.59** (updated 2026-09-22).
 - Node.js 24.x and FFmpeg are installed.
 - Chrome Headless Shell is installed through HyperFrames.
 - Use `hf-local.cmd` for HyperFrames CLI commands. It sets `HYPERFRAMES_NO_TELEMETRY=1` and `DO_NOT_TRACK=1` for every invocation.
 - Keep rendering local by default.
-- Active render projects should pin `hyperframes@0.8.23`; historical one-off projects may intentionally preserve an older exact pin for reproducible renders.
+- Active render projects should pin `hyperframes@0.8.59`; historical one-off projects may intentionally preserve an older exact pin for reproducible renders.
 
 ## Allowed official skills
 
@@ -25,9 +25,11 @@ The maintained HyperFrames skill set for this environment is limited to:
 - `hyperframes-cli`
 - `hyperframes-core`
 - `hyperframes-animation`
+- `hyperframes-audio`
 - `hyperframes-creative`
 - `hyperframes-keyframes`
 - `hyperframes-registry`
+- `hyperframes-studio`
 - `media-use`
 
 Do not automatically install missing optional HyperFrames workflow skills such as `remotion-to-hyperframes`, `figma`, `general-video`, `motion-graphics`, `music-to-video`, or `talking-head-recut`. Add one only when a user request actually requires that workflow.

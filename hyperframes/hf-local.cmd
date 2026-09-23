@@ -13,7 +13,7 @@ if /I "%~1"=="skills" (
 )
 
 rem Keep the shared CLI deterministic instead of resolving an older cached npx package.
-npx.cmd --yes hyperframes@0.8.23 %*
+npx.cmd --yes hyperframes@0.8.59 %*
 set "HF_EXIT_CODE=%ERRORLEVEL%"
 
 if defined HF_PUSHED_DIR popd

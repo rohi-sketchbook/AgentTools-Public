@@ -37,7 +37,7 @@ ChatGPT切断後のCodex自動継続は既存DevSpace watchdogへ相乗りする
 
 ビルド、動画処理、明示的な一括変換等のforeground jobは例外だが、常駐idle状態へ戻った後も超過が続く場合は異常とする。
 
-`devspace-watchdog` はAgentTools配下プロセスの累積CPU/I/Oを監視し、継続超過を `resource-budget-exceeded` としてWatchdog履歴へ記録する。自動killは行わない。
+`devspace-watchdog` はAgentTools配下プロセスの累積CPU/I/Oを監視し、継続超過を `resource-budget-exceeded` としてWatchdog履歴へ記録する。自動killは行わない。DevSpace health probeは既定10秒周期を維持するが、healthyが継続している間のstate永続化は既定60秒周期へ間引き、障害・状態遷移・復旧・maintenanceは即時保存する。
 
 ## 静的監査
 

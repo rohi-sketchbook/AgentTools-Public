@@ -15,7 +15,10 @@ import type {
 import type { SyncCodexSessionTranscriptUpdatesResult } from "./codexTranscriptSync.js";
 import type { ControlApiClient } from "./controlApiClient.js";
 import type { TranscriptSyncMode } from "./directState.js";
-import type { DevlogPipelineStartResult } from "./devlogPipeline.js";
+import type {
+  DevlogPipelineCompletionResult,
+  DevlogPipelineStartResult,
+} from "./devlogPipeline.js";
 import type { ScheduleCommandRequest, ScheduleCommandResult } from "./scheduler.js";
 import { routeDiscordMessage } from "./commandRouter.js";
 import type { DiscordMessagePayload } from "./responses.js";
@@ -277,6 +280,67 @@ const DEFAULT_CODEX_MODEL = "gpt-5.6-terra";
 const FAST_CODEX_MODEL = "gpt-5.6-luna";
 
 type CodexReasoningEffort = "low" | "medium" | "high" | "xhigh";
+
+function truncateDevlogDiagnostic(value: string | undefined, maxLength = 900): string {
+  const text = value?.trim() ?? "";
+  if (text.length <= maxLength) return text;
+  return `${text.slice(0, maxLength - 3)}...`;
+}
+
+function devlogStageLabel(stage: string): string {
+  switch (stage) {
+    case "startup_failed":
+      return "起動";
+    case "validation_failed":
+      return "生成物の検証";
+    case "publish_failed":
+      return "Git公開処理";
+    case "publish_pending":
+      return "GitHub Pages公開確認";
+    case "validated":
+      return "公開前引き渡し";
+    case "pushed":
+      return "Git push後";
+    case "published":
+      return "公開確認";
+    default:
+      return "実行";
+  }
+}
+
+function devlogDiagnosticReason(completion: DevlogPipelineCompletionResult): string {
+  return truncateDevlogDiagnostic(
+    completion.failureReason
+      || completion.statusError
+      || completion.publishSummary
+      || "詳細レポートを確認してください。",
+  );
+}
+
+function formatDevlogFailure(completion: DevlogPipelineCompletionResult): string {
+  const lines = [
+    "開発日記パイプラインが失敗しました。",
+    `工程: ${devlogStageLabel(completion.stage)} (stage=${completion.stage})`,
+    `原因: ${devlogDiagnosticReason(completion)}`,
+    `Pipeline exit: ${completion.exitCode}${completion.codexExitCode === undefined ? "" : ` / Codex exit: ${completion.codexExitCode}`}`,
+    `published: ${completion.published}`,
+  ];
+  if (completion.reportPath) lines.push(`詳細レポート: ${completion.reportPath}`);
+  lines.push(`ランチャーログ: ${completion.launcherLogPath}`);
+  return lines.join("\n");
+}
+
+function formatDevlogPublishPending(completion: DevlogPipelineCompletionResult): string {
+  const lines = [
+    "開発日記の生成とpushは完了しました。GitHub Pagesの公開反映をまだ確認できていません。",
+    `工程: ${devlogStageLabel(completion.stage)} (stage=${completion.stage})`,
+    `状況: ${devlogDiagnosticReason(completion)}`,
+    "これは生成失敗ではなく、公開確認待ちです。",
+  ];
+  if (completion.reportPath) lines.push(`詳細レポート: ${completion.reportPath}`);
+  lines.push(`ランチャーログ: ${completion.launcherLogPath}`);
+  return lines.join("\n");
+}
 
 export function createDiscordMessageHandler(input: CreateDiscordMessageHandlerInput) {
   const channelQueues = new Map<string, Promise<DiscordMessageHandlingResult | void>>();
@@ -664,8 +728,12 @@ export function createDiscordMessageHandler(input: CreateDiscordMessageHandlerIn
           `開発日記パイプラインを起動しました。PID=${result.pid} / ${result.startedAt}`,
         );
         const completion = await result.completion;
+        if (completion.stage === "publish_pending" && completion.exitCode === 0) {
+          await message.reply(formatDevlogPublishPending(completion));
+          return { status: "completed" };
+        }
         if (!completion.succeeded) {
-          const messageText = `開発日記パイプラインが失敗しました。exit=${completion.exitCode} stage=${completion.stage} published=${completion.published} / ${completion.launcherLogPath}`;
+          const messageText = formatDevlogFailure(completion);
           await message.reply(messageText);
           return { status: "failed", error: messageText };
         }

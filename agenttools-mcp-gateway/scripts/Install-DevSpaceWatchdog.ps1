@@ -22,7 +22,16 @@ $Action = New-ScheduledTaskAction `
     -Argument ('//B //NoLogo "{0}" "{1}" "{2}" "{3}"' -f $HiddenRunner, $Node, $WatchdogScript, $Root) `
     -WorkingDirectory $Root
 
-$Trigger = New-ScheduledTaskTrigger -AtLogOn -User $UserId
+$LogonTrigger = New-ScheduledTaskTrigger -AtLogOn -User $UserId
+# RestartOnFailure alone is not a sufficient liveness guarantee for a long-running
+# action that terminates after it has already started. The repeating trigger is a
+# bounded supervisor: MultipleInstances=IgnoreNew makes it a no-op while the
+# watchdog is healthy, and the next one-minute tick starts it again after an exit.
+$LivenessTrigger = New-ScheduledTaskTrigger `
+    -Once `
+    -At (Get-Date).AddMinutes(1) `
+    -RepetitionInterval (New-TimeSpan -Minutes 1)
+$Triggers = @($LogonTrigger, $LivenessTrigger)
 $Principal = New-ScheduledTaskPrincipal -UserId $UserId -LogonType Interactive -RunLevel Limited
 $Settings = New-ScheduledTaskSettingsSet `
     -StartWhenAvailable `
@@ -66,15 +75,15 @@ if ($null -ne $ExistingTask -and $ExistingTask.State -eq 'Running') {
     Stop-ScheduledTask -TaskName $TaskName
     Start-Sleep -Milliseconds 500
 }
-# Run-HiddenNode.vbs launches Node detached from the Scheduled Task host, so
-# Stop-ScheduledTask alone may leave the previous watchdog alive. Only stop
-# the PID recorded by our lock after verifying its exact watchdog command line.
+# Stop-ScheduledTask normally terminates the wscript host, but the Node child can
+# survive an abrupt host termination. Only stop the PID recorded by our lock after
+# verifying its exact watchdog command line.
 Stop-OwnedWatchdogProcess
 
 Register-ScheduledTask `
     -TaskName $TaskName `
     -Action $Action `
-    -Trigger $Trigger `
+    -Trigger $Triggers `
     -Principal $Principal `
     -Settings $Settings `
     -Description 'Monitors local DevSpace health and performs guarded self-recovery independently of ChatGPT.' `

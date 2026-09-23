@@ -164,8 +164,11 @@ describe("devlog command handling", () => {
         completion: Promise.resolve({
           succeeded: false,
           exitCode: 1,
+          codexExitCode: 0,
           stage: "validation_failed",
           published: false,
+          statusError: "status.json schema validation failed: image_ready=false",
+          reportPath: "H:\\logs\\run\\discord-report.txt",
           launcherLogPath: "H:\\logs\\launcher.log",
         }),
       }),
@@ -184,9 +187,54 @@ describe("devlog command handling", () => {
 
     expect(result).toEqual({
       status: "failed",
-      error: "開発日記パイプラインが失敗しました。exit=1 stage=validation_failed published=false / H:\\logs\\launcher.log",
+      error: [
+        "開発日記パイプラインが失敗しました。",
+        "工程: 生成物の検証 (stage=validation_failed)",
+        "原因: status.json schema validation failed: image_ready=false",
+        "Pipeline exit: 1 / Codex exit: 0",
+        "published: false",
+        "詳細レポート: H:\\logs\\run\\discord-report.txt",
+        "ランチャーログ: H:\\logs\\launcher.log",
+      ].join("\n"),
     });
     expect(replies).toHaveLength(2);
+  });
+
+  test("treats publish propagation delay as pending rather than a pipeline failure", async () => {
+    const replies: DiscordOutgoingMessage[] = [];
+    const handler = createHandler({
+      startDevlogPipeline: async () => ({
+        pid: 1234,
+        scriptPath: "D:\\projects\\AgentTools\\devlog-codex-runner\\start-devlog-pipeline.mjs",
+        startedAt: "2026-09-23T18:00:00.000Z",
+        completion: Promise.resolve({
+          succeeded: false,
+          exitCode: 0,
+          codexExitCode: 0,
+          stage: "publish_pending",
+          published: false,
+          statusError: "GitHub Pages was not confirmed: article=404, image=404",
+          reportPath: "H:\\logs\\run\\discord-report.txt",
+          launcherLogPath: "H:\\logs\\launcher.log",
+        }),
+      }),
+    });
+
+    const result = await handler({
+      authorBot: false,
+      userId: "user-1",
+      channelId: "channel-1",
+      content: "devlog run",
+      roleIds: ["admin"],
+      reply: async (message) => {
+        replies.push(message);
+      },
+    });
+
+    expect(result).toEqual({ status: "completed" });
+    expect(replies).toHaveLength(2);
+    expect(replies[1]).toContain("これは生成失敗ではなく、公開確認待ちです。");
+    expect(replies[1]).toContain("article=404, image=404");
   });
 
   test("returns a failed outcome when the dedicated launcher fails", async () => {

@@ -280,6 +280,35 @@ async function statusSummary() {
   }
 }
 
+function compactDiagnostic(value, maxLength = 1200) {
+  const compact = String(value ?? "").replace(/\s+/g, " ").trim();
+  if (compact.length <= maxLength) return compact;
+  return `${compact.slice(0, maxLength - 3)}...`;
+}
+
+async function readCodexFailureReason(eventLogPath) {
+  try {
+    const text = await readFile(eventLogPath, "utf8");
+    const lines = text.split(/\r?\n/).filter(Boolean);
+    for (let index = lines.length - 1; index >= 0; index -= 1) {
+      try {
+        const event = JSON.parse(lines[index]);
+        if (event?.type === "turn.failed" && event?.error?.message) {
+          return compactDiagnostic(event.error.message);
+        }
+        if (event?.type === "error" && event?.message) {
+          return compactDiagnostic(event.message);
+        }
+      } catch {
+        // Ignore non-JSON diagnostic lines.
+      }
+    }
+  } catch {
+    // The regular report still carries the exit code and log directory.
+  }
+  return "";
+}
+
 async function runGitPublish(status) {
   const publishPaths = publishPathsForDate();
   const statusResult = await runProcess("git", ["-C", siteRoot, "status", "--porcelain", "--", ...publishPaths]);
@@ -486,6 +515,7 @@ try {
   await eventHandle.close();
   await errorHandle.close();
 
+  const codexFailureReason = result.code === 0 ? "" : await readCodexFailureReason(eventLogPath);
   let pipelineExitCode = result.code;
   let publishReport = "";
 
@@ -540,6 +570,7 @@ try {
     `Devlog Local Codex pipeline: ${label}`,
     `Date: ${runDate}`,
     `Codex exit code: ${result.code}`,
+    ...(codexFailureReason ? [`Codex failure reason: ${codexFailureReason}`] : []),
     `Pipeline exit code: ${pipelineExitCode}`,
     `status.stage: ${status.stage}`,
     `status.published: ${status.published}`,

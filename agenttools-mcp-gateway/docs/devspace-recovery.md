@@ -21,11 +21,10 @@ The Watchdog is the primary SPOF mitigation. AgentTools MCP Gateway no longer ne
 
 The manager is registered to the validated upstream-main local port:
 
-- root: `<WorkspaceRoot>\worktrees\devspace-pr103-8ae9f581`
-- package: `@waishnav/devspace` 1.0.7
-- reference upstream commit: `d9855aa5e115d25417ac84f0af807968a3dae063`（診断用。起動条件ではない）
-- local branch: `<local-devspace-branch>`
-- rollback checkout: `<AgentToolsRoot>\devspace-pr103`
+- root: `<WorkspaceRoot>\worktrees\devspace-pr103-8ae9f581-c1dc9bed`
+- package: `@waishnav/devspace` 1.0.8
+- reference upstream commit: `5a8510fd3106b8e788d99d683d7382e368ccd487`（診断用。起動条件ではない）
+- local branch: `rohi/upstream-main-port`
 - local endpoint: read from `~/.devspace/config.json`, currently expected to be `127.0.0.1:7676`
 - health endpoint: `/healthz`
 - MCP route: `/mcp`
@@ -135,7 +134,7 @@ It calls `loadConfig()`, `createServer(config)`, and `app.listen(...)`. A random
 
 No `.bat`, `cmd /c`, `powershell -Command`, or user-provided command string is involved in start/stop control. `DEVSPACE_ARTIFACTS=1` and `DEVSPACE_SUBAGENTS=1` are preserved in the child environment.
 
-On Windows, upstream 1.0.7 exposes native artifact download only on Linux, so the local port retains the reviewed PR #103 Windows secure-filesystem implementation. The Windows path pins each destination directory with Win32 handles, rejects reparse-point/junction escapes and Windows-reserved path forms, writes to an exclusive partial, verifies size/identity, and publishes without overwriting. `koffi` 3.1.2 and its matching Windows x64 native package are installed directly in the live worktree, so artifact download no longer depends on the rollback PR #103 checkout.
+On Windows, the registered 1.0.8 local port retains the reviewed secure-filesystem implementation for native artifact download. The Windows path pins each destination directory with Win32 handles, rejects reparse-point/junction escapes and Windows-reserved path forms, writes to an exclusive partial, verifies size/identity, and publishes without overwriting. `koffi` 3.1.2 and its matching Windows x64 native package are installed directly in the live worktree; the registered runtime does not depend on the retired rollback PR #103 checkout.
 
 Git commit state is reported as diagnostic information only. A commit mismatch does not block restart because this checkout also contains reviewed local runtime extensions. Recovery still refuses to run package installation, updates, `git pull`, `git switch`, `git reset`, or checkout rewrites; it validates the expected package version, required runtime modules, dependencies, configured endpoint ownership, and health responses instead.
 
@@ -235,7 +234,7 @@ They invoke the trusted Git executable directly with argument arrays. Existing g
 - `Start-AgentToolsGateway.bat`: starts the stdio MCP prototype with the trusted Node.js executable
 - `Status-AgentToolsGateway.bat`: read-only Gateway and DevSpace health
 - `Doctor-AgentToolsGateway.bat`: Gateway health + DevSpace diagnosis + registered process status
-- `Install-DevSpaceWatchdog.bat`: registers and immediately starts the per-user `AgentTools-DevSpaceWatchdog` Scheduled Task
+- `Install-DevSpaceWatchdog.bat`: registers and immediately starts the per-user `AgentTools-DevSpaceWatchdog` Scheduled Task. The task starts at logon and also has a one-minute repeating liveness trigger. `MultipleInstances=IgnoreNew` makes that trigger inert while the watchdog is already running, but starts a fresh instance after an unexpected exit even when Task Scheduler's `RestartOnFailure` path does not.
 - `Status-DevSpaceWatchdog.bat`: shows Watchdog state and current DevSpace health
 - `Uninstall-DevSpaceWatchdog.bat`: stops/unregisters only the named Watchdog Scheduled Task
 
@@ -245,4 +244,4 @@ There is intentionally no global `Stop-AgentToolsGateway.bat` that searches for 
 
 The independent recovery path is designed to run as a local Scheduled Task and therefore does not depend on ChatGPT MCP permissions. The existing ChatGPT-side DevSpace registration should remain untouched.
 
-The Watchdog code can be validated safely with `node scripts/devspace-watchdog-test.js` and `node scripts/devspace-watchdog.js --once` while the real DevSpace stays running. Intentionally stopping or hanging the live DevSpace is a separate destructive integration test and is not required for normal installation.
+The Watchdog code can be validated safely with `node scripts/devspace-watchdog-test.js` and `node scripts/devspace-watchdog.js --once` while the real DevSpace stays running. Health probing remains 10-second by default, but a stable healthy state is persisted only once per `healthyPersistIntervalMs` (60 seconds by default); failures, maintenance state, recovery attempts, and status transitions are persisted immediately. Intentionally stopping or hanging the live DevSpace is a separate destructive integration test and is not required for normal installation.

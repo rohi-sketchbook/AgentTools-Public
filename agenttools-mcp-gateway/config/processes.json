@@ -2,7 +2,7 @@
   "registeredProcesses": {
     "devspace": {
       "manager": "devspace",
-      "description": "DevSpace 1.0.7 upstream-main + AgentTools local Windows extensions"
+      "description": "DevSpace 1.0.8 upstream-main port + AgentTools local Windows extensions"
     }
   },
   "notes": "process.start/process.stop accept registered process IDs only. Arbitrary executable/command input is intentionally unsupported."

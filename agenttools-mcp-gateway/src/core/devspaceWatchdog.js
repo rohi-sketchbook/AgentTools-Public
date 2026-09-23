@@ -17,6 +17,7 @@ function watchdogConfig() {
   const config = {
     enabled: raw.enabled !== false,
     intervalMs: integer(raw.intervalMs, 10000, 1000, 300000),
+    healthyPersistIntervalMs: integer(raw.healthyPersistIntervalMs, 60000, 10000, 3600000),
     failureThreshold: integer(raw.failureThreshold, 3, 1, 100),
     forceAfterFailures: integer(raw.forceAfterFailures, 6, 1, 1000),
     allowForceRecovery: raw.allowForceRecovery === true,
@@ -340,6 +341,7 @@ async function runCheck(runtime = null) {
   const now = new Date(nowMs).toISOString();
   const state = { ...defaultState(), ...(await deps.readState()) };
   const previousStatus = state.lastStatus;
+  const previousCheckAtMs = state.lastCheckAt ? Date.parse(state.lastCheckAt) : NaN;
   const maintenance = deps.readMaintenance ? await deps.readMaintenance(nowMs) : readMaintenance(nowMs);
   if (maintenance?.active) {
     state.lastCheckAt = now;
@@ -364,7 +366,12 @@ async function runCheck(runtime = null) {
     state.consecutiveFailures = 0;
     state.lastError = null;
     state.circuitOpenUntil = null;
-    await deps.writeState(state);
+    const healthyPersistElapsedMs = Number.isFinite(previousCheckAtMs) ? nowMs - previousCheckAtMs : NaN;
+    const shouldPersistHealthyState = hadFailures
+      || !Number.isFinite(healthyPersistElapsedMs)
+      || healthyPersistElapsedMs < 0
+      || healthyPersistElapsedMs >= config.healthyPersistIntervalMs;
+    if (shouldPersistHealthyState) await deps.writeState(state);
     if (hadFailures) {
       await deps.appendHistory({ at: now, event: 'healthy', previousStatus, status: 'healthy', pids: compactBefore.pids });
     }
@@ -493,6 +500,7 @@ function statusSnapshot(config = watchdogConfig()) {
     pid: lock.alive ? lock.pid : null,
     startedAt: lock.alive ? lock.startedAt || null : null,
     intervalMs: config.intervalMs,
+    healthyPersistIntervalMs: config.healthyPersistIntervalMs,
     failureThreshold: config.failureThreshold,
     forceAfterFailures: config.forceAfterFailures,
     allowForceRecovery: config.allowForceRecovery,
