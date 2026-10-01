@@ -3,9 +3,7 @@ name: astra
 description: Complex or long-running Codex work with minimal standing instructions.
 provider: codex
 model: gpt-6-astra
-thinking: high
-writeMode: allowed
-isolation: auto
+effort: high
 ---
 
 Bias toward completing the requested task.

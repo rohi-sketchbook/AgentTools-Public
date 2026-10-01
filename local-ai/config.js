@@ -69,6 +69,7 @@ function loadConfig() {
     stabilityMatrixExecutable: path.resolve(config.stabilityMatrixExecutable),
     stabilityMatrixSettings: path.resolve(config.stabilityMatrixSettings),
     registeredWorkflowRoot: path.resolve(config.registeredWorkflowRoot),
+    inputRoot: path.resolve(config.inputRoot || path.join(LOCAL_AI_ROOT, 'input')),
     outputRoot: path.resolve(config.outputRoot),
     stateRoot: path.resolve(config.stateRoot),
     detectedWorkflowSources: (config.detectedWorkflowSources || []).map((source) => ({

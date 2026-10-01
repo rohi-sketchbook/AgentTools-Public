@@ -2,7 +2,7 @@
 
 `<AgentToolsRoot>` の共有Runtimeを統合管理するローカルGatewayです。
 
-担当範囲は、DevSpace lifecycle、ユーザーTask Store、安全Policy、Watchdog、Idle UI QA、共有Adapter、診断・監査です。人間向け通常操作はAgentTools Control Centerを入口にします。
+担当範囲は、DevSpace lifecycle、ユーザーTask Store、安全Policy、Watchdog、共有Adapter、診断・監査です。人間向け通常操作はAgentTools Control Centerを入口にします。
 
 ## Architecture
 
@@ -13,7 +13,6 @@ ChatGPT / DevSpace / Control Center
        ├─ Work Task Store
        ├─ Safety / confirmation policy
        ├─ DevSpace manager / watchdog
-       ├─ Idle UI / UX QA
        ├─ Local adapters
        └─ diagnostics / audits
                ↓
@@ -93,14 +92,6 @@ Watchdogの固定内部復旧処理はMCP mutation policyとは別系統です�
 - MCP接続から独立してhealthを観測
 - 固定された内部復旧経路のみ使用
 - 常駐処理変更時は[`docs/background-performance-policy.md`](docs/background-performance-policy.md)に従う
-
-### Idle UI QA
-
-- local設定で指定した対象Projectの開発中は何もせず、project変更後に設定されたidle時間へ到達した時だけrecent UI screenshotを監査
-- Codexはread-only workerとして画像を確認し、文字切れ・重なり・配置/余白/メッセージ位置・明確な導線不整合など客観的なUI/UX問題だけを候補化
-- 同じproject revisionは1回だけ確認し、未解決の同一finding keyは再通知・再起票しない
-- QA自身はsource修正、worktree作成、main統合、pushを行わない
-- 設定は`config/idle-ui-qa.json`、状態は`state/idle-ui-qa/`
 
 ### Unity Worktree Validation
 

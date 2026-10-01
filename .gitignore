@@ -144,6 +144,9 @@ kimodo-poc/adapter/data/*
 !kimodo-poc/adapter/data/.gitkeep
 kimodo-poc/*.obj
 
+# Local AI staged input
+local-ai/input/
+
 # Image bridge runtime data
 image-bridge/UserData/
 

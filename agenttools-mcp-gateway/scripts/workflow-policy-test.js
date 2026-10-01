@@ -45,7 +45,7 @@ try {
   assert.equal(continuationOff.executor, null);
 
   const continuationCodex = policy.setContinuationMode('codex');
-  assert.equal(continuationCodex.executor.model, 'gpt-5.6-terra');
+  assert.equal(continuationCodex.executor.model, 'gpt-6.1-sol');
   assert.equal(continuationCodex.executor.thinking, 'medium');
   assert.equal(continuationCodex.executor.role, 'continuation');
   assert.equal(policy.reviewPolicy().codexReviewMode, 'codex', 'continuation setting must not reset review mode');

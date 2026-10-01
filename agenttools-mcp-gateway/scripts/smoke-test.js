@@ -36,10 +36,6 @@ async function main() {
     'skill.approve',
     'skill.reject',
     'skill.apply',
-    'uiqa.status',
-    'uiqa.issues',
-    'uiqa.runOnce',
-    'uiqa.resolve',
     'fs.readText',
     'fs.deleteRecursive',
     'process.find',
@@ -115,11 +111,6 @@ async function main() {
   const activityUpdateSchema = inputSchemaFor('activity.update');
   assert.deepEqual(activityUpdateSchema.required, ['id', 'actor']);
   assert.deepEqual(activityUpdateSchema.properties.workerStatus.enum, ['running', 'blocked', 'done']);
-  const uiQaRunSchema = inputSchemaFor('uiqa.runOnce');
-  assert.equal(uiQaRunSchema.additionalProperties, false);
-  assert.ok(Object.hasOwn(uiQaRunSchema.properties, 'force'));
-  const uiQaResolveSchema = inputSchemaFor('uiqa.resolve');
-  assert.deepEqual(uiQaResolveSchema.required, ['key']);
   const windowsUiInvokeSchema = inputSchemaFor('windowsUi.invoke');
   assert.deepEqual(windowsUiInvokeSchema.required, ['process', 'window']);
   assert.equal(windowsUiInvokeSchema.additionalProperties, false);
@@ -140,10 +131,6 @@ async function main() {
   const watchdogStatus = await invoke('watchdog', 'status', {});
   assert.equal(watchdogStatus.ok, true);
   assert.equal(typeof watchdogStatus.running, 'boolean');
-  const uiQaStatus = await invoke('uiqa', 'status', {});
-  assert.equal(uiQaStatus.ok, true);
-  assert.equal(typeof uiQaStatus.developmentActive, 'boolean');
-  assert.equal(typeof uiQaStatus.issues.open, 'number');
   const localAiStatus = await invoke('localAi', 'status', {});
   assert.equal(localAiStatus.ok, true);
   assert.ok(['ready', 'installed', 'degraded', 'missing'].includes(localAiStatus.status));

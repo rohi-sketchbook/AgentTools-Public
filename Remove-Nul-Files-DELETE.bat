@@ -11,7 +11,7 @@ echo   n or Enter = keep
 echo   q = quit
 echo.
 
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0remove-nul-files.ps1" -Delete
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0remove-nul-files.ps1" -Root "%~dp0." -Delete
 set "EXITCODE=%ERRORLEVEL%"
 
 echo.

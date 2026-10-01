@@ -1,0 +1,35 @@
+{
+  "name": "ltx_2_3_distilled_gguf_ja_t2v",
+  "description": "LTX-2.3 Distilled 1.1 Q2_K GGUF fast text-to-video workflow for RTX 3080-class GPUs. Uses an 8-step distilled sigma schedule and accepts prompts supplied through AgentTools/ChatGPT.",
+  "type": "video",
+  "workflowFile": "workflow-api.json",
+  "bindings": {
+    "prompt": { "node": "5", "input": "text" },
+    "negativePrompt": { "node": "6", "input": "text" },
+    "seed": { "node": "11", "input": "noise_seed" },
+    "width": { "node": "8", "input": "width" },
+    "height": { "node": "8", "input": "height" },
+    "length": { "node": "8", "input": "length" },
+    "fps": { "node": "7", "input": "frame_rate" },
+    "audioFps": { "node": "9", "input": "frame_rate" },
+    "audioFrames": { "node": "9", "input": "frames_number" },
+    "cfg": { "node": "12", "input": "cfg" },
+    "sampler": { "node": "13", "input": "sampler_name" },
+    "sigmas": { "node": "14", "input": "sigmas" },
+    "videoFps": { "node": "18", "input": "fps" },
+    "outputPrefix": { "node": "19", "input": "filename_prefix" }
+  },
+  "defaults": {
+    "width": 640,
+    "height": 384,
+    "length": 97,
+    "fps": 24,
+    "audioFps": 24,
+    "audioFrames": 97,
+    "cfg": 1.0,
+    "sampler": "euler_ancestral_cfg_pp",
+    "sigmas": "1.0, 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0",
+    "videoFps": 24,
+    "negativePrompt": "blurry, low quality, still frame, frozen motion, watermark, overlay, titles, subtitles"
+  }
+}

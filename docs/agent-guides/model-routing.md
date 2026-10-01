@@ -4,10 +4,10 @@
 
 ## Current roles
 
-- **GPT-5.6 Sol**: ChatGPTホスト側。DevSpace subagent profileではない。グローバル`AGENTS.md`とProjectの`AGENTS.md`を共通契約として使い、必要なrunbookだけ追加で読む。
-- **Codex自動ルーティング**: Terra/Lunaのみを使用する。複雑・長時間の判断と統合はChatGPTホストのGPT-5.6 Solが担当し、Codexへ切り出す場合も bounded な実装はTerra、読み取り調査はLunaを使う。
+- **ChatGPTホスト側のSol**: DevSpace subagent profileではない。グローバル`AGENTS.md`とProjectの`AGENTS.md`を共通契約として使い、必要なrunbookだけ追加で読む。
+- **Codex自動ルーティング**: 標準の実装・レビュー・継続・複雑作業は`gpt-6.1-sol`、高頻度の軽量探索とIdle QAは`gpt-5.6-luna`を使う。
 - **Codex Astra (`gpt-6-astra`)**: 自動選択禁止。ユーザーがAstraを明示指定した場合だけ`.devspace/agents/astra.md` profileを使う。
-- Terra/Lunaを含むCodex role mappingの正本は`agenttools-mcp-gateway/config/codex-models.json`。モデル名やthinkingを別文書へ重複固定しない。
+- Codex role mappingの正本は`agenttools-mcp-gateway/config/codex-models.json`。モデル名やthinkingを別文書へ重複固定しない。
 
 ## Instruction layering
 
@@ -25,4 +25,4 @@ Astra profileは明示指定時だけ使用する。Astraには、行動開始�
 
 Blender制作でSolが監督する場合も、Sol側の画像比較・品質判定・repair ticket生成は `blender_sol_supervision.md` に隔離し、Astra profileや通常runbookへ複製しない。Astraへ渡すのは圧縮した具体的な作業ticketだけとする。
 
-Sol用のCodex profileは作らない。Codex providerが将来`gpt-5.6-sol`等を正式に利用可能にし、ローカルmodel policyにも追加された場合だけ別profileを検討する。
+通常のSol作業はrole mappingから`gpt-6.1-sol`を直接指定し、専用profileは作らない。Astraだけは明示指定専用profileとして分離する。

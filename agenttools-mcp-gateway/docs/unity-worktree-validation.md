@@ -1,6 +1,6 @@
 # Unity Worktree Validation
 
-Unity Worktree Validatorは、AutoDevやIdle UI QAの専用機能ではなく、DevSpace管理WorktreeでVR Avatar Studioを安全に検証するための共通基盤です。
+Unity Worktree Validatorは、特定の自動QA機能に依存せず、DevSpace管理WorktreeでVR Avatar Studioを安全に検証するための共通基盤です。
 
 ## 目的
 

@@ -14,7 +14,7 @@ node scripts/public-release-audit.js
 
 必要な機能の `config/*.local.example.json` を同名の `*.local.json` としてコピーして編集してください。`*.local.*`、`.env`、`.connect`、state、logsはGit対象外です。設定レイヤーは[docs/public-distribution.md](docs/public-distribution.md)を参照してください。
 
-Public配布用treeは既存Private repoをそのまま公開せず、root license選択後に `Export-AgentToolsPublic.ps1` で生成します。製品固有サンプルは `.agenttools-publicignore` でPublic exportから分離し、ライセンス境界は[docs/licensing.md](docs/licensing.md)を参照してください。
+Public配布用treeは既存Private repoをそのまま公開せず、root license選択後に `Export-AgentToolsPublic.ps1` で生成します。初回は空ディレクトリへexportし、以後は `-UpdateGitRepository` で既存の公開Git checkoutを直接更新するため、更新ごとの一時previewディレクトリは不要です。製品固有サンプルは `.agenttools-publicignore` でPublic exportから分離し、ライセンス境界は[docs/licensing.md](docs/licensing.md)を参照してください。
 
 ## まず読むもの
 

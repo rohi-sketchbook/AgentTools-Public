@@ -89,6 +89,57 @@ workflows/
 
 ComfyUI GUIが通常保存する`nodes`/`links`形式はUI formatとして検出・一覧化しますが、そのまま`/prompt`へは送信しません。API formatを登録してから実行します。
 
+画像入力を受け取るregistered workflowは、manifestの`inputFiles`でファイルbindingを宣言できます。入力画像は`local-ai/input/`配下だけを許可し、生成時にComfyUIの`input/AgentTools/`へ一時コピーして、終了後に削除します。省略可能な参照画像は`omitWhenMissing`で不要なLoadImageノードとAutogrow入力を落とせます。
+
+Qwen-Image-2.1高速版の登録ID:
+
+```text
+qwen-image-turbo-ja
+qwen-image-turbo-ja-edit
+```
+
+Editでは主画像を`local-ai/input/`へ置き、`paramsJson`で`inputImage`を指定します。`referenceImage2` / `referenceImage3`も同じ方法で追加できます。
+
+```text
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js localAi generate --workflow qwen-image-turbo-ja-edit --prompt "服を白いジャケットに変えて" --paramsJson '{"inputImage":"source.png"}'
+```
+
+LTX-2.3 Distilled GGUF高速動画版の登録ID:
+
+```text
+ltx-2-3-distilled-ja
+ltx-2-3-distilled-ja-i2v
+```
+
+RTX 3080 10GB向けの既定値は640x384、97 frames、24fps、CFG 1.0、Distilled 8-step sigma scheduleです。T2Vはテキストだけ、I2Vは`local-ai/input/`配下の1枚を`inputImage`で渡します。ChatGPTから日本語で依頼する場合は、生成意図を保ったLTX向けプロンプトへ整形してから`prompt`へ渡せます。
+
+```text
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js localAi generate --workflow ltx-2-3-distilled-ja --prompt "A woman walks through a neon-lit rainy street, cinematic camera tracking, natural motion"
+
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js localAi generate --workflow ltx-2-3-distilled-ja-i2v --prompt "Animate the subject with a gentle turn and natural hair movement" --paramsJson '{"inputImage":"source.png"}'
+```
+
+Wan2.2 TI2V 5B Turbo GGUF高速動画版の登録ID:
+
+```text
+wan2-2-ti2v-5b-turbo-ja
+wan2-2-ti2v-5b-turbo-ja-i2v
+```
+
+モデル本体は `hum-ma/Wan2.2-TI2V-5B-Turbo-GGUF` の `Wan2_2-TI2V-5B-Turbo-Q5_K_M.gguf` を使用します。RTX 3080 10GB向けの高速既定値は832x480、81 frames、24fps、4 steps、CFG 1.0、Euler + simple、SD3 shift 8、latent multiplier 0.8です。モデル本来の推奨解像度1280x704より軽くし、VRAM offloadと生成時間を抑える構成です。
+
+T2Vはテキストだけ、I2Vは `local-ai/input/` 配下の1枚を `inputImage` で渡します。I2Vの入力画像はComfyUI標準 `Wan22ImageToVideoLatent` の処理により、指定された `width` / `height` へbilinear + center cropで合わせます。入力画像は既存runnerが `ComfyUI/input/AgentTools/...` へ一時stagingし、終了後にcleanupします。
+
+日本語で依頼された場合は、そのまま直訳だけを渡すのではなく、意図を保った簡潔な英語Wan向け動画Promptへ整形する運用を正本とします。特に `subject`、`action`、`camera motion`、`scene`、`lighting`、`chronological motion` の順序が分かるようにまとめます。
+
+`length`、`fps`、Turbo固有の `shift`、`latentMultiplier` などは `paramsJson` から上書きできます。
+
+```text
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js localAi generate --workflow wan2-2-ti2v-5b-turbo-ja --prompt "A woman walks through a neon-lit rainy street; the camera tracks beside her; reflections move naturally across the wet pavement."
+
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js localAi generate --workflow wan2-2-ti2v-5b-turbo-ja-i2v --prompt "The subject slowly turns toward the camera; hair and clothing move naturally; the camera makes a gentle push-in." --paramsJson '{"inputImage":"source.png","length":81,"fps":24,"shift":8,"latentMultiplier":0.8}'
+```
+
 現在の実機ではComfyUI user workflowsを次から専用Adapterで検出します。
 
 ```text

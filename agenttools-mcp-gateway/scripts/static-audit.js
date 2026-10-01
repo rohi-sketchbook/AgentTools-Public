@@ -159,7 +159,6 @@ async function main() {
       'src/core/processes.js',
       'src/core/devspaceManager.js',
       'src/core/devspaceWatchdog.js',
-      'src/core/idleUiQa.js',
       'src/core/unityWorktreeValidator.js',
       'src/devspace/supervisor.mjs',
       'src/tools/devspace.js',

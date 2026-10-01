@@ -2,7 +2,7 @@
 [CmdletBinding()]
 param(
     [Parameter()]
-    [string]$Root = $PSScriptRoot,
+    [string]$Root = '',
 
     [Parameter()]
     [switch]$Delete
@@ -125,6 +125,13 @@ function Get-NulCandidates([string]$ExtendedRoot) {
     }
 
     return @($results | Sort-Object Path)
+}
+
+if ([string]::IsNullOrWhiteSpace($Root)) {
+    $Root = $PSScriptRoot
+}
+if ([string]::IsNullOrWhiteSpace($Root)) {
+    throw 'Could not determine the script directory. Specify -Root explicitly.'
 }
 
 $normalRoot = [System.IO.Path]::GetFullPath($Root).TrimEnd('\')

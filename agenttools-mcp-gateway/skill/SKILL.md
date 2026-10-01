@@ -67,7 +67,7 @@ node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task update --id <taskId
 Codex delegation:
 
 ```text
-node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task update --id <taskId> --actor codex --actorLabel Codex --model Terra --phase "実装" --message "設定UIの単純実装を担当" --workerStatus running
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task update --id <taskId> --actor codex --actorLabel Codex --model "GPT-6.1 Sol" --phase "実装" --message "設定UIの単純実装を担当" --workerStatus running
 ```
 
 Parallel work is represented by leaving both workers `running`. Control Center shows the same Task with both workers.
@@ -75,7 +75,7 @@ Parallel work is represented by leaving both workers `running`. Control Center s
 When one worker finishes its portion without completing the overall user request:
 
 ```text
-node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task update --id <taskId> --actor codex --actorLabel Codex --model Terra --phase "実装完了" --message "変更をChatGPTへ引き渡し" --workerStatus done
+node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task update --id <taskId> --actor codex --actorLabel Codex --model "GPT-6.1 Sol" --phase "実装完了" --message "変更をChatGPTへ引き渡し" --workerStatus done
 ```
 
 When ownership really moves, add `--takeOwnership true`. A quota-limit handoff from Codex to ChatGPT should mark Codex `done` or `blocked`, then update ChatGPT as `running` with ownership.
@@ -143,7 +143,7 @@ node <AgentToolsRoot>/agenttools-mcp-gateway/src/cli.js task resume --id <taskId
 
 `force` means the host is intentionally resuming after resolving the blocking condition; it does not grant permission for the protected external/destructive action itself.
 
-A ChatGPT product turn ending cannot be made to spawn a new ChatGPT turn by the local Gateway alone. `chatgpt` mode therefore waits for the next host execution; `codex` mode fills that gap with a bounded DevSpace worker. Control Centerの通常の続行操作はTask状態を変更せず、ChatGPTホスト（Sol系列）へ貼り付ける再開プロンプトを生成するだけである。別の「Codexで続行」が明示された場合のみDevSpace workerを起動し、この手動経路は`implementation` role（GPT-5.6系）を使う。自動`continuation` roleもGPT-5.6 Terraを使用し、Astraはユーザーが明示指定した場合だけ利用する。Never claim that either mode bypasses an OpenAI-side turn limit. DevSpace currently exposes Codex quota usage as used/remaining percentage and reset metadata, not exact input/output/cache token counts; label it accordingly in user-visible reporting.
+A ChatGPT product turn ending cannot be made to spawn a new ChatGPT turn by the local Gateway alone. `chatgpt` mode therefore waits for the next host execution; `codex` mode fills that gap with a bounded DevSpace worker. Control Centerの通常の続行操作はTask状態を変更せず、ChatGPTホスト（Sol系列）へ貼り付ける再開プロンプトを生成するだけである。別の「Codexで続行」が明示された場合のみDevSpace workerを起動し、この手動経路は`implementation` role（GPT-6.1 Sol）を使う。自動`continuation` roleもGPT-6.1 Solを使用し、Astraはユーザーが明示指定した場合だけ利用する。Never claim that either mode bypasses an OpenAI-side turn limit. DevSpace currently exposes Codex quota usage as used/remaining percentage and reset metadata, not exact input/output/cache token counts; label it accordingly in user-visible reporting.
 
 For checkout/non-Git work where a metadata checkpoint is insufficient, capture only the concrete files that need rollback protection:
 

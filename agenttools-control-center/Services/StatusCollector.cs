@@ -39,7 +39,6 @@ public sealed class StatusCollector
             CollectGatewayAsync(cancellationToken),
             CollectDevSpaceAsync(cancellationToken),
             CollectWatchdogAsync(cancellationToken),
-            CollectIdleUiQaAsync(cancellationToken),
             CollectLocalAiAsync(cancellationToken),
             CollectDiscordAsync(cancellationToken),
             CollectUnitySkillsAsync(cancellationToken),
@@ -55,7 +54,6 @@ public sealed class StatusCollector
         {
             "devspace" => await RunDevSpaceControlAsync("restart", cancellationToken),
             "watchdog" => await RestartScheduledTaskAsync("AgentTools-DevSpaceWatchdog", cancellationToken),
-            "uiqa" => await RestartScheduledTaskAsync("AgentTools-IdleUiQA", cancellationToken),
             "discord" => await RestartScheduledTaskAsync(DiscordTaskName, cancellationToken),
             _ => new ProcessResult(-1, string.Empty, "このサービスには再起動操作が定義されていません。", false)
         };
@@ -270,84 +268,6 @@ public sealed class StatusCollector
         catch (Exception ex)
         {
             return ErrorStatus("watchdog", "DevSpace Watchdog", "確認失敗", ex.Message, checkedAt, Path.Combine(GatewayRoot, "state", "devspace"), true);
-        }
-    }
-
-    private async Task<ServiceStatus> CollectIdleUiQaAsync(CancellationToken cancellationToken)
-    {
-        var checkedAt = DateTimeOffset.Now;
-        try
-        {
-            using var json = await RunGatewayJsonAsync(["uiqa", "status"], cancellationToken, TimeSpan.FromSeconds(15));
-            if (json is null)
-            {
-                return ErrorStatus("uiqa", "Idle UI QA", "応答なし", "Idle UI QA状態を取得できませんでした。", checkedAt, Path.Combine(GatewayRoot, "state", "idle-ui-qa"), true);
-            }
-
-            var root = json.RootElement;
-            var ok = ReadBool(root, "ok") == true;
-            var enabled = ReadBool(root, "enabled") == true;
-            var developmentActive = ReadBool(root, "developmentActive") == true;
-            var idleMinutes = ReadInt(root, "idleMinutes") ?? 30;
-            var openIssues = ReadInt(root, "issues", "open") ?? 0;
-            var lastStatus = ReadString(root, "state", "lastRunStatus") ?? "never";
-            var lastReason = ReadString(root, "state", "lastRunReason") ?? "未実行";
-            var lastRun = ReadDate(root, "state", "lastRunAt");
-            var lastCheck = ReadDate(root, "state", "lastCheckAt");
-            var lastImages = ReadInt(root, "state", "lastImageCount") ?? 0;
-            var lastNewIssues = ReadInt(root, "state", "lastNewIssues") ?? 0;
-
-            var health = !ok || lastStatus == "error"
-                ? ServiceHealth.Warning
-                : developmentActive
-                    ? ServiceHealth.Busy
-                    : !enabled
-                        ? ServiceHealth.Stopped
-                        : ServiceHealth.Healthy;
-
-            var statusText = developmentActive
-                ? "開発中・待機"
-                : lastStatus switch
-                {
-                    "issues" => "指摘あり",
-                    "passed" => "問題なし",
-                    "waiting_idle" => "アイドル待ち",
-                    "waiting_images" => "画像待ち",
-                    "error" => "警告",
-                    _ => enabled ? "待機" : "停止"
-                };
-
-            var details = new StringBuilder()
-                .AppendLine($"アイドル判定: {idleMinutes}分")
-                .AppendLine($"開発中: {(developmentActive ? "はい" : "いいえ")}")
-                .AppendLine($"未解決指摘: {openIssues}")
-                .AppendLine($"最終状態: {lastStatus}")
-                .AppendLine($"理由: {lastReason}")
-                .AppendLine($"前回画像: {lastImages}枚 / 新規指摘 {lastNewIssues}件")
-                .AppendLine($"最終QA: {FormatLocalDate(lastRun)}")
-                .AppendLine($"最終確認: {FormatLocalDate(lastCheck)}")
-                .ToString().TrimEnd();
-
-            return new ServiceStatus
-            {
-                Id = "uiqa",
-                DisplayName = "Idle UI QA",
-                Health = health,
-                StatusText = statusText,
-                Summary = developmentActive
-                    ? "開発作業が終わるまで待機"
-                    : openIssues > 0
-                        ? $"未解決 {openIssues}件 / {lastReason}"
-                        : lastReason,
-                Details = details,
-                CheckedAt = checkedAt,
-                LogPath = Path.Combine(GatewayRoot, "state", "idle-ui-qa"),
-                CanRecover = true
-            };
-        }
-        catch (Exception ex)
-        {
-            return ErrorStatus("uiqa", "Idle UI QA", "確認失敗", ex.Message, checkedAt, Path.Combine(GatewayRoot, "state", "idle-ui-qa"), true);
         }
     }
 

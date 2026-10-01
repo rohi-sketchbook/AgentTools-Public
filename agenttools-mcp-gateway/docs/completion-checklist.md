@@ -21,20 +21,6 @@
 - [x] secret redaction
 - [x] taskStore / task runner / tailLog
 
-## Idle UI / UX QA
-
-- [x] VR Avatar Studioのproject fingerprint変化を軽量に検出
-- [x] 同projectのactive Work Task workerがいる間はQAを開始しない
-- [x] 変更検出後30分のidle graceを設ける
-- [x] 同じproject revisionは1回だけQAする
-- [x] recent UI screenshotを最大12枚にboundedしてCodexへ画像入力
-- [x] QA workerはread-only / checkout固定でsource変更を禁止
-- [x] 文字切れ・重なり・配置/余白/メッセージ位置・明確な導線不整合を対象化
-- [x] stable finding keyによる未解決問題の重複抑止
-- [x] QA reportとfinding ledgerを`state/idle-ui-qa/`へ保存
-- [x] Control Centerからidle状態・未解決件数・最終QAを確認可能
-- [x] 10分ごとのone-shot Scheduled Taskで常駐loopを廃止
-
 ## DevSpace独立管理
 
 - [x] 固定DevSpace設定 `config/devspace.json`

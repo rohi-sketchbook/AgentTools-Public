@@ -165,7 +165,7 @@ POST /api/tasks/{id}/complete
 - `continue-chatgpt`: 固定type `task_continue` をHost Request Queueへ登録する。Scheduled ChatGPT Hostが既存Work TaskとDevSpace workspaceを再利用し、Requestで許可された安全なローカル作業の範囲で未完了作業を実際に続行する。通常の続行経路ではCodex worker/Astraを自動起動せず、結果はMarkdown実施レポートとして「通信」に返す。
 - `communications`: Host Requestの状態（pending / processing / completed / failed）とsanitized結果概要を表示する。全体一覧は最新20件、`/api/tasks/{id}/communications` は対象Taskだけを最新10件まで返す。個別取得ではcompletedレポート全文をsanitizer経由で返す。絶対レポートパスやRequest内部instructionはWebへ返さない。
 - `resume-prompt`: 旧UI/互換用。停止TaskからChatGPT (Sol)へ貼り付ける再開プロンプトを生成するが、通常Web UIの「作業続行」では使用しない。
-- `continue-codex`: ユーザーが別ボタンで明示した場合だけDevSpace Codex continuationを開始する。Control Center経由の手動続行は`implementation` role（GPT-5.6 Terra）を使用する。自動継続も`continuation` role（GPT-5.6 Terra）を使用し、Astraはユーザー明示指定時だけ利用する。
+- `continue-codex`: ユーザーが別ボタンで明示した場合だけDevSpace Codex continuationを開始する。Control Center経由の手動続行は`implementation` role（GPT-6.1 Sol）を使用する。自動継続も`continuation` role（GPT-6.1 Sol）を使用し、Astraはユーザー明示指定時だけ利用する。
 - `continue`: 旧Webクライアント互換。現在は`resume-prompt`相当で、Codexを自動起動しない。
 - `complete`: 閉じ忘れTaskを手動成功完了にする。明示確認、stale更新検知、worker reconcile後のactive worker不存在、Goal Contract enforcementを通過した場合だけ実行する。
 

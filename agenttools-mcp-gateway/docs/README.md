@@ -10,7 +10,6 @@ Gatewayの詳細資料索引です。READMEやAGENTSへ詳細手順を重複さ�
 | [`background-performance-policy.md`](background-performance-policy.md) | 常駐処理、timer、watchdog、polling、queue pumpの性能ポリシー |
 | [`skill-improvement-workflow.md`](skill-improvement-workflow.md) | Skill改善候補の保存・diffレビュー・承認/却下・安全な適用フロー |
 | [`devspace-recovery.md`](devspace-recovery.md) | DevSpace health、diagnose、recovery、手動lifecycle設計 |
-| [`idle-ui-qa.md`](idle-ui-qa.md) | 開発アイドル判定、Codex画像QA、finding重複抑止、Scheduled Task運用 |
 | [`unity-worktree-validation.md`](unity-worktree-validation.md) | AutoDevから独立したUnity Worktree検証、依存Junction、Editor起動、孤児Unity cleanupの共通安全基盤 |
 
 ## Validation / reference

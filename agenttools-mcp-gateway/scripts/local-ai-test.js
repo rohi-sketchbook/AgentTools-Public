@@ -31,6 +31,7 @@ function main() {
 
   const config = loadConfig();
   assert.ok(path.isAbsolute(config.registeredWorkflowRoot));
+  assert.ok(path.isAbsolute(config.inputRoot));
   assert.ok(path.isAbsolute(config.outputRoot));
   assert.ok(path.isAbsolute(config.stateRoot));
 

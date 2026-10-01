@@ -8,6 +8,7 @@
   "generationPollIntervalMs": 750,
   "generationTimeoutMs": 1800000,
   "registeredWorkflowRoot": "${LOCAL_AI_ROOT}/workflows",
+  "inputRoot": "${LOCAL_AI_ROOT}/input",
   "outputRoot": "${LOCAL_AI_ROOT}/output",
   "stateRoot": "${LOCAL_AI_ROOT}/state",
   "detectedWorkflowSources": []

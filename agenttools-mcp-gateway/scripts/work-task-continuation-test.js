@@ -63,14 +63,14 @@ try {
         providerUsage: { usedPercent: 25, remainingPercent: 75, resetsAt: 1234567890, source: 'codex-app-server' },
       };
     }
-    if (args[1] === 'handoff') {
+    if (args[1] === 'show') {
       return {
         id: 'agt_test_auto_continue',
-        status: 'idle',
+        status: 'completed',
         provider: 'codex',
         model: runtime.policy.codexModel,
         providerUsage: { usedPercent: 24, remainingPercent: 76, resetsAt: 1234567890, source: 'codex-app-server' },
-        latestResponse: 'ローカルテストを実行し、問題を修正しました。',
+        response: 'ローカルテストを実行し、問題を修正しました。',
         changedFiles: ['src/example.js'],
         commandsRun: ['npm test'],
       };
@@ -100,11 +100,15 @@ try {
   assert.equal(fs.existsSync(path.join(notificationDir, startedNotification)), true);
   const startedPayload = JSON.parse(fs.readFileSync(path.join(notificationDir, startedNotification), 'utf8'));
   assert.equal(startedPayload.notificationKind, 'continuation_started');
-  assert.equal(startedPayload.continuation.model, 'gpt-5.6-terra');
+  assert.equal(startedPayload.continuation.model, 'gpt-6.1-sol');
   assert.equal(startedPayload.continuation.sessionReused, false);
   assert.equal(startedPayload.continuation.providerUsage.remainingPercent, 76);
-  assert.equal(calls[0].includes('--thinking'), true);
-  assert.equal(calls[0][calls[0].indexOf('--thinking') + 1], 'medium');
+  assert.equal(calls[0].includes('--effort'), true);
+  assert.equal(calls[0][calls[0].indexOf('--effort') + 1], 'medium');
+  assert.equal(calls[0].includes('--thinking'), false);
+  assert.equal(calls[0].includes('--write-mode'), false);
+  assert.equal(calls[0].includes('--isolation'), false);
+  assert.equal(calls[0].includes('--usage-threshold'), false);
 
   const monitored = continuation.runContinuationSweep({
     nowMs: firstHeartbeat + runtime.policy.codexHandoffAfterMs + 60_001,
@@ -114,7 +118,7 @@ try {
   assert.equal(monitored.events[0].action, 'completed');
   assert.equal(monitored.events[0].notificationQueued, true);
   assert.equal(calls.length, 2);
-  assert.equal(calls[1][1], 'handoff');
+  assert.equal(calls[1][1], 'show');
   current = workTasks.getWorkTask(started.id);
   assert.equal(current.status, 'blocked');
   assert.equal(current.work.state, 'waiting_dependency');

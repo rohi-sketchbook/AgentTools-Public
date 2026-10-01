@@ -1,0 +1,96 @@
+{
+  "1": {
+    "class_type": "UnetLoaderGGUF",
+    "inputs": {
+      "unet_name": "Wan2_2-TI2V-5B-Turbo-Q5_K_M.gguf"
+    }
+  },
+  "2": {
+    "class_type": "CLIPLoaderGGUF",
+    "inputs": {
+      "clip_name": "umt5-xxl-encoder-Q5_K_M.gguf",
+      "type": "wan"
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "wan2.2_vae.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "A cinematic subject performs a clear natural action. The camera moves smoothly through a coherent scene with controlled lighting and chronological motion.",
+      "clip": ["2", 0]
+    }
+  },
+  "5": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "oversaturated, overexposed, static, frozen motion, blurry details, watermark, subtitles, worst quality, low quality, jpeg artifacts, deformed anatomy, extra limbs, distorted hands, distorted face, cluttered background",
+      "clip": ["2", 0]
+    }
+  },
+  "6": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": {
+      "model": ["1", 0],
+      "shift": 8.0
+    }
+  },
+  "7": {
+    "class_type": "Wan22ImageToVideoLatent",
+    "inputs": {
+      "vae": ["3", 0],
+      "width": 832,
+      "height": 480,
+      "length": 81,
+      "batch_size": 1
+    }
+  },
+  "8": {
+    "class_type": "LatentMultiply",
+    "inputs": {
+      "samples": ["7", 0],
+      "multiplier": 0.8
+    }
+  },
+  "9": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["6", 0],
+      "seed": 123456789,
+      "steps": 4,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "positive": ["4", 0],
+      "negative": ["5", 0],
+      "latent_image": ["8", 0],
+      "denoise": 1.0
+    }
+  },
+  "10": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["9", 0],
+      "vae": ["3", 0]
+    }
+  },
+  "11": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": ["10", 0],
+      "fps": 24
+    }
+  },
+  "12": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": ["11", 0],
+      "filename_prefix": "AgentTools/wan2_2_ti2v_5b_turbo_ja_t2v",
+      "format": "mp4"
+    }
+  }
+}

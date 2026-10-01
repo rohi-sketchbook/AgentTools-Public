@@ -72,7 +72,6 @@ const publicConfigFiles = [
   'components.json',
   'devspace.json',
   'discord.json',
-  'idle-ui-qa.json',
   'safety.json',
   'unity-worktree-validator.json',
 ];

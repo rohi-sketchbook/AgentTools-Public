@@ -1,0 +1,35 @@
+{
+  "name": "wan2_2_ti2v_5b_turbo_gguf_ja_t2v",
+  "description": "Wan2.2 TI2V 5B Turbo Q5_K_M GGUF fast text-to-video workflow for RTX 3080-class GPUs. Uses 4 steps, CFG 1.0, SD3 shift 8, Euler/simple sampling, and a lightweight 832x480x81 default.",
+  "type": "video",
+  "workflowFile": "workflow-api.json",
+  "bindings": {
+    "prompt": { "node": "4", "input": "text" },
+    "negativePrompt": { "node": "5", "input": "text" },
+    "seed": { "node": "9", "input": "seed" },
+    "steps": { "node": "9", "input": "steps" },
+    "width": { "node": "7", "input": "width" },
+    "height": { "node": "7", "input": "height" },
+    "length": { "node": "7", "input": "length" },
+    "fps": { "node": "11", "input": "fps" },
+    "cfg": { "node": "9", "input": "cfg" },
+    "sampler": { "node": "9", "input": "sampler_name" },
+    "scheduler": { "node": "9", "input": "scheduler" },
+    "shift": { "node": "6", "input": "shift" },
+    "latentMultiplier": { "node": "8", "input": "multiplier" },
+    "outputPrefix": { "node": "12", "input": "filename_prefix" }
+  },
+  "defaults": {
+    "width": 832,
+    "height": 480,
+    "length": 81,
+    "fps": 24,
+    "steps": 4,
+    "cfg": 1.0,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "shift": 8.0,
+    "latentMultiplier": 0.8,
+    "negativePrompt": "oversaturated, overexposed, static, frozen motion, blurry details, watermark, subtitles, worst quality, low quality, jpeg artifacts, deformed anatomy, extra limbs, distorted hands, distorted face, cluttered background"
+  }
+}

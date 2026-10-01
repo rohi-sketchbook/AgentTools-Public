@@ -3,6 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { loadConfig } = require('../config');
 const { postJson, getHistory, request } = require('../adapters/comfyui');
+const { inspectStabilityMatrix } = require('../adapters/stability-matrix');
 const { loadRegisteredWorkflow, applyBindings } = require('../adapters/workflows');
 
 function parseArgs(argv) {
@@ -25,6 +26,108 @@ function decodePayload(value) {
 function sanitizeFilename(value) {
   const base = path.basename(String(value || 'output.bin'));
   return base.replace(/[<>:"/\\|?*\x00-\x1F]/g, '_') || 'output.bin';
+}
+
+function isInside(root, target) {
+  const relative = path.relative(root, target);
+  return relative === '' || (!relative.startsWith('..') && !path.isAbsolute(relative));
+}
+
+function cleanupStagedInputs(stagingDir) {
+  if (!stagingDir) return;
+  try {
+    fs.rmSync(stagingDir, { recursive: true, force: true });
+  } catch {
+    // Best-effort cleanup only. A completed generation must not be turned into a failure
+    // because Windows still has a transient handle on an input image.
+  }
+}
+
+function applyMissingInputActions(workflow, spec) {
+  const actions = Array.isArray(spec?.omitWhenMissing) ? spec.omitWhenMissing : [];
+  for (const action of actions) {
+    const nodeId = String(action?.node || '');
+    if (!nodeId) continue;
+    if (!action.input) {
+      delete workflow[nodeId];
+      continue;
+    }
+    const node = workflow[nodeId];
+    if (!node?.inputs || typeof node.inputs !== 'object') continue;
+    if (action.key) {
+      const container = node.inputs[action.input];
+      if (container && typeof container === 'object' && !Array.isArray(container)) {
+        delete container[action.key];
+      }
+    } else {
+      delete node.inputs[action.input];
+    }
+  }
+}
+
+function prepareWorkflow(config, registered, payloadValues = {}) {
+  const values = { ...payloadValues };
+  const workflow = structuredClone(registered.workflow);
+  const inputFiles = registered.manifest?.inputFiles || {};
+  const entries = Object.entries(inputFiles);
+  if (entries.length === 0) {
+    return { workflow: applyBindings(workflow, registered.manifest, values), stagingDir: null };
+  }
+
+  for (const [key, spec] of entries) {
+    const value = values[key];
+    const present = value !== undefined && value !== null && String(value).trim() !== '';
+    if (!present && spec?.required) throw new Error(`workflow input image is required: ${key}`);
+  }
+
+  fs.mkdirSync(config.inputRoot, { recursive: true });
+  const inputRoot = fs.realpathSync(config.inputRoot);
+  const matrix = inspectStabilityMatrix();
+  if (!matrix.comfyUi.installed || !matrix.comfyUi.libraryPath) {
+    throw new Error('ComfyUI package path is unavailable for staging workflow input images');
+  }
+
+  const comfyInputRoot = path.join(matrix.comfyUi.libraryPath, 'input');
+  fs.mkdirSync(comfyInputRoot, { recursive: true });
+  const stagingDir = path.join(comfyInputRoot, 'AgentTools', `job-${Date.now()}-${process.pid}`);
+  fs.mkdirSync(stagingDir, { recursive: true });
+
+  try {
+    let index = 0;
+    for (const [key, spec] of entries) {
+      const value = values[key];
+      const present = value !== undefined && value !== null && String(value).trim() !== '';
+      if (!present) {
+        applyMissingInputActions(workflow, spec);
+        delete values[key];
+        continue;
+      }
+
+      const candidate = path.isAbsolute(String(value))
+        ? path.resolve(String(value))
+        : path.resolve(config.inputRoot, String(value));
+      if (!fs.existsSync(candidate)) throw new Error(`local-ai input image not found for ${key}: ${value}`);
+      const source = fs.realpathSync(candidate);
+      if (!isInside(inputRoot, source)) {
+        throw new Error(`workflow input ${key} must remain under local-ai inputRoot`);
+      }
+      if (!fs.statSync(source).isFile()) throw new Error(`workflow input ${key} must be a regular file`);
+
+      index += 1;
+      const stagedName = `${String(index).padStart(2, '0')}-${sanitizeFilename(source)}`;
+      const destination = path.join(stagingDir, stagedName);
+      fs.copyFileSync(source, destination);
+      values[key] = path.relative(comfyInputRoot, destination).split(path.sep).join('/');
+    }
+
+    return {
+      workflow: applyBindings(workflow, registered.manifest, values),
+      stagingDir,
+    };
+  } catch (error) {
+    cleanupStagedInputs(stagingDir);
+    throw error;
+  }
 }
 
 function collectOutputFiles(historyEntry) {
@@ -77,22 +180,30 @@ async function main() {
   const payload = decodePayload(args.payload);
   const config = loadConfig();
   const registered = loadRegisteredWorkflow(payload.workflow);
-  const values = payload.values || {};
-  const workflow = applyBindings(registered.workflow, registered.manifest, values);
+  const prepared = prepareWorkflow(config, registered, payload.values || {});
+  const workflow = prepared.workflow;
+  const stagingDir = prepared.stagingDir;
   const outputDir = path.resolve(payload.outputDir || path.join(config.outputRoot, `${payload.workflow}-${Date.now()}`));
   const outputRoot = path.resolve(config.outputRoot);
   const relative = path.relative(outputRoot, outputDir);
-  if (relative.startsWith('..') || path.isAbsolute(relative)) throw new Error('outputDir must remain under local-ai outputRoot');
+  if (relative.startsWith('..') || path.isAbsolute(relative)) {
+    cleanupStagedInputs(stagingDir);
+    throw new Error('outputDir must remain under local-ai outputRoot');
+  }
   fs.mkdirSync(outputDir, { recursive: true });
 
   const clientId = `agenttools-${process.pid}-${Date.now()}`;
   const submit = await postJson('/prompt', { prompt: workflow, client_id: clientId }, 15000);
   if (!submit.ok) {
+    cleanupStagedInputs(stagingDir);
     const details = submit.data && typeof submit.data === 'object' ? JSON.stringify(submit.data) : submit.error;
     throw new Error(`ComfyUI rejected workflow: ${details}`);
   }
   const promptId = submit.data?.prompt_id;
-  if (!promptId) throw new Error('ComfyUI did not return prompt_id');
+  if (!promptId) {
+    cleanupStagedInputs(stagingDir);
+    throw new Error('ComfyUI did not return prompt_id');
+  }
 
   const startedAt = new Date().toISOString();
   const jobBase = {
@@ -103,7 +214,7 @@ async function main() {
     ownedBy: 'AgentTools',
     startedAt,
   };
-  const jobPath = writeJob(config, promptId, { ...jobBase, status: 'running', updatedAt: startedAt });
+  writeJob(config, promptId, { ...jobBase, status: 'running', updatedAt: startedAt });
   process.stdout.write(`${JSON.stringify({ event: 'submitted', promptId, clientId, workflow: payload.workflow })}\n`);
 
   const timeoutMs = Number(payload.timeoutMs || config.generationTimeoutMs || 1800000);
@@ -132,30 +243,36 @@ async function main() {
 
   const status = historyEntry?.status || {};
   if (status.status_str && status.status_str !== 'success') {
+    cleanupStagedInputs(stagingDir);
     const error = status.messages ? JSON.stringify(status.messages) : `status=${status.status_str}`;
     writeJob(config, promptId, { ...jobBase, status: 'failed', error, updatedAt: new Date().toISOString() });
     throw new Error(`ComfyUI generation failed: ${error}`);
   }
 
-  const outputFiles = collectOutputFiles(historyEntry);
-  const downloaded = [];
-  for (let i = 0; i < outputFiles.length; i += 1) {
-    downloaded.push(await downloadOutput(outputFiles[i], outputDir, i));
-  }
+  let downloaded;
+  try {
+    const outputFiles = collectOutputFiles(historyEntry);
+    downloaded = [];
+    for (let i = 0; i < outputFiles.length; i += 1) {
+      downloaded.push(await downloadOutput(outputFiles[i], outputDir, i));
+    }
 
-  const result = {
-    ok: true,
-    promptId,
-    clientId,
-    workflow: payload.workflow,
-    outputDir,
-    outputs: downloaded,
-    outputMetadata: outputFiles,
-    completedAt: new Date().toISOString(),
-  };
-  fs.writeFileSync(path.join(outputDir, 'result.json'), `${JSON.stringify(result, null, 2)}\n`, 'utf8');
-  writeJob(config, promptId, { ...jobBase, status: 'completed', outputs: downloaded, updatedAt: result.completedAt });
-  process.stdout.write(`${JSON.stringify({ event: 'completed', ...result })}\n`);
+    const result = {
+      ok: true,
+      promptId,
+      clientId,
+      workflow: payload.workflow,
+      outputDir,
+      outputs: downloaded,
+      outputMetadata: outputFiles,
+      completedAt: new Date().toISOString(),
+    };
+    fs.writeFileSync(path.join(outputDir, 'result.json'), `${JSON.stringify(result, null, 2)}\n`, 'utf8');
+    writeJob(config, promptId, { ...jobBase, status: 'completed', outputs: downloaded, updatedAt: result.completedAt });
+    process.stdout.write(`${JSON.stringify({ event: 'completed', ...result })}\n`);
+  } finally {
+    cleanupStagedInputs(stagingDir);
+  }
 }
 
 main().catch((error) => {

@@ -1,0 +1,29 @@
+{
+  "name": "qwen_image_2_1_turbo_ja_t2i",
+  "description": "Qwen-Image-2.1 Viggle Turbo GGUF 4-step T2I for RTX 3080-class GPUs. Accepts Japanese prompts directly through Qwen3-VL.",
+  "type": "image",
+  "workflowFile": "workflow-api.json",
+  "bindings": {
+    "prompt": { "node": "4", "input": "prompt" },
+    "negativePrompt": { "node": "4", "input": "negative_prompt" },
+    "seed": { "node": "6", "input": "seed" },
+    "steps": { "node": "6", "input": "steps" },
+    "width": { "node": "5", "input": "width" },
+    "height": { "node": "5", "input": "height" },
+    "cfg": { "node": "6", "input": "cfg" },
+    "sampler": { "node": "6", "input": "sampler_name" },
+    "scheduler": { "node": "6", "input": "scheduler" },
+    "resolution": { "node": "4", "input": "resolution" },
+    "outputPrefix": { "node": "8", "input": "filename_prefix" }
+  },
+  "defaults": {
+    "width": 1024,
+    "height": 1024,
+    "steps": 4,
+    "cfg": 1.0,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "negativePrompt": "",
+    "resolution": 1024
+  }
+}

@@ -2,7 +2,6 @@ const status = require('./status');
 const gateway = require('./gateway');
 const devspace = require('./devspace');
 const watchdog = require('./watchdog');
-const uiqa = require('./uiqa');
 const activity = require('./activity');
 const fsTools = require('./fs');
 const processTools = require('./process');
@@ -26,7 +25,6 @@ const registry = {
   gateway,
   devspace,
   watchdog,
-  uiqa,
   activity,
   fs: fsTools,
   process: processTools,

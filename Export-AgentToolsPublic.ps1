@@ -2,7 +2,9 @@
 param(
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string]$Destination
+    [string]$Destination,
+
+    [switch]$UpdateGitRepository
 )
 
 Set-StrictMode -Version 2.0
@@ -61,7 +63,26 @@ if ($LASTEXITCODE -ne 0) {
     throw ('Public release audit failed:' + [Environment]::NewLine + ($auditOutput -join [Environment]::NewLine))
 }
 
-if (Test-Path -LiteralPath $destinationPath) {
+$updateExistingGit = $UpdateGitRepository.IsPresent
+if ($updateExistingGit) {
+    if (-not (Test-Path -LiteralPath $destinationPath -PathType Container)) {
+        throw ('Public Git repository destination does not exist: ' + $destinationPath)
+    }
+
+    $destinationGitProbe = @(& git -C $destinationPath rev-parse --is-inside-work-tree 2>&1)
+    if ($LASTEXITCODE -ne 0 -or ($destinationGitProbe -join '').Trim() -ne 'true') {
+        throw ('UpdateGitRepository requires an existing Git work tree: ' + $destinationPath)
+    }
+
+    $destinationStatus = @(& git -C $destinationPath status --porcelain=v1 --untracked-files=all 2>&1)
+    if ($LASTEXITCODE -ne 0) {
+        throw ('Destination git status failed: ' + ($destinationStatus -join [Environment]::NewLine))
+    }
+    if ($destinationStatus.Count -gt 0) {
+        throw ('Public Git repository working tree must be clean before update: ' + $destinationPath)
+    }
+}
+elseif (Test-Path -LiteralPath $destinationPath) {
     $existing = @(Get-ChildItem -LiteralPath $destinationPath -Force -ErrorAction Stop)
     if ($existing.Count -gt 0) {
         throw ('Public export destination must be empty: ' + $destinationPath)
@@ -76,7 +97,7 @@ if ($LASTEXITCODE -ne 0) {
     throw ('git ls-files failed: ' + ($trackedFiles -join [Environment]::NewLine))
 }
 
-$copied = 0
+$publicFiles = [System.Collections.Generic.List[string]]::new()
 $excluded = 0
 foreach ($relative in $trackedFiles) {
     if ([string]::IsNullOrWhiteSpace($relative)) { continue }
@@ -89,22 +110,55 @@ foreach ($relative in $trackedFiles) {
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) {
         throw ('Tracked source file is missing: ' + $relative)
     }
+    $publicFiles.Add($relative)
+}
 
+$removed = 0
+if ($updateExistingGit) {
+    $desiredFiles = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($relative in $publicFiles) {
+        [void]$desiredFiles.Add($relative.Replace('\', '/'))
+    }
+
+    $destinationTrackedFiles = @(& git -C $destinationPath -c core.quotepath=false ls-files 2>&1)
+    if ($LASTEXITCODE -ne 0) {
+        throw ('Destination git ls-files failed: ' + ($destinationTrackedFiles -join [Environment]::NewLine))
+    }
+
+    foreach ($relative in $destinationTrackedFiles) {
+        if ([string]::IsNullOrWhiteSpace($relative)) { continue }
+        if ($desiredFiles.Contains($relative.Replace('\', '/'))) { continue }
+
+        $target = Join-Path $destinationPath ($relative.Replace('/', '\'))
+        if ((Test-Path -LiteralPath $target -PathType Leaf) -and
+            $PSCmdlet.ShouldProcess($target, 'Remove obsolete tracked public file')) {
+            Remove-Item -LiteralPath $target -Force
+            $removed++
+        }
+    }
+}
+
+$copied = 0
+foreach ($relative in $publicFiles) {
+    $source = Join-Path $repoRoot ($relative.Replace('/', '\'))
     $target = Join-Path $destinationPath ($relative.Replace('/', '\'))
     if ($PSCmdlet.ShouldProcess($target, 'Copy tracked public file')) {
         [System.IO.Directory]::CreateDirectory((Split-Path -Parent $target)) | Out-Null
-        Copy-Item -LiteralPath $source -Destination $target
+        Copy-Item -LiteralPath $source -Destination $target -Force
         $copied++
     }
 }
 
 $head = (& git -C $repoRoot rev-parse HEAD).Trim()
 [pscustomobject]@{
-    SourceRepository = $repoRoot
-    SourceCommit     = $head
-    Destination      = $destinationPath
-    FilesCopied      = $copied
-    FilesExcluded    = $excluded
-    GitHistoryCopied = $false
-    LocalOverridesCopied = $false
+    SourceRepository      = $repoRoot
+    SourceCommit          = $head
+    Destination           = $destinationPath
+    DestinationMode       = if ($updateExistingGit) { 'git-update' } else { 'new-tree' }
+    FilesCopied           = $copied
+    FilesRemoved          = $removed
+    FilesExcluded         = $excluded
+    GitHistoryCopied      = $false
+    GitHistoryPreserved   = $updateExistingGit
+    LocalOverridesCopied  = $false
 } | Format-List

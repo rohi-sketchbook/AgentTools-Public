@@ -35,7 +35,7 @@ async function summary() {
 
   return {
     ok: true,
-    mode: 'guarded gateway + autonomous watchdog + Work Task orchestration + idle UI/UX QA',
+    mode: 'guarded gateway + autonomous watchdog + Work Task orchestration',
     projectRoot,
     safety: {
       ...safetyPolicySummary(safety),
@@ -53,8 +53,7 @@ async function summary() {
       blenderCandidates: blenderProcesses.processes.map((p) => ({ pid: p.pid, name: p.name })),
     },
     next: [
-      'Keep AgentTools-DevSpaceWatchdog and AgentTools-IdleUiQA as independent per-user Scheduled Tasks.',
-      'Idle UI QA waits for VR Avatar Studio development to become idle, reviews recent UI screenshots with a read-only Codex worker, and suppresses unresolved duplicate findings.',
+      'Keep AgentTools-DevSpaceWatchdog as an independent per-user Scheduled Task.',
       'Use action-scoped allowlists plus explicit user-request assertions and confirmTokens for approved side effects; registered trusted long-running adapters are allowed while destructive/arbitrary external/network/command execution remains blocked.'
     ],
   };

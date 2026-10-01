@@ -7,13 +7,12 @@ DevSpaceとAgentTools周辺サービスの稼働状況をまとめて確認す�
 - AgentTools MCP Gateway
 - DevSpace
 - DevSpace Watchdog
-- Idle UI QA（開発アイドル時のUI/UX画像監査）
 - Local AI（Stability Matrix / ComfyUI）
 - Discord Bot
 - UnitySkills
 - 開発日記Runner
 
-単純なPID存在確認だけでなく、既存Gatewayのhealth JSON、HTTP/MCP疎通、Watchdogの連続失敗、Idle UI QA、Local AIの`localAi status`、Windows Scheduled Task、UnitySkills設定、開発日記`status.json`を組み合わせて判定します。Local AIはStability MatrixとComfyUI packageが導入済みでComfyUI APIが停止中の場合、オンデマンド運用の正常な「待機」として表示します。
+単純なPID存在確認だけでなく、既存Gatewayのhealth JSON、HTTP/MCP疎通、Watchdogの連続失敗、Local AIの`localAi status`、Windows Scheduled Task、UnitySkills設定、開発日記`status.json`を組み合わせて判定します。Local AIはStability MatrixとComfyUI packageが導入済みでComfyUI APIが停止中の場合、オンデマンド運用の正常な「待機」として表示します。
 
 ## 主な機能
 
@@ -27,15 +26,15 @@ DevSpaceとAgentTools周辺サービスの稼働状況をまとめて確認す�
 - 常駐中のTask更新では子プロセスを起動しない低負荷設計
 - 正常／警告／停止／処理中／不明の区別
 - PID、Endpoint、最終確認、キュー件数などの詳細表示
-- 並行作業時は同一タスク内に `ChatGPT (GPT-5.6 Sol)` / `Codex (Terra)` 等のactive workerを併記
+- 並行作業時は同一タスク内に `ChatGPT (GPT-5.6 Sol)` / `Codex (GPT-6.1 Sol)` 等のactive workerを併記
 - ログフォルダをExplorerで開く
 - 診断情報をJSONとしてクリップボードへコピー
 - DevSpaceの起動・停止・再起動・診断（Gateway supervisor経由、強制終了なし）
-- Watchdog、Idle UI QA、Discord Botの確認付き再実行/再起動
+- Watchdog、Discord Botの確認付き再実行/再起動
 - Local AIは初期版では状態表示のみ（起動・生成などの実操作はGatewayの確認付きToolへ分離）
 - 最小化・閉じる操作でタスクトレイ常駐
 
-DevSpace操作は `agenttools-mcp-gateway\scripts\devspace-manual-control.js` を正本とし、process ownershipの再検証とGateway supervisorのgraceful shutdown/startを使用します。Watchdog・Idle UI QA・Discordは固定された既存Windows Scheduled Taskだけを使用し、任意コマンドは受け付けません。
+DevSpace操作は `agenttools-mcp-gateway\scripts\devspace-manual-control.js` を正本とし、process ownershipの再検証とGateway supervisorのgraceful shutdown/startを使用します。Watchdog・Discordは固定された既存Windows Scheduled Taskだけを使用し、任意コマンドは受け付けません。
 
 ## 作業Task表示
 

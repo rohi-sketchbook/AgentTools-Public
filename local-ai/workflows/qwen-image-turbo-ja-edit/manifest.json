@@ -1,0 +1,51 @@
+{
+  "name": "qwen_image_2_1_turbo_ja_edit",
+  "description": "Qwen-Image-2.1 Viggle Turbo GGUF 4-step edit workflow with direct Japanese instructions and one to three reference images.",
+  "type": "image-edit",
+  "workflowFile": "workflow-api.json",
+  "bindings": {
+    "inputImage": { "node": "4", "input": "image" },
+    "referenceImage2": { "node": "5", "input": "image" },
+    "referenceImage3": { "node": "6", "input": "image" },
+    "prompt": { "node": "7", "input": "prompt" },
+    "negativePrompt": { "node": "7", "input": "negative_prompt" },
+    "seed": { "node": "9", "input": "seed" },
+    "steps": { "node": "9", "input": "steps" },
+    "cfg": { "node": "9", "input": "cfg" },
+    "sampler": { "node": "9", "input": "sampler_name" },
+    "scheduler": { "node": "9", "input": "scheduler" },
+    "resolution": { "node": "7", "input": "resolution" },
+    "cacheDevice": { "node": "8", "input": "device" },
+    "cacheDtype": { "node": "8", "input": "dtype" },
+    "outputPrefix": { "node": "11", "input": "filename_prefix" }
+  },
+  "inputFiles": {
+    "inputImage": {
+      "required": true
+    },
+    "referenceImage2": {
+      "required": false,
+      "omitWhenMissing": [
+        { "node": "5" },
+        { "node": "7", "input": "images", "key": "image_2" }
+      ]
+    },
+    "referenceImage3": {
+      "required": false,
+      "omitWhenMissing": [
+        { "node": "6" },
+        { "node": "7", "input": "images", "key": "image_3" }
+      ]
+    }
+  },
+  "defaults": {
+    "steps": 4,
+    "cfg": 1.0,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "negativePrompt": "",
+    "resolution": 1024,
+    "cacheDevice": "off",
+    "cacheDtype": "default"
+  }
+}

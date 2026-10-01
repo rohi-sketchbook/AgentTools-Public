@@ -2,7 +2,7 @@
   "name": "agenttools-mcp-gateway",
   "version": "0.12.0",
   "private": true,
-  "description": "Guarded local AgentTools gateway with DevSpace self-healing, Work Task orchestration, and idle UI/UX quality checks.",
+  "description": "Guarded local AgentTools gateway with DevSpace self-healing and Work Task orchestration.",
   "license": "MIT",
   "scripts": {
     "status": "node src/cli.js status",
@@ -33,11 +33,9 @@
     "watchdog": "node scripts/devspace-watchdog.js",
     "watchdog:once": "node scripts/devspace-watchdog.js --once",
     "watchdog:reload": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/Install-DevSpaceWatchdog.ps1",
-    "uiqa": "node scripts/idle-ui-qa.js",
-    "test:uiqa": "node scripts/idle-ui-qa-test.js",
     "test:unity-worktree-validator": "node scripts/unity-worktree-validator-test.js",
     "unity:worktree-cleanup": "node scripts/unity-worktree-session-cleanup.js",
-    "check": "node scripts/static-audit.js && node scripts/config-portability-test.js && node scripts/background-performance-audit-test.js && node scripts/background-performance-audit.js && node scripts/resource-budget-test.js && node scripts/github-workflow-permissions-audit.js && node scripts/devspace-manager-test.js && node scripts/devspace-watchdog-test.js && node scripts/work-task-store-test.js && node scripts/work-task-control-test.js && node scripts/work-task-timeout-e2e-test.js && node scripts/work-task-continuation-test.js && node scripts/task-runner-safety-test.js && node scripts/workflow-policy-test.js && node scripts/codex-model-policy-test.js && node scripts/skill-improvement-store-test.js && node scripts/history-search-test.js && node scripts/host-request-store-test.js && node scripts/work-task-snapshot-test.js && node scripts/activity-store-test.js && node scripts/local-ai-test.js && node scripts/action-policy-test.js && node scripts/idle-ui-qa-test.js && node scripts/unity-worktree-validator-test.js && node scripts/smoke-test.js && node src/cli.js gateway health && node src/cli.js status"
+    "check": "node scripts/static-audit.js && node scripts/config-portability-test.js && node scripts/background-performance-audit-test.js && node scripts/background-performance-audit.js && node scripts/resource-budget-test.js && node scripts/github-workflow-permissions-audit.js && node scripts/devspace-manager-test.js && node scripts/devspace-watchdog-test.js && node scripts/work-task-store-test.js && node scripts/work-task-control-test.js && node scripts/work-task-timeout-e2e-test.js && node scripts/work-task-continuation-test.js && node scripts/task-runner-safety-test.js && node scripts/workflow-policy-test.js && node scripts/codex-model-policy-test.js && node scripts/skill-improvement-store-test.js && node scripts/history-search-test.js && node scripts/host-request-store-test.js && node scripts/work-task-snapshot-test.js && node scripts/activity-store-test.js && node scripts/local-ai-test.js && node scripts/action-policy-test.js && node scripts/unity-worktree-validator-test.js && node scripts/smoke-test.js && node src/cli.js gateway health && node src/cli.js status"
   },
   "engines": {
     "node": ">=20"

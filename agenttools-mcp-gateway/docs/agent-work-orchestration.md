@@ -47,13 +47,13 @@ Unity/game/renderのスクリーンショットは、画像そのものの編集
 
 範囲と完了条件が明確なbounded taskに利用する。モデル名を呼び出し側へ散在させず、`config/codex-models.json`の用途別roleを正本にする。
 
-- `complex`: `gpt-5.6-terra` (high)。Codexへ切り出せる範囲が明確な難しめの実装。広域な設計・統合・長時間判断はChatGPTホストのSolへ戻す
-- `continuation`: `gpt-5.6-terra` (medium)。安全なローカル作業の自動継続。Astraは自動選択しない
-- `implementation`: `gpt-5.6-terra`。単純〜中程度の実装、機械的リファクタ、テスト追加、明確なバグ修正
-- `review`: `gpt-5.6-terra`。独立diffレビュー。通常レビューにAstraを常用せず利用枠を抑える
-- `lightweight` / `idleQa`: `gpt-5.6-luna`。read-only探索、軽量監査、Idle UI QAなど高頻度・低コスト作業
+- `complex`: `gpt-6.1-sol` (high)。Codexへ切り出せる範囲が明確な難しめの実装。広域な設計・統合・長時間判断はChatGPTホストのSolへ戻す
+- `continuation`: `gpt-6.1-sol` (medium)。安全なローカル作業の自動継続。Astraは自動選択しない
+- `implementation`: `gpt-6.1-sol` (medium)。単純〜中程度の実装、機械的リファクタ、テスト追加、明確なバグ修正
+- `review`: `gpt-6.1-sol` (medium)。独立diffレビュー。通常レビューにAstraを常用せず利用枠を抑える
+- `lightweight`: `gpt-5.6-luna` (low)。read-only探索、軽量監査など高頻度・低コスト作業
 
-各roleは`model`に加えてDevSpaceへ渡す`thinking`も定義する。作業が曖昧化・広域化・反復失敗した場合はCodexで粘らずhostへ戻す。
+各roleは`model`に加えて内部設定の`thinking`も定義し、DevSpace 1.0.8 CLIへは`--effort`として渡す。作業が曖昧化・広域化・反復失敗した場合はCodexで粘らずhostへ戻す。
 
 ### 会話上の担当表示・作業状態
 
@@ -131,13 +131,13 @@ Goal判定は`continue / satisfied / blocked`の3値です。検証手順が定�
 
 Codex自動継続はprovider CLIを直接呼ばずDevSpace agent daemon/CLIを使用し、元checkoutの未コミット差分を引き継ぎます。そのためChatGPT生存中には起動せず、外部送信・commit/push・PR・production・削除・課金/アカウント操作は禁止した安全なローカル作業だけを委譲します。Codex終了後はTask ownerをChatGPTへ戻し、変更・テスト結果の最終確認待ちにします。
 
-自動継続roleは既定で`gpt-5.6-terra`を使用する。`gpt-6-astra`は明示指定専用であり、role mappingや自動継続からは選択しない。同じWork Taskで前回のCodex継続が正常完了し、同じモデルを引き続き使える場合は、次checkpointで新しいagentを作らず保存済みDevSpace Agent IDへ`agents continue`し、同一Codex session/contextを継続利用する。失敗・停止session、モデル変更、または`reuseCodexSession=false`の場合は新規sessionへfallbackする。Work Task checkpointは引き続き障害復旧の正本であり、session再利用に依存して安全情報を省略しない。
+自動継続roleは既定で`gpt-6.1-sol`を使用する。`gpt-6-astra`は明示指定専用であり、role mappingや自動継続からは選択しない。同じWork Taskで前回のCodex継続が正常完了し、同じモデルを引き続き使える場合は、次checkpointで新しいagentを作らず保存済みDevSpace Agent IDへ`agents continue`し、同一Codex session/contextを継続利用する。失敗・停止session、モデル変更、または`reuseCodexSession=false`の場合は新規sessionへfallbackする。Work Task checkpointは引き続き障害復旧の正本であり、session再利用に依存して安全情報を省略しない。
 
 OpenAI側でChatGPTのturnそのものが終了した場合、ローカルGateway単体で新しいChatGPT turnを生成することはできません。`chatgpt`モードの責務は状態を失わず次host executionで復元すること、`codex`モードの責務はその空白期間の安全なローカル作業をDevSpace workerへ移譲することです。OpenAI側の実行上限を回避した扱いにはしません。
 
 Control CenterはCodex引き継ぎ状態、実際に選択されたモデル、DevSpace Agent ID、引き継ぎ回数、session再利用状態、開始/終了、結果、およびDevSpaceが取得できるCodex利用枠スナップショットを表示します。自動継続設定のtooltip/footerにも現在のモデルとthinkingを表示します。現状DevSpaceが取得できるusageは`usedPercent / remainingPercent / resetsAt / source`であり、input/output/cache token数やturn単位の正確なtoken消費量ではありません。
 
-Control Centerの通常の続行操作は、Task ID・現在進捗・保存済み次作業を含むChatGPT再開プロンプトを生成してclipboardへ渡すだけとし、workerを自動起動しません。ユーザーが別の「Codexで続行」を明示した場合だけDevSpace continuationを起動し、その手動経路は`codex-models.json`の`implementation` roleを使用します。自動timeout継続の`continuation` roleもGPT-5.6 Terraを使用し、Astraはユーザーが明示指定した場合だけ利用します。
+Control Centerの通常の続行操作は、Task ID・現在進捗・保存済み次作業を含むChatGPT再開プロンプトを生成してclipboardへ渡すだけとし、workerを自動起動しません。ユーザーが別の「Codexで続行」を明示した場合だけDevSpace continuationを起動し、その手動経路は`codex-models.json`の`implementation` roleを使用します。自動timeout継続の`continuation` roleもGPT-6.1 Solを使用し、Astraはユーザーが明示指定した場合だけ利用します。
 
 ### 更新粒度
 

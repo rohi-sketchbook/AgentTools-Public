@@ -75,14 +75,3 @@ Unity Playerへ常時監視コードを追加しない。開発・デバッグ�
 - 毎フレームのLINQ・大規模allocation
 
 VR Avatar Studioでは `ChatGPT検証用/診断` 配下の性能診断を使い、Editor idle時のCPU・I/O・メモリ増加を実測する。
-
-## Idle UI QA
-
-Idle UI QAは常駐Node loopを持たず、Windows Scheduled Taskから既定10分間隔のone-shotで起動する。
-
-- 通常checkはWork Task状態とGit fingerprintだけを確認して終了する。
-- project fingerprintが変化したら30分のidle graceを最初から数え直す。
-- 同fingerprintを複数回画像QAしない。
-- screenshot列挙は設定済みdirectoryの直下だけ、Codexへ渡す画像は最大12枚とする。
-- Codex画像QAはidle gate通過時だけ起動し、通常のdevelopment workerと並行起動しない。
-- 未解決findingの再観測は既存ledger更新だけにし、新規Taskや再通知を増殖させない。

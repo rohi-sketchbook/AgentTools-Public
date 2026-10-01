@@ -18,7 +18,7 @@ const {
 } = require('./workTaskStore');
 
 const RUNNING_CONTINUATION_STATES = new Set(['launching', 'starting', 'running']);
-const TERMINAL_AGENT_STATES = new Set(['idle', 'error', 'stopped']);
+const TERMINAL_AGENT_STATES = new Set(['completed', 'failed', 'stopped']);
 
 function nowIso(nowMs = Date.now()) {
   return new Date(nowMs).toISOString();
@@ -28,6 +28,17 @@ function truncate(value, limit = 2000) {
   const text = String(value || '').trim();
   if (!text) return null;
   return text.length <= limit ? text : `${text.slice(0, Math.max(0, limit - 1))}…`;
+}
+
+function agentErrorMessage(error) {
+  if (!error) return null;
+  if (typeof error === 'string') return truncate(error);
+  if (typeof error.message === 'string') return truncate(error.message);
+  try {
+    return truncate(JSON.stringify(error));
+  } catch {
+    return truncate(String(error));
+  }
 }
 
 function comparablePath(value) {
@@ -327,25 +338,19 @@ function launchContinuation(task, runtime, nowMs = Date.now(), triggerReason = n
 
   try {
     current = prepareResumeForCodex(current, runtime);
-    const writeMode = current.work.resumeContext.nextActionImpact === 'read' ? 'read_only' : 'allowed';
     const prompt = buildContinuationPrompt(current);
     const agentRunner = runtime.runAgent || runDevspaceAgent;
     const agentArgs = reusableSession
       ? [
         'agents', 'continue', reusableSession.agentId,
         '--model', runtime.policy.codexModel,
-        '--thinking', runtime.policy.codexThinking,
-        '--write-mode', writeMode,
-        '--usage-threshold', String(runtime.policy.codexUsageThresholdPercent),
+        '--effort', runtime.policy.codexThinking,
         prompt,
       ]
       : [
         'agents', 'run', 'codex',
         '--model', runtime.policy.codexModel,
-        '--thinking', runtime.policy.codexThinking,
-        '--write-mode', writeMode,
-        '--isolation', 'checkout',
-        '--usage-threshold', String(runtime.policy.codexUsageThresholdPercent),
+        '--effort', runtime.policy.codexThinking,
         prompt,
       ];
     const record = agentRunner(current, runtime, agentArgs);
@@ -437,7 +442,7 @@ function monitorContinuation(task, runtime) {
   let record;
   try {
     const agentRunner = runtime.runAgent || runDevspaceAgent;
-    record = agentRunner(task, runtime, ['agents', 'handoff', continuation.agentId], 10000);
+    record = agentRunner(task, runtime, ['agents', 'show', continuation.agentId], 10000);
   } catch (error) {
     return { ok: false, action: 'monitor-error', taskId: task.id, agentId: continuation.agentId, error: truncate(error.message, 1000) };
   }
@@ -465,9 +470,10 @@ function monitorContinuation(task, runtime) {
   }
 
   let current = getWorkTask(task.id) || task;
-  const successful = record.status === 'idle' && !record.error;
+  const errorMessage = agentErrorMessage(record.error);
+  const successful = record.status === 'completed' && !errorMessage;
   const finalStatus = successful ? 'completed' : record.status === 'stopped' ? 'stopped' : 'failed';
-  const summary = truncate(record.latestResponse || record.error || (successful ? 'Codex自動継続が完了' : 'Codex自動継続が終了'), 2500);
+  const summary = truncate(record.response || record.latestResponse || errorMessage || (successful ? 'Codex自動継続が完了' : 'Codex自動継続が終了'), 2500);
   const nextStep = successful
     ? 'Codex自動継続の変更とテスト結果をChatGPTで最終確認する'
     : 'Codex自動継続の失敗内容を確認し、ChatGPTでcheckpointから再開する';
@@ -478,7 +484,7 @@ function monitorContinuation(task, runtime) {
     lastCheckedAt: observedAt,
     providerUsage: record.providerUsage || continuation.providerUsage || null,
     summary,
-    error: record.error || null,
+    error: errorMessage,
     changedFiles: Array.isArray(record.changedFiles) ? record.changedFiles : [],
     commandsRun: Array.isArray(record.commandsRun) ? record.commandsRun : [],
   });
@@ -490,7 +496,7 @@ function monitorContinuation(task, runtime) {
     phase: successful ? 'Codex継続完了' : 'Codex継続停止',
     message: summary,
     state: successful ? 'working' : 'blocked',
-    reason: successful ? 'Codex自動継続のローカル作業が完了' : `Codex自動継続停止: ${record.error || record.handoffReason || record.status}`,
+    reason: successful ? 'Codex自動継続のローカル作業が完了' : `Codex自動継続停止: ${errorMessage || record.handoffReason || record.status}`,
     workerStatus: successful ? 'done' : 'blocked',
     nextStep,
     lastCompletedStep: successful
@@ -506,7 +512,7 @@ function monitorContinuation(task, runtime) {
     phase: successful ? '最終確認待ち' : '再開待ち',
     message: nextStep,
     state: successful ? 'waiting_dependency' : 'blocked',
-    reason: successful ? 'Codexから引き継ぎ済み。ChatGPTの最終確認待ち' : `Codex自動継続失敗: ${record.error || record.handoffReason || record.status}`,
+    reason: successful ? 'Codexから引き継ぎ済み。ChatGPTの最終確認待ち' : `Codex自動継続失敗: ${errorMessage || record.handoffReason || record.status}`,
     workerStatus: 'blocked',
     takeOwnership: true,
   });
@@ -515,7 +521,7 @@ function monitorContinuation(task, runtime) {
     attempt: updatedContinuation.attempt,
     model: updatedContinuation.model || runtime.policy.codexModel,
     summary,
-    error: record.error || (successful ? null : record.handoffReason || record.status),
+    error: errorMessage || (successful ? null : record.handoffReason || record.status),
     providerUsage: updatedContinuation.providerUsage,
   });
 
@@ -527,7 +533,7 @@ function monitorContinuation(task, runtime) {
     providerUsage: updatedContinuation.providerUsage,
     changedFiles: updatedContinuation.changedFiles,
     summary,
-    error: record.error || null,
+    error: errorMessage,
     handoffReason: record.handoffReason || null,
     notificationQueued,
   };

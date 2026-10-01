@@ -3,12 +3,11 @@ const { readJson } = require('./config');
 const EXPLICIT_ONLY_MODELS = new Set(['gpt-6-astra']);
 
 const DEFAULT_ROLES = Object.freeze({
-  complex: Object.freeze({ model: 'gpt-5.6-terra', thinking: 'high' }),
-  implementation: Object.freeze({ model: 'gpt-5.6-terra', thinking: 'medium' }),
-  review: Object.freeze({ model: 'gpt-5.6-terra', thinking: 'medium' }),
+  complex: Object.freeze({ model: 'gpt-6.1-sol', thinking: 'high' }),
+  implementation: Object.freeze({ model: 'gpt-6.1-sol', thinking: 'medium' }),
+  review: Object.freeze({ model: 'gpt-6.1-sol', thinking: 'medium' }),
   lightweight: Object.freeze({ model: 'gpt-5.6-luna', thinking: 'low' }),
-  idleQa: Object.freeze({ model: 'gpt-5.6-luna', thinking: 'low' }),
-  continuation: Object.freeze({ model: 'gpt-5.6-terra', thinking: 'medium' }),
+  continuation: Object.freeze({ model: 'gpt-6.1-sol', thinking: 'medium' }),
 });
 
 function stringOrNull(value) {

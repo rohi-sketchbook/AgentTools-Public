@@ -59,7 +59,17 @@ VRAS、開発日記、特定GitHub Pages、特定Discord serverなど、ひと�
 
 既存のPrivate開発repoには過去コミット由来のローカルパス等が残り得るため、そのrepo自体をPublicへ切り替えない。
 
-公開時はPrivate開発repoのcleanな最新コミットから `Export-AgentToolsPublic.ps1` でtracked treeだけを別ディレクトリへ書き出し、新しいPublic repositoryの初期ソースとする。このexportはGit履歴、`*.local.*`、`.env`、state、temp、ignored runtime dataをコピーしない。
+初回公開時はPrivate開発repoのcleanな最新コミットから `Export-AgentToolsPublic.ps1` でtracked treeだけを空ディレクトリへ書き出し、新しいPublic repositoryの初期ソースとする。このexportはGit履歴、`*.local.*`、`.env`、state、temp、ignored runtime dataをコピーしない。
+
+2回目以降は、公開Git checkoutをcleanな状態にしたうえで `-UpdateGitRepository` を指定し、同じ公開Git作業ツリーを直接更新する。更新モードは `.git` を保持し、sanitized treeに存在しなくなったPublic側tracked fileを削除してから最新treeを上書きする。公開Git作業ツリーに未コミット・未追跡変更がある場合は拒否する。
+
+```powershell
+.\Export-AgentToolsPublic.ps1 `
+  -Destination <PublicRepositoryCheckout> `
+  -UpdateGitRepository
+```
+
+通常更新のために `public-preview-YYYYMMDD-NNNN` のような一時ディレクトリを作る必要はない。差分確認は更新後のPublic repositoryで `git status` / `git diff` を使う。
 
 Private repo内で維持したい製品固有サンプルや再配布対象外素材は `.agenttools-publicignore` にrepository-relative pathまたは末尾`/`のdirectory prefixとして登録する。`public-release-audit.js`とexport scriptは同じmanifestを使用する。
 
