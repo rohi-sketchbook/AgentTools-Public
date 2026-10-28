@@ -29,6 +29,24 @@ const [{ loadConfig }, { createServer }, { shutdownHttpServer }] = await Promise
 ]);
 
 const config = loadConfig();
+// Match DevSpace CLI startup semantics: Gateway starts server.js directly, bypassing cli.js.
+if (config.pruneManagedWorktreesOnStartup) {
+  try {
+    const { pruneStaleManagedWorktrees } = await import(moduleUrl('dist/worktree-prune.js'));
+    const cleanup = await pruneStaleManagedWorktrees(config);
+    if (cleanup.isErr()) {
+      console.warn('agenttools supervisor: managed worktree cleanup failed', cleanup.error?.message);
+    } else {
+      const { removed, missing, skipped, failed } = cleanup.value;
+      console.log(`agenttools supervisor: managed worktree cleanup removed=${removed.length} missing=${missing.length} skipped=${skipped.length} failed=${failed.length}`);
+      for (const failure of failed) {
+        console.warn('agenttools supervisor: managed worktree cleanup failed', failure.workspaceId, failure.error?.message);
+      }
+    }
+  } catch (error) {
+    console.warn('agenttools supervisor: managed worktree cleanup failed', error instanceof Error ? error.message : String(error));
+  }
+}
 const { app, close } = createServer(config);
 const httpServer = app.listen(config.port, config.host, () => {
   console.log(`devspace listening on http://${config.host}:${config.port}/mcp`);

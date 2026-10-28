@@ -15,7 +15,7 @@
   "defaultPort": 7676,
   "healthPath": "/healthz",
   "startupTimeoutMs": 15000,
-  "stopTimeoutMs": 10000,
+  "stopTimeoutMs": 60000,
   "healthTimeoutMs": 2500,
   "logFile": "state/devspace/devspace.log",
   "logMaxBytes": 5242880,

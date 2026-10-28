@@ -21,6 +21,7 @@ function createRuntime(initialState, options = {}) {
   let state = initialState;
   let startCalls = 0;
   let stopCalls = [];
+  let waitTimeouts = [];
   let diagnoseCalls = 0;
   const runtime = {
     readStatus: async () => statusOf(state),
@@ -31,7 +32,8 @@ function createRuntime(initialState, options = {}) {
       state = options.startBecomesUnresponsive ? 'unresponsive' : 'healthy';
       return { ok: true, pid: 222 };
     },
-    waitFor: async (predicate) => {
+    waitFor: async (predicate, timeoutMs) => {
+      waitTimeouts.push(timeoutMs);
       if (options.forceWaitTimeout) return { ok: false, value: null, error: 'fake timeout' };
       const value = await predicate();
       return value ? { ok: true, value } : { ok: false, value: null, error: 'fake timeout' };
@@ -46,7 +48,7 @@ function createRuntime(initialState, options = {}) {
         ownership: { verified: true, gracefulStopAvailable: options.gracefulAvailable !== false },
       }],
     }),
-    managerConfig: () => ({ startupTimeoutMs: 50, stopTimeoutMs: 50 }),
+    managerConfig: () => ({ startupTimeoutMs: 50, stopTimeoutMs: options.stopTimeoutMs ?? 50 }),
     requestGracefulShutdown: () => {
       stopCalls.push({ force: false, tree: false });
       if (options.gracefulStopFails) return { ok: false, pid: 111, method: 'supervisor-file-request', error: 'fake graceful stop failed' };
@@ -73,7 +75,7 @@ function createRuntime(initialState, options = {}) {
   };
   return {
     runtime,
-    snapshot: () => ({ state, startCalls, stopCalls: [...stopCalls], diagnoseCalls }),
+    snapshot: () => ({ state, startCalls, stopCalls: [...stopCalls], waitTimeouts: [...waitTimeouts], diagnoseCalls }),
   };
 }
 
@@ -175,6 +177,14 @@ async function main() {
     const result = await stopInternal({ force: false }, fake.runtime);
     assert.equal(result.ok, true);
     assert.equal(result.after.status, 'stopped');
+    assert.deepEqual(fake.snapshot().stopCalls, [{ force: false, tree: false }]);
+  }, results);
+
+  await test('graceful stop respects an extended wait without forcing a kill', async () => {
+    const fake = createRuntime('healthy', { stopTimeoutMs: 60000 });
+    const result = await stopInternal({ force: false }, fake.runtime);
+    assert.equal(result.ok, true);
+    assert.deepEqual(fake.snapshot().waitTimeouts, [60000]);
     assert.deepEqual(fake.snapshot().stopCalls, [{ force: false, tree: false }]);
   }, results);
 
@@ -558,6 +568,64 @@ async function main() {
       assert.equal(exit.code, 0, output);
       assert.equal(fs.readFileSync(closeMarker, 'utf8'), 'closed');
       assert.equal(fs.existsSync(requestFile), false);
+    } finally {
+      if (child.exitCode == null) child.kill();
+      await removeDirectoryWithRetry(temp);
+    }
+  }, results);
+
+  await test('Gateway supervisor prunes managed worktrees before listening when enabled', async () => {
+    const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'gateway-supervisor-prune-'));
+    const dist = path.join(temp, 'dist');
+    const requestFile = path.join(temp, 'shutdown-request.json');
+    const sequenceFile = path.join(temp, 'startup-sequence.txt');
+    const supervisorPath = path.resolve(__dirname, '..', 'src', 'devspace', 'supervisor.mjs');
+    fs.mkdirSync(dist, { recursive: true });
+    fs.writeFileSync(path.join(temp, 'package.json'), JSON.stringify({ type: 'module' }), 'utf8');
+    fs.writeFileSync(path.join(dist, 'config.js'), "export function loadConfig() { return { host: '127.0.0.1', port: 0, pruneManagedWorktreesOnStartup: true }; }\n", 'utf8');
+    fs.writeFileSync(path.join(dist, 'worktree-prune.js'), [
+      "import fs from 'node:fs';",
+      "export async function pruneStaleManagedWorktrees() {",
+      "  fs.appendFileSync(process.env.SUPERVISOR_SEQUENCE_FILE, 'prune\\n');",
+      "  return { isErr: () => false, value: { removed: [], missing: [], skipped: [], failed: [] } };",
+      "}",
+    ].join('\n'), 'utf8');
+    fs.writeFileSync(path.join(dist, 'server.js'), [
+      "import fs from 'node:fs';",
+      "import http from 'node:http';",
+      "export function createServer() {",
+      "  fs.appendFileSync(process.env.SUPERVISOR_SEQUENCE_FILE, 'createServer\\n');",
+      "  return { app: { listen(port, host, cb) {",
+      "    return http.createServer((_req, res) => res.end('ok')).listen(port, host, cb);",
+      "  } }, close: async () => {} };",
+      "}",
+    ].join('\n'), 'utf8');
+    fs.writeFileSync(path.join(dist, 'server-shutdown.js'), [
+      "export async function shutdownHttpServer(server, close) {",
+      "  await new Promise((resolve) => server.close(resolve));",
+      "  await close();",
+      "}",
+    ].join('\n'), 'utf8');
+    const child = spawn(process.execPath, [supervisorPath], {
+      cwd: temp,
+      env: { ...process.env, AGENTTOOLS_DEVSPACE_ROOT: temp,
+        AGENTTOOLS_DEVSPACE_CONTROL_REQUEST_FILE: requestFile,
+        AGENTTOOLS_DEVSPACE_CONTROL_TOKEN: 'prune-test-token',
+        AGENTTOOLS_DEVSPACE_LOG_FILE: '',
+        SUPERVISOR_SEQUENCE_FILE: sequenceFile },
+      stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true,
+    });
+    let output = '';
+    child.stdout.on('data', (chunk) => { output += chunk.toString('utf8'); });
+    child.stderr.on('data', (chunk) => { output += chunk.toString('utf8'); });
+    try {
+      const deadline = Date.now() + 15000;
+      while (!output.includes('graceful shutdown control enabled') && child.exitCode == null && Date.now() < deadline) {
+        await new Promise((resolve) => setTimeout(resolve, 50));
+      }
+      assert.equal(child.exitCode, null, output);
+      assert.match(output, /managed worktree cleanup removed=0/);
+      assert.deepEqual(fs.readFileSync(sequenceFile, 'utf8').trim().split(/\r?\n/), ['prune', 'createServer']);
     } finally {
       if (child.exitCode == null) child.kill();
       await removeDirectoryWithRetry(temp);

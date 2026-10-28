@@ -113,7 +113,8 @@ async function main() {
     const maintenance = watchdog.beginMaintenance({
       reason: 'manual-restart',
       requestedBy: 'devspace-manual-control',
-      ttlMs: 120000,
+      // Keep the Watchdog out of the way for the full graceful drain plus startup.
+      ttlMs: 240000,
     });
     process.stdout.write(`Maintenance  : active until ${maintenance.expiresAt}\n`);
     try {
